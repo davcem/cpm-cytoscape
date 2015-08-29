@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>CPM-Cytoscape</title>
+<link href="css/style-columns.css" type="text/css" rel="stylesheet" />
+
+<script src="js/cpm.js"></script>
+<script src="js/cytoscape-layouts.js"></script>
+
+<!-- 3rd party libraries for cytoscape and jquery (for ajax) -->
+<script src="js/libraries/jquery.min.js"></script>
+<script src="js/libraries/cytoscape.min.js"></script>
+
+
+<!-- External scripts for demo only if different layouts are used please comment layout js import in
+<script src="http://marvl.infotech.monash.edu/webcola/cola.v3.min.js"></script>
+<script src="js/libraries/dagre.js"></script>
+<script src="js/libraries/dagre.min.js"></script>
+<script src="js/libraries/cola.v3.min.js"></script>
+<script src="js/libraries/springy.js"></script>-->
+
+</head>
+<body>
+	<div id="menuContainer">
+		<table id="menuTable">
+			<tbody>
+				<tr>
+					<th colspan="7">Menu</th>
+				</tr>
+				<tr>
+					<td>Max X: <input name="maxX" type="number" value="10" min="1"
+						max="100" maxlength="3" /></td>
+					<td>Max Y: <input name="maxY" type="number" value="10" min="1"
+						max="100" maxlength="3" /></td>
+					<td>Monte-Carlo-Steps: <input name="mcs" value="100"
+						type="number" min="1" max="10000" maxlength="5" /></td>
+					<td>Monte-Carlo-Substeps: <input name="mcSubsteps" value="16"
+						type="number" min="1" max="10000" maxlength="5" /></td>
+					<td>Max Sigma: <input name="maxSigma" value="2" type="number"
+						min="1" max="50" maxlength="2" /></td>
+					<td>Matrix Density: <input name="matrixDensity" value="0.8" type="number"
+						min="0.1" step="0.1" max="1" maxlength="1" /></td>
+					<td>Temperature: <input name="temperature" value="10"
+						type="number" min="0.0" step="0.25" max="15" maxlength="5" /></td>
+				</tr>
+				<tr>
+					<td id="subheader">Choose options and than initialize/ compute</td>
+					<td><button class="btn btn-primary" type="button"
+							onclick="cytoscapeRender('init')">initialize</button></td>
+					<td><button class="btn btn-primary" type="button"
+							onclick="cytoscapeRender('compute')">compute</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div id="cyInitialized"></div>
+	<div id="cyComputed"></div>
+	<div id="areaInitializedContainer">
+		<table id="areaInitializedTable">
+			<tbody>
+				<tr>
+					<th id="areaInitializedTableHeader">Cell area</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div id="areaComputedContainer">
+		<table id="areaComputedTable">
+			<tbody>
+				<tr>
+					<th id="areaComputedTableHeader">Cell area</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
