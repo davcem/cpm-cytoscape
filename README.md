@@ -4,7 +4,7 @@ __In Silico Modeling for Tumor Growth Visualization__
 
 A science project by 
 F. Jeanquartier, C. Jean-Quartier, D. Cenemerk, with the Holzinger Group, Research Unit HCI-KDD.
-Get in contact with the developer via mail [f.jeanquartier[at]hci-kdd.org](f.jeanquartier[at]hci-kdd.org)
+Get in contact with the developer via mail [f.jeanquartier[at]hci-kdd.org](mailto:f.jeanquartier[at]hci-kdd.org)
 
 <img src="img/CPM-Cytoscape-Screenshot.jpg" width="780" alt="The cpm-cytoscape webapp provides a ui for initialization and stepwise simulation computation. The left part shows the initialization, the right part the state after performing Monte Carlo step computations." />
 
@@ -23,6 +23,7 @@ The CPM model is a popular lattice-based, multi-particle cell-based formalism, a
 
 - Cytoscape Visualization
 
+We make use of the graph theory and visualization library [Cytoscape.js](http://js.cytoscape.org) to create simulation output in html.
 
 
 ## How to Run and Deploy cpm-cytoscape in silico simulation app ##
