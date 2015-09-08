@@ -51,7 +51,7 @@ Open a webbrowser and type in the url to the deployed webapp such as `http://loc
 
 ## Contribute to our project ##
 
-We __encourage__ you to have a look at our source code and give as feedback and contribute to the cpm-cytoscape project to foster in silico simulation in cancer research!
+We __encourage__ you to have a look at our source code, give us feedback and contribute to the cpm-cytoscape project to foster in silico simulation in cancer research!
 
 
 ## Demo - coming until 2016 ##
