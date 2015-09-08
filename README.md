@@ -4,7 +4,7 @@ __In Silico Modeling for Tumor Growth Visualization__
 
 A science project by 
 F. Jeanquartier, C. Jean-Quartier, D. Cenemerk, with the Holzinger Group, Research Unit HCI-KDD.
-Get in contact with the developer via mail [f.jeanquartier[at]hci-kdd.org](mailto:f.jeanquartier[at]hci-kdd.org)
+Get in contact with one of the developers via mail [f.jeanquartier[at]hci-kdd.org](mailto:f.jeanquartier[at]hci-kdd.org)
 
 <img src="img/CPM-Cytoscape-Screenshot.jpg" width="780" alt="The cpm-cytoscape webapp provides a ui for initialization and stepwise simulation computation. The left part shows the initialization, the right part the state after performing Monte Carlo step computations." />
 
@@ -49,9 +49,9 @@ Create a webapp folder on your Java capable Webserver such as Tomcat and start s
 Open a webbrowser and type in the url to the deployed webapp such as `http://localhost:8080/cpm-cytoscape/` and start playing around with the app.
 
 
-## Contribute to out project ##
+## Contribute to our project ##
 
-We encourage you to have a look at our source code and give as feedback and contribute to the cpm-cytoscape project to foster in silico simulation in cancer research!
+We __encourage__ you to have a look at our source code and give as feedback and contribute to the cpm-cytoscape project to foster in silico simulation in cancer research!
 
 
 ## Demo - coming until 2016 ##
