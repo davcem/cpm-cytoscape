@@ -1,5 +1,5 @@
 //global visible variables
-var cyContainer, areaTable, tableHeader, x, y, maxSigma;
+var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep;
 
 function cytoscapeRender(method){
 	
@@ -12,12 +12,14 @@ function cytoscapeRender(method){
 		cyContainer = 'cyInitialized';
 		areaTable = 'areaInitializedTable';
 		tableHeader = 'areaInitializedTableHeader';
+		computationStep = 0;
 		
 	} else if (method='compute') {
 		httpType = 'GET';
 		cyContainer = 'cyComputed';
 		areaTable = 'areaComputedTable';
 		tableHeader = 'areaComputedTableHeader';
+		computationStep++;
 	} else {
 		console.log("Method not defined!");
 	}
@@ -154,9 +156,14 @@ function cytoscapeRender(method){
 	    		  return a.data('cell') > b.data('cell');
 	    		});
 	    	
-	    	var currentTableHeader = areaTable+"Header";
+	    	var currentTableHeader = areaTable+"Header"; 
 
 	    	var currentAreaTable = document.getElementById(currentTableHeader);
+	    	
+	    	//we count computation steps and output them
+	    	if (computationStep > 1) {
+	    		document.getElementById(currentTableHeader).innerHTML = "Cell area after computation step " +computationStep +":";
+	    	}
 	    	
 	    	//we need to add 2 because one for headers in 1 colum and 1 for cell 0 (ECM)
 	    	currentAreaTable.colSpan = maxSigma + 2;

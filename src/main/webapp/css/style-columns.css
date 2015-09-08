@@ -1,29 +1,35 @@
-body {
+html, body {
 	font: 14px helvetica neue, helvetica, arial, sans-serif;
+	margin:0; 
+	padding:0;
+	background-color: #8E9CB4;
+	height: 100%;
 }
 
 #menuContainer {
-	background-color: #7D8BA3;
-	height: 10%;
+	background-color: #8E9CB4;
+	height: 12%;
+	clear:both;
+	min-height: 4em;
 	width: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
+	margin-top:0em;
 	opacity: 0.75;
 	z-index: 999;
+	padding: 1em;
 }
 
-#menuTable {
-	width: inherit;
-	height: inherit;
-	padding: 0;
-	margin: 0;
-	border: 0;
+#menuHeader {
+	clear:both;
+	text-align: center;
+	display: block;
+	border:1px solid #8E9CB4;
 }
 
-#menuTable th {
+#menuHeader h1 {
 	font-weight: bold;
 	font-size: medium;
+	margin-top: 0px;
+	clear: both
 }
 
 #subheader {
@@ -31,92 +37,82 @@ body {
 	font-weight: bold;
 	font-size: small;
 }
-
+#middleContainer {
+	position: relative;
+	clear:both;
+	margin:0;
+	height: 68%;
+	min-height: 200px;
+	width:100%;
+}
+#cyInitialized, #cyComputed {
+	background-color: #fff;
+	height: 100%;
+	position: absolute;
+	width: 50%;
+}
 #cyInitialized {
-	height: 80%;
-	width: 50%;
-	position: absolute;
-	left: 0;
-	right: 50%;
-	top: 10%;
+	margin-right:-2px;
+	float: left;
+	position:relative;
+	bottom: 0px;
+	left:0;
+	top:0;
+	bottom:0;
 	border-bottom: 2px solid #808080;
 }
-
 #cyComputed {
-	height: 80%;
-	width: 50%;
-	position: absolute;
-	top: 10%;
-	left: 50%;
-	right: 0;
-	border-left: 2px solid #808080;
-	border-bottom: 2px solid #808080;
+	margin-left:-2px;
+	float:right;
+	right:0;
+	top:0;
+	bottom:0;
+	border-left: 1px solid #808080;
+	border-bottom: 1px solid #808080;
 }
 
-#areaInitializedContainer {
-	height: 10%;
-	width: 50%;
-	position: absolute;
-	bottom: 0%;
-	left: 0%;
-	right: 50%;
+#bottomContainer {
+	clear: both;
+	min-height: 6em;
+	position: relative;
+	height: 30%
+	width: 100%;
 }
-
-#areaComputedContainer {
-	height: 10%;
-	width: 50%;
-	position: absolute;
-	bottom: 0%;
-	left: 50%;
-	right: 0%;
+#bottomContainer #areaInitializedTable {
+	float: left;
+	margin-left:2em;
 }
-
-#areaComputedTable,#areaInitializedTable {
-	width: inherit;
-	height: inherit;
-	padding: 10;
-	margin: 10;
-	border: 1;
+#bottomContainer #areaComputedTable {
+	float: right;
+	margin-right:2em;
 }
-
-#areaComputedTable th,#areaInitializedTable th {
+#areaComputedTable, #areaInitializedTable {
+	border: 1px solid #808080;
+	background: #8E9CB4;
+	width: 42%;
+	height: auto;
+	padding: 0.5em;
+	margin: 1em;
 	text-align: center;
-	background-color: #7D8BA3;
-	font-weight: bold;
-	font-size: medium;
-	border-left: 0;
-	border-right: 0;
+}
+#areaComputedTable td, #areaInitializedTable td {
+	padding:0.25em;
+	border-top: 1px solid #808080;
+	border-right: 1px solid #808080;
 }
 
-#areaComputedTable td,#areaInitializedTable td {
-	text-align: left;
-	border: 1px solid grey;
-	font-weight: bold;
-	font-size: medium;
-}
-
-#areaInitializedTable {
-	width: 100%;
-	height: inherit;
-	border: 1px solid #808080;
-	border-collapse: collapse;
-}
-
-#areaComputedTable {
-	width: 100%;
-	height: inherit;
-	border: 1px solid #808080;
-	border-collapse: collapse;
-}
+#areaInitializedTable td:nth-child(2), #areaComputedTable td:nth-child(2) { background: grey; }
+#areaInitializedTable td:nth-child(3), #areaComputedTable td:nth-child(3) { background: red; }
+#areaInitializedTable td:nth-child(4), #areaComputedTable td:nth-child(4) { background: green; }
 
 #json {
 	display: none;
-	border-top: 2px solid #808080;
+	border-top: 1px solid #808080;
 	height: 1%;
 	width: 100%;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	border-top: 2px solid #808080;
+	float: left;
+	clear:both;
+}
+.clear {
+	clear: both;
 }
