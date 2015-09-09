@@ -57,7 +57,7 @@ We __encourage__ you to have a look at our source code, give us feedback and con
 ## Demo - coming until 2016 ##
 
 The app is already running and can be easily deployed. 
-However, we know, that not every clinician and/or scientist is able to run his own Java EE webserver. 
+However, we know, that not every clinician and/or scientist is able to run his own web servlet or respectively java capable webserver. 
 Therefore, we further plan to provide an online version by end of 2015, always running the newest stable version to try it out.
 
 ## License
