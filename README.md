@@ -34,7 +34,7 @@ We further encourage developers developers to revise existing.
 
 ### Prerequisites ###
 
-To run this app you need a Java EE capable server such as Apache Tomcat and at least java version 1.8 to run the app.
+To run this app you need a Java capable webserver such as Apache Tomcat and at least java version 1.7 to run the app.
 
 ### Option 1 : WAR file ###
 
