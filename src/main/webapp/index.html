@@ -26,9 +26,9 @@
 			<h1>Menu</h1>
 		</div>
 		<div>
-			<span>Max X: <input name="maxX" type="number" value="10" min="1"
+			<span>Max X: <input name="maxX" type="number" value="20" min="1"
 					max="100" maxlength="3" /></span>
-			<span>Max Y: <input name="maxY" type="number" value="10" min="1"
+			<span>Max Y: <input name="maxY" type="number" value="20" min="1"
 					max="100" maxlength="3" /></span>
 			<span>Monte-Carlo-Steps: <input name="mcs" value="100"
 					type="number" min="1" max="10000" maxlength="5" /></span>
@@ -51,7 +51,7 @@
 	</div>
 	
 	<!-- middle container -->
-	<div id="middleContainer">
+	<div id="middleContainer"><div class="loading-spinner hide"></div>
 		<div id="cyInitialized"></div>
 		<div id="cyComputed"></div>
 	</div>
