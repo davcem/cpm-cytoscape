@@ -102,9 +102,11 @@ html, body {
 	border-right: 1px solid #808080;
 }
 
+#areaInitializedTable td:nth-child(odd), #areaComputedTable td:nth-child(odd) { background: red; }
+#areaInitializedTable td:nth-child(even), #areaComputedTable td:nth-child(even) { background: green; }
+#areaInitializedTable td:nth-child(0), #areaComputedTable td:nth-child(0) { background: inherit; }
+#areaInitializedTable td:nth-child(1), #areaComputedTable td:nth-child(1) { background: inherit; }
 #areaInitializedTable td:nth-child(2), #areaComputedTable td:nth-child(2) { background: grey; }
-#areaInitializedTable td:nth-child(3), #areaComputedTable td:nth-child(3) { background: red; }
-#areaInitializedTable td:nth-child(4), #areaComputedTable td:nth-child(4) { background: green; }
 
 #json {
 	display: none;

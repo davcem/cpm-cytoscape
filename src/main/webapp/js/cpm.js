@@ -24,14 +24,14 @@ function cytoscapeRender(method){
 		console.log("Method not defined!");
 	}
 	
-	$('.loading-spinner').show(); // hide loading feedback
-	console.log("updating graph area");
+	$('.loading-spinner').show(); // show loading feedback when render method called
+	//console.log("updating graph area");
 	
 	x = document.getElementsByName("maxX")[0].value;
 	y = document.getElementsByName("maxY")[0].value;
 	var mcs = document.getElementsByName("mcs")[0].value;
 	var mcSubsteps = document.getElementsByName("mcSubsteps")[0].value;
-	maxSigma = document.getElementsByName("maxSigma")[0].value;
+	var maxSigma = document.getElementsByName("maxSigma")[0].value;
 	var matrixDensity = document.getElementsByName("matrixDensity")[0].value;
 	var temperature = document.getElementsByName("temperature")[0].value;
 
@@ -52,7 +52,7 @@ function cytoscapeRender(method){
 	});
 	graphP.done(function(msg) {
 		$('.loading-spinner').fadeOut(); // hide loading feedback after finish
-		console.log("loaded successfully");
+		//console.log("loaded successfully");
 	});
 	  
   //if asynchrone requests returns we initialize cytoscape
@@ -109,13 +109,13 @@ function cytoscapeRender(method){
 				  'text-halign' : 'center',
 				  'text-valign' : 'center',
 					'background-color': function (ele){			    	  
-					  return ele.data('parentcolor');	//color | parentcolor			    	  				    	  
+					  return ele.data('parentcolor');	//color | parentcolor
 					}
 			  })
 			  /*set special colour for ECM*/
 			.selector('node[cell = "0"]')
 				.style({
-				  'background-color': 'silver'
+				  'background-color': 'grey'
 					})
 				/*hide ancestor nodes*/
 			.selector('node[x < "0"]')
