@@ -166,8 +166,15 @@ function cytoscapeRender(method){
 		var currentAreaTable = document.getElementById(currentTableHeader);
 		
 		//we count computation steps and output them
-		if (computationStep > 1) {
+		if (computationStep > 0) {
 			document.getElementById(currentTableHeader).innerHTML = "Cell area after computation step " +computationStep +":";
+			$("#cyComputed canvas").fadeIn();
+			$("#areaComputedTable tr").fadeIn();
+		}
+		else if (computationStep === 0) { // reset by init
+			//put code here to remove older computed results by init
+			$("#cyComputed canvas").fadeOut().remove();
+			$("#areaComputedTable tr").fadeOut();
 		}
 		
 		//we need to add 2 because one for headers in 1 colum and 1 for cell 0 (ECM)
