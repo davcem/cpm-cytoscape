@@ -3,12 +3,12 @@ html, body {
 	font: 14px helvetica neue, helvetica, arial, sans-serif;
 	margin:0; 
 	padding:0;
-	background-color: #8E9CB4;
+	background-color: #ddd; /*#8E9CB4;*/
 	height: 100%;
 }
 
 #menuContainer {
-	background-color: #8E9CB4;
+	background-color: #ddd; /*#8E9CB4;*/
 	height: 12%;
 	clear:both;
 	min-height: 4em;
@@ -23,7 +23,7 @@ html, body {
 	clear:both;
 	text-align: center;
 	display: block;
-	border:1px solid #8E9CB4;
+	border:1px solid #ddd; /*#8E9CB4;*/
 }
 
 #menuHeader h1 {
@@ -60,7 +60,7 @@ html, body {
 	left:0;
 	top:0;
 	bottom:0;
-	border-bottom: 2px solid #808080;
+	border-bottom: 1px solid #808080;
 }
 #cyComputed {
 	margin-left:-2px;
@@ -89,7 +89,7 @@ html, body {
 }
 #areaComputedTable, #areaInitializedTable {
 	border: 1px solid #808080;
-	background: #8E9CB4;
+	background: #ddd; /*#8E9CB4;*/
 	width: 42%;
 	height: auto;
 	padding: 0.5em;
@@ -102,10 +102,11 @@ html, body {
 	border-right: 1px solid #808080;
 }
 
-#areaInitializedTable td:nth-child(odd), #areaComputedTable td:nth-child(odd) { background: red; }
-#areaInitializedTable td:nth-child(even), #areaComputedTable td:nth-child(even) { background: green; }
+/* primary colors are now set dynamically by js to support greater sigma differentiation than 2 */
+/* #areaInitializedTable td:nth-child(odd), #areaComputedTable td:nth-child(odd) { background: red; }
+#areaInitializedTable td:nth-child(even), #areaComputedTable td:nth-child(even) { background: green; } 
 #areaInitializedTable td:nth-child(0), #areaComputedTable td:nth-child(0) { background: inherit; }
-#areaInitializedTable td:nth-child(1), #areaComputedTable td:nth-child(1) { background: inherit; }
+#areaInitializedTable td:nth-child(1), #areaComputedTable td:nth-child(1) { background: inherit; }   */
 #areaInitializedTable td:nth-child(2), #areaComputedTable td:nth-child(2) { background: grey; }
 
 #json {

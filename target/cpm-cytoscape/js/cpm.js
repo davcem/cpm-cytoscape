@@ -5,7 +5,7 @@ function cytoscapeRender(method){
 	
 	/*Because we have two different cytoscape graphs we define to different methods
 	 * - init: ajax call is post and cy container is cyInitialized
-	 * - compute: ajax call is get and cy container is cyComputed*/	
+	 * - compute: ajax call is get and cy container is cyComputed*/	 
 			
 	if (method=='init') {
 		httpType = 'POST';
@@ -25,7 +25,6 @@ function cytoscapeRender(method){
 	}
 	
 	$('.loading-spinner').show(); // show loading feedback when render method called
-	//console.log("updating graph area");
 	
 	x = document.getElementsByName("maxX")[0].value;
 	y = document.getElementsByName("maxY")[0].value;
@@ -34,6 +33,9 @@ function cytoscapeRender(method){
 	var maxSigma = document.getElementsByName("maxSigma")[0].value;
 	var matrixDensity = document.getElementsByName("matrixDensity")[0].value;
 	var temperature = document.getElementsByName("temperature")[0].value;
+	var sigmaCounter = 0;
+	var colorArray = new Array();
+	colorArray[0] = "grey"; //default color for ECM
 
 	// requesting CPM data
 	var graphP = $.ajax({
@@ -52,7 +54,6 @@ function cytoscapeRender(method){
 	});
 	graphP.done(function(msg) {
 		$('.loading-spinner').fadeOut(); // hide loading feedback after finish
-		//console.log("loaded successfully");
 	});
 	  
   //if asynchrone requests returns we initialize cytoscape
@@ -64,7 +65,7 @@ function cytoscapeRender(method){
 	 var expJson = then[0];
 	 
 	 var elements = expJson.elements;
-	 
+
 	 var cy = cytoscape({
 		container: document.getElementById(cyContainer),
 		elements: elements,
@@ -108,8 +109,23 @@ function cytoscapeRender(method){
 				  'min-zoomed-font-size' : '6',
 				  'text-halign' : 'center',
 				  'text-valign' : 'center',
-					'background-color': function (ele){			    	  
-					  return ele.data('parentcolor');	//color | parentcolor
+					'background-color': function (ele){
+  					 if (maxSigma > 2) {
+                if (sigmaCounter <= maxSigma) {
+                  if ( $.inArray(ele.data('color'), colorArray) == -1 ){
+                    colorArray[ele.data('cell')] = ele.data('color');
+                    sigmaCounter++;
+                  }
+                }
+                return ele.data('color'); // use cytoscape default coloring scheme for more than 2 different cells
+              }
+              else {
+                if (sigmaCounter <= maxSigma+1) {
+                    colorArray[ele.data('cell')] = ele.data('parentcolor');
+                    sigmaCounter++;
+                }
+                return ele.data('parentcolor');  // if we only differentiate between two cells, use the color from the NodeJSONAdapter
+              }
 					}
 			  })
 			  /*set special colour for ECM*/
@@ -130,27 +146,27 @@ function cytoscapeRender(method){
 				  'line-style' : 'solid',
 				  'curve-style' : 'haystack'
 				})
-	});
-	 
-	 //sortNodes();
-	 
-	 addAreaOutput();
-	 
-	 /*Function sorts nodes of cytoscape graph (some layouts depend on sorted nodes)*/
-	 function sortNodes(){
-		
-		var nodesToremove = cy.nodes();
-		  var edgesToAdd = cy.edges();
-		  
-		  var nodesSorted = cy.nodes().sort(function( a, b ){
-			  return a.data('id') > b.data('id');
-			});
-		  
-		  cy.remove(nodesToremove);
-		  cy.add(nodesSorted);
-		  cy.add(edgesToAdd);
-		
-	 }
+    });
+     
+    //sortNodes();
+    
+    addAreaOutput();
+    
+    /*Function sorts nodes of cytoscape graph (some layouts depend on sorted nodes)*/
+    function sortNodes(){
+    
+    var nodesToremove = cy.nodes();
+      var edgesToAdd = cy.edges();
+      
+      var nodesSorted = cy.nodes().sort(function( a, b ){
+    	  return a.data('id') > b.data('id');
+    	});
+      
+      cy.remove(nodesToremove);
+      cy.add(nodesSorted);
+      cy.add(edgesToAdd);
+    
+    }
 	 
 	 /*Function adds the area output at the end of page*/
 	 function addAreaOutput(){
@@ -190,21 +206,32 @@ function cytoscapeRender(method){
 			table.deleteRow(1);
 		}
 		
-		  var rowOne = table.insertRow(1);
-		  var cellOne = rowOne.insertCell(0);
-		  cellOne.innerHTML = "Cell id";
-		  var rowTwo = table.insertRow(2);
-		  var cellTwo = rowTwo.insertCell(0);
-		cellTwo.innerHTML = "Area";
-		  
-		  parentNodes.forEach(function( ele,i ){
-			var cellOne = rowOne.insertCell(i+1);
-			cellOne.innerHTML = ele.data('cell');
+	  // prepare data table below visualization
+    var rowOne = table.insertRow(1);
+	  var cellOneInRowOne = rowOne.insertCell(0);
+	  cellOneInRowOne.innerHTML = "Cell id";
+	  var rowTwo = table.insertRow(2);
+	  var cellTwoInRowTwo = rowTwo.insertCell(0);
+    cellTwoInRowTwo.innerHTML = "Area";
+    
+    for (i=0; i <= maxSigma; i++) { 
+      rowOne.insertCell(i+1);
+      rowTwo.insertCell(i+1);
+    }
+	  
+	  // update data table
+	  parentNodes.forEach(function( ele,i ){
+	    var tableCellIndex = ele.data('cell'); tableCellIndex++;
 			
-			var cellTwo = rowTwo.insertCell(i+1);
-			cellTwo.innerHTML = ele.data('area');
-			  
-		});    	
+      var cellForIDLabel = rowOne.getElementsByTagName("td")[tableCellIndex];
+      cellForIDLabel.innerHTML = ele.data('cell');
+			cellForIDLabel.style.background = colorArray[ele.data('cell')];
+			
+			var cellForAreaCount = rowTwo.getElementsByTagName("td")[tableCellIndex];
+			cellForAreaCount.innerHTML = ele.data('area');  
+      cellForAreaCount.style.background = colorArray[ele.data('cell')]; 
+		});
+        	
 	 }
   }//cytoscapeInit End
 } 
