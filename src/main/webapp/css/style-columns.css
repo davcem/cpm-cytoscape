@@ -6,31 +6,34 @@ html, body {
 	margin:0; 
 	padding:0;
 	background-color: #ddd; /*#8E9CB4;*/
-	height: 100%;
+	height:100%;
+  min-height:100%;
+	overflow-y: auto;
 }
 
 #menuContainer {
 	background-color: #ddd; /*#8E9CB4;*/
 	color:#333;
 	height: 12%;
+	height:auto;
 	clear:both;
-	min-height: 4em;
+	min-height: 6em;
 	width: 100%;
 	margin-top:0em;
 	opacity: 0.85;
 	z-index: 999;
-	padding: 1em;
+  padding:0.5em 1em;
+	box-sizing: border-box;
 }
 #menuHeader {
 	clear:both;
 	text-align: center;
-	display: block;
+	display: none;
 	border:1px solid #ddd; /*#8E9CB4;*/
 }
 #menuHeader h1 {
 	font-weight: bold;
 	font-size: medium;
-	margin-top: 0px;
 	clear: both
 }
 #menuContainer input {
@@ -84,6 +87,20 @@ html, body {
 	border-bottom: 1px solid #808080;
 }
 
+#growthAsLineChartContainer {
+  position: absolute;
+  top: 0.5em;
+  left:25%;
+  right: 25%;
+  margin: 5em auto;
+  opacity:0.85;
+  width: 50%;
+  height: 10em;
+  border:1px solid #333;
+  background:#fff;
+  z-index:2;      
+}
+
 #bottomContainer {
 	clear: both;
 	min-height: 6em;
@@ -122,12 +139,54 @@ html, body {
 #areaInitializedTable td:nth-child(2), #areaComputedTable td:nth-child(2) { background: grey; }
 
 #json {
-	display: none;
-	border-top: 1px solid #808080;
-	height: 1%;
-	width: 100%;
-	float: left;
-	clear:both;
+  display: none;
+  border-top: 1px solid #808080;
+  height: 1%;
+  width: 100%;
+  float: left;
+  clear:both;
+}
+
+/* info icon */
+/* span.info-icon {
+display: inline-block;
+font-size: 16px;
+height: 22px;
+line-height: 22px;
+overflow-x: hidden;
+overflow-y: hidden;
+position: relative;
+text-align: left;
+width: 22px;
+z-index: 1;
+} */
+span.info-icon {
+  display: block;
+  position: relative;
+  float:left;
+  width: 1em;
+  height:1em;
+  line-height:1em; 
+  margin-top:4px;
+  margin-right:8px;
+}
+span.info-icon:before {
+  content:"i";
+  left:3px;
+  width:16px;
+  height:16px;
+  margin-top:-8px;
+  font-size:14px;
+  font-weight:bold;
+  font-style:italic;
+  line-height:15px;
+  text-align:center;
+  color:#fff;
+  display: inline-block;
+  background:#2385BA;
+  -webkit-border-radius:16px;
+  -moz-border-radius:16px;
+  border-radius:16px;
 }
 
 /*loading spinner styles */

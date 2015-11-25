@@ -6,13 +6,27 @@ function cytoscapeRender(method){
 	/*Because we have two different cytoscape graphs we define to different methods
 	 * - init: ajax call is post and cy container is cyInitialized
 	 * - compute: ajax call is get and cy container is cyComputed*/	 
-			
+	
+	
+	x = document.getElementsByName("maxX")[0].value;
+	y = document.getElementsByName("maxY")[0].value;
+	var mcs = document.getElementsByName("mcs")[0].value;
+	var mcSubsteps = document.getElementsByName("mcSubsteps")[0].value;
+	var maxSigma = document.getElementsByName("maxSigma")[0].value;
+	var matrixDensity = document.getElementsByName("matrixDensity")[0].value;
+	var temperature = document.getElementsByName("temperature")[0].value;
+	var sigmaCounter = 0;
+	var colorArray = new Array();
+	colorArray[0] = "grey"; //default color for ECM
+  		
 	if (method=='init') {
 		httpType = 'POST';
 		cyContainer = 'cyInitialized';
 		areaTable = 'areaInitializedTable';
 		tableHeader = 'areaInitializedTableHeader';
 		computationStep = 0;
+		if (maxSigma==2) { $('#toggleLineChart').show(); }
+		else {  $('#toggleLineChart').hide(); }
 		
 	} else if (method='compute') {
 		httpType = 'GET';
@@ -25,17 +39,6 @@ function cytoscapeRender(method){
 	}
 	
 	$('.loading-spinner').show(); // show loading feedback when render method called
-	
-	x = document.getElementsByName("maxX")[0].value;
-	y = document.getElementsByName("maxY")[0].value;
-	var mcs = document.getElementsByName("mcs")[0].value;
-	var mcSubsteps = document.getElementsByName("mcSubsteps")[0].value;
-	var maxSigma = document.getElementsByName("maxSigma")[0].value;
-	var matrixDensity = document.getElementsByName("matrixDensity")[0].value;
-	var temperature = document.getElementsByName("temperature")[0].value;
-	var sigmaCounter = 0;
-	var colorArray = new Array();
-	colorArray[0] = "grey"; //default color for ECM
 
 	// requesting CPM data
 	var graphP = $.ajax({
@@ -231,6 +234,9 @@ function cytoscapeRender(method){
 			cellForAreaCount.innerHTML = ele.data('area');  
       cellForAreaCount.style.background = colorArray[ele.data('cell')]; 
 		});
+		
+		// update line chart
+		if (maxSigma==2) { updateLineChart(); }
         	
 	 }
   }//cytoscapeInit End
