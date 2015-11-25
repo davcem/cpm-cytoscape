@@ -148,7 +148,7 @@ function cytoscapeRender(method){
 				})
     });
      
-    //sortNodes();
+    sortNodes();
     
     addAreaOutput();
     
@@ -159,7 +159,7 @@ function cytoscapeRender(method){
       var edgesToAdd = cy.edges();
       
       var nodesSorted = cy.nodes().sort(function( a, b ){
-    	  return a.data('id') > b.data('id');
+    	  return a.data('id') > b.data('id'); //may also be sorted by cell-relation or area-size
     	});
       
       cy.remove(nodesToremove);
@@ -174,7 +174,7 @@ function cytoscapeRender(method){
 		var parentNodes = cy.elements("node[x < 0]");
 		
 		parentNodes.sort(function( a, b ){
-			  return a.data('cell') > b.data('cell');
+			  return a.data('cell') > b.data('cell'); //may also be sorted by cell-relation or area
 			});
 		
 		var currentTableHeader = areaTable+"Header"; 
