@@ -1,6 +1,8 @@
 /* styles for cpm-cytoscape html rendering */
 html, body {
-	font: 14px helvetica neue, helvetica, arial, sans-serif;
+	font-family: "Helvetica Neue","Helvetica","Arial","Verdana","sans-serif";
+  font-size: 14px;
+  line-height: 1.42857;
 	margin:0; 
 	padding:0;
 	background-color: #ddd; /*#8E9CB4;*/
@@ -9,31 +11,41 @@ html, body {
 
 #menuContainer {
 	background-color: #ddd; /*#8E9CB4;*/
+	color:#333;
 	height: 12%;
 	clear:both;
 	min-height: 4em;
 	width: 100%;
 	margin-top:0em;
-	opacity: 0.75;
+	opacity: 0.85;
 	z-index: 999;
 	padding: 1em;
 }
-
 #menuHeader {
 	clear:both;
 	text-align: center;
 	display: block;
 	border:1px solid #ddd; /*#8E9CB4;*/
 }
-
 #menuHeader h1 {
 	font-weight: bold;
 	font-size: medium;
 	margin-top: 0px;
 	clear: both
 }
-
+#menuContainer input {
+  width:auto;
+  min-width:1em;
+  max-width:3.5em;
+  margin-right:0.5em;
+  text-align: center;
+}
+#menuContainer input[type=number]::-webkit-inner-spin-button, 
+#menuContainer input[type=number]::-webkit-outer-spin-button {  
+   opacity: 1;
+}
 #subheader {
+  padding-top:0.5em;
 	padding-bottom: 0px;
 	font-weight: bold;
 	font-size: small;
