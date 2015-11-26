@@ -6,7 +6,7 @@ A science project by
 F. Jeanquartier, C. Jean-Quartier, D. Cemernek, with the Holzinger Group, Research Unit HCI-KDD.
 Get in contact with one of the developers via mail [f.jeanquartier[at]hci-kdd.org](mailto:f.jeanquartier[at]hci-kdd.org)
 
-<img src="img/cpm-cytoscape-simulation-run-with-light-and-dark-cells.png" width="780" alt="The cpm-cytoscape webapp provides a ui for initialization and stepwise simulation computation. The left part shows the initialization, the right part the state after performing Monte Carlo step computations." />
+<img src="img/cpm-cytoscape-with-line-chart-overlay.png" width="780" alt="The cpm-cytoscape webapp provides a ui for initialization and stepwise simulation computation. The left part shows the initialization, the right part the state after performing Monte Carlo step computations. A toggleable overlay is showing the traditional growth as line chart for comparing two different cell growth rates" />
 <img src="img/cpm-cytoscape-simulation-run-with-more-than-two-cells.png" width="780" alt="Here we see the computed result of a simulation run with other initialize values than the defaults." />
 
 
