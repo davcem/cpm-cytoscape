@@ -42,7 +42,7 @@ public class NodeJSONAdapter implements JsonSerializer<Node> {
 		//if our cell is of type ECM
 		color = (color == 0) ? 1 : color;
        
-        data.addProperty("color", String.format("#%06X", (16777216-750000) / color^4));
+        data.addProperty("color", String.format("#%06X", (16777216-750000) / color^4)); // for maxSigma > 2
         
         int modulo = Integer.valueOf(node.getCell()) % 2;
         
@@ -51,11 +51,11 @@ public class NodeJSONAdapter implements JsonSerializer<Node> {
         //The parent color is only needed if we use compound nodes
         if(modulo == 0){
         	
-        	parentColor = "green";
+        	parentColor = "#96e0e0"; // "light" cells
         	
         }else{
         	
-        	parentColor = "red";
+        	parentColor = "#91243e"; // "dark" cells
         }
         
         data.addProperty("parentcolor", parentColor);
