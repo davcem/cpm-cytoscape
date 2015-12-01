@@ -17,7 +17,7 @@ function cytoscapeRender(method){
 	var temperature = document.getElementsByName("temperature")[0].value;
 	var sigmaCounter = 0;
 	var colorArray = new Array();
-	colorArray[0] = "grey"; //default color for ECM
+	colorArray[0] = "#e2e2e2"; //default color for ECM
   		
 	if (method=='init') {
 		httpType = 'POST';
@@ -112,6 +112,8 @@ function cytoscapeRender(method){
 				  'min-zoomed-font-size' : '6',
 				  'text-halign' : 'center',
 				  'text-valign' : 'center',
+				  'border-width' : '1',
+          'border-color': '#333', 
 					'background-color': function (ele){
   					 if (maxSigma > 2) {
                 if (sigmaCounter <= maxSigma) {
@@ -134,7 +136,7 @@ function cytoscapeRender(method){
 			  /*set special colour for ECM*/
 			.selector('node[cell = "0"]')
 				.style({
-				  'background-color': 'grey'
+				  'background-color': '#e2e2e2'
 					})
 				/*hide ancestor nodes*/
 			.selector('node[x < "0"]')
@@ -162,7 +164,7 @@ function cytoscapeRender(method){
       var edgesToAdd = cy.edges();
       
       var nodesSorted = cy.nodes().sort(function( a, b ){
-    	  return a.data('id') > b.data('id'); //may also be sorted by cell-relation or area-size
+    	  return a.data('id') < b.data('id'); //may also be sorted by cell-relation or area-size
     	});
       
       cy.remove(nodesToremove);

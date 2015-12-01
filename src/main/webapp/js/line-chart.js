@@ -1,7 +1,7 @@
 $(document).ready(function(){
   
   //define arrays for cell data to be plotted as line chart
-  var celldata1, celldata2;
+  var celldata1, celldata2, lightcellcolor, darkcellcolor;
   
   $("#toggleLineChart").click(function() {
   
@@ -30,10 +30,15 @@ function updateLineChart(){
        celldata2.push([computationStep,$("#areaComputedTable tbody tr:nth-child(3) td:nth-child(4)").text()]);
     }
     
+    lightcellcolor = $("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(3)").css("background-color");
+    darkcellcolor = $("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(4)").css("background-color");
+    
+    console.log(darkcellcolor);
+    
     // draw line charts for cell types
     $.plot("#lineChart", [
-  			{ label: "cells of cell 1", data: celldata1, color: "red" },
-  			{ label: "cells of cell 2", data: celldata2, color: "green" }
+  			{ label: "cells of cell 1", data: celldata1, color: lightcellcolor },
+  			{ label: "cells of cell 2", data: celldata2, color: darkcellcolor }
   		], {
   			series: {
   				lines: { show: true },
