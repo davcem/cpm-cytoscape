@@ -23,27 +23,8 @@ import java.util.Random;
  * 	- dark (cell-type modulo 2 == 1 == odd)
  */
 public class CPMLattice implements CPM{
-	
-	/** Energy interaction for the ecm*/
-	private static final double J_ECM = 16;
-	
-	/** Energy interaction for even cells */
-	private static final double J_LIGHT_CELLS = 14;
-	
-	/** Energy interaction for other cells */
-	private static final double J_DARK_CELLS = 2;
-	
-	/** Energy interaction for even with odd cells */
-	private static final double J_OTHER_CELLS = 11;
-	
-	/** The Lambda for area calculation. */
-	private static final double LAM_AREA = 1;
-	
-	/** The factor for the targetArea of light cells*/
-	private static final double TARGET_AREA_FACTOR_LIGHT = 0.6;
-	
-	/** The factor for the targetArea of dark cells*/
-	private static final double TARGET_AREA_FACTOR_DARK = 0.4;
+
+	CPMLatticeCalculationParams params = new CPMLatticeCalculationParams();
 	
 	/** Number of rows of lattice */
 	private int xMax;
@@ -244,27 +225,28 @@ public class CPMLattice implements CPM{
 				//if cell is of type ECM then the Area calculation is suppressed
 				if (cell > 0) {
 
-					energyArea = LAM_AREA * Math.sqrt(area[cell] - getTargetAreaForCell(cell)) * suppressAreaConstraint;
+					energyArea = params.lamdaArea * Math.sqrt(area[cell] - getTargetAreaForCell(cell)) * suppressAreaConstraint;
 
 				}
 
 				//if cell neighbor is of type ECM then the Area calculation is suppressed
 				if (cellNeighbour > 0) {
 
-					newEnergyArea = LAM_AREA * Math.sqrt(area[cellNeighbour] - getTargetAreaForCell(cellNeighbour));
+					newEnergyArea = params.lamdaArea * Math.sqrt(area[cellNeighbour] - getTargetAreaForCell(cellNeighbour));
 
 				}
 
 				/* The overall deltaH = AFTER-BEFORE */
 				deltaH = (newEnergyAdhesion + newEnergyArea) - (energyAdhesion + energyArea);
 				
-				// spin-copy is accepted with prob = 1.0 if it would decrease
-				// the value of globally Hamiltonian
+				// spin-copy for a temperature > 0 is accepted
+				//  with prob = 1.0 if it would decrease the value of globally Hamiltonian
+				//  or with Boltzmann probability if it would increase the value of Hamiltonian
 				if (temperature > 0) {
 					
 					if (deltaH > 0) {
 
-						prob = Math.exp(-deltaH / temperature);
+						prob = Math.exp(-deltaH / temperature); // Boltzmann
 
 					} else if (deltaH <= 0) {
 
@@ -315,15 +297,15 @@ public class CPMLattice implements CPM{
 	
 		if(cell1 == 0 || cell2 == 0){//ECM
 			
-			return J_ECM;
+			return params.jEcm;
 		
 		}else if(cell1 == cell2){//Same cells, which cells?
 			
-			return (cell1 % 2 == 0) ? J_LIGHT_CELLS : J_DARK_CELLS;
+			return (cell1 % 2 == 0) ? params.jLightCells : params.jDarkCells;
 		
 		}else{//different cells
 			
-			return J_OTHER_CELLS;
+			return params.jOtherCells;
 		}
 	}
 	
@@ -338,7 +320,7 @@ public class CPMLattice implements CPM{
 		
 		double targetAreaFactor = 0.0;
 		
-		targetAreaFactor =  (cell % 2 == 0) ? TARGET_AREA_FACTOR_LIGHT : TARGET_AREA_FACTOR_DARK;
+		targetAreaFactor =  (cell % 2 == 0) ? params.targetAreaFactorLight : params.targetAreaFactorDark;
 		
 		return xMax * yMax * targetAreaFactor;
 		
