@@ -23,7 +23,7 @@ public class CPMLatticeCalculationParams {
     public double jOtherCells;
 
     /** The Lambda for area calculation. */
-    public double lamdaArea;
+    public double lambdaArea;
 
     /** The factor for the targetArea of light cells*/
     public double targetAreaFactorLight;
@@ -33,7 +33,7 @@ public class CPMLatticeCalculationParams {
 
 
     /**
-     * Instantiates a new derfault CPMLatticeCalculationsParrams object
+     * Instantiates a new default CPMLatticeCalculationsParrams object
      */
     public CPMLatticeCalculationParams() {
 
@@ -41,7 +41,7 @@ public class CPMLatticeCalculationParams {
         jLightCells = 14;
         jDarkCells = 2;
         jOtherCells = 11;
-        lamdaArea = 1;
+        lambdaArea = 1;
         targetAreaFactorLight = 0.2;
         targetAreaFactorDark = 0.8;
 

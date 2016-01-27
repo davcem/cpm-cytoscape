@@ -85,9 +85,9 @@ public class CPMLattice implements CPM{
 	/**
 	 * Returns a random number within the given range (between min and max (max = inclusive)
 	 *
-	 * @param min the minmum range
+	 * @param min the minimum range
 	 * @param max the maximum range
-	 * @return the random number withing range
+	 * @return the random number within range
 	 */
 	public int getRandom(int min, int max){
 		
@@ -150,8 +150,6 @@ public class CPMLattice implements CPM{
 
 		int neighbourX, neighbourY;
 		
-		int suppressAreaConstraint;
-		
 		double energyAdhesion, newEnergyAdhesion, energyArea, newEnergyArea, deltaH, prob;
 		
 		prob = 0.0;
@@ -178,7 +176,7 @@ public class CPMLattice implements CPM{
 					neighbourX = getRandom(rangXMin, rangXMax);
 					neighbourY = getRandom(rangYMin, rangYMax);
 				
-				}while(randomX == neighbourX && randomY == neighbourX);
+				}while(randomX == neighbourX && randomY == neighbourY);
 				
 				cellNeighbour = sigma[neighbourX][neighbourY];
 	
@@ -200,7 +198,7 @@ public class CPMLattice implements CPM{
 						if (!(i == randomX && j == randomY)) {
 							
 							/*Only calculate if we have different cells --> Kronecker Delta (1-1 = 0 --> multiplication with 0)
-							 * Kronecker delta, δ(σ, σ ) = 0 if σ = σ and δ(σ, σ ) = 1 if σ = σ , ensures that only the 
+							 * Kronecker delta, δ(σ, σ ) = 1 if σ = σ and δ(σ, σ) = 0 if σ != σ , ensures that only the 
 							 * surface sites between different cells contribute to the adhesion energy*/
 							if(cell != sigma[i][j]){
 								
@@ -219,20 +217,18 @@ public class CPMLattice implements CPM{
 
 				energyArea = 0;
 				newEnergyArea = 0;
-				
-				suppressAreaConstraint = (cell == 0) ? 0 : 1;
 
 				//if cell is of type ECM then the Area calculation is suppressed
 				if (cell > 0) {
 
-					energyArea = params.lamdaArea * Math.sqrt(area[cell] - getTargetAreaForCell(cell)) * suppressAreaConstraint;
+					energyArea = params.lambdaArea * Math.pow((area[cell] - getTargetAreaForCell(cell)), 2);
 
 				}
 
 				//if cell neighbor is of type ECM then the Area calculation is suppressed
 				if (cellNeighbour > 0) {
 
-					newEnergyArea = params.lamdaArea * Math.sqrt(area[cellNeighbour] - getTargetAreaForCell(cellNeighbour));
+					newEnergyArea = params.lambdaArea * Math.pow((area[cellNeighbour] - getTargetAreaForCell(cellNeighbour)),2);
 
 				}
 
