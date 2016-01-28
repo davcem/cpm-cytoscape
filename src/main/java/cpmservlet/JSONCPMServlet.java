@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cpm.CPMLattice;
+import cpm.CPMLatticeCalculationParams;
 import cytoscapeconverter.GraphToCytoscapeJSONConverter;
  
 /**
@@ -85,15 +86,17 @@ public class JSONCPMServlet extends HttpServlet {
     	String mcs = request.getParameter("mcs");
     	String mcSubsteps = request.getParameter("mcSubsteps");
     	String sigmaMax = request.getParameter("sigmaMax");
-    	String temperature = request.getParameter("temperature");
     	String matrixDensity = request.getParameter("matrixDensity");
     	
-//    	System.out.println("xMax: " + xMax + " yMax:" + yMax + " mcsMax:" + mcs + " mcsSubsteps:" + 
-//    	" mcsSubsteps: " + mcSubsteps + " sigmaMax:" + sigmaMax + " temperature:" + temperature);
+    	String temperature = request.getParameter("temperature");   	
+    	
+    	//TODO add functionality to decide which profile of calculation params to use
+    	CPMLatticeCalculationParams params = new CPMLatticeCalculationParams(Double.valueOf(temperature));
+    	
     	
     	lattice = new CPMLattice(Integer.valueOf(xMax), Integer.valueOf(yMax), 
     			Integer.valueOf(mcs), Integer.valueOf(mcSubsteps), 
-    			Integer.valueOf(sigmaMax), Double.valueOf(matrixDensity), Double.valueOf(temperature) );
+    			Integer.valueOf(sigmaMax), Double.valueOf(matrixDensity), params);
 
     }
     
