@@ -37,13 +37,13 @@ public class CPMLatticeCalculationParams {
      */
     public CPMLatticeCalculationParams() {
 
-        jEcm = 16;
-        jLightCells = 14;
-        jDarkCells = 2;
+        jEcm = 2;
+        jLightCells = 2;
+        jDarkCells = 14;
         jOtherCells = 11;
-        lambdaArea = 1;
-        targetAreaFactorLight = 0.2;
-        targetAreaFactorDark = 0.8;
+        lambdaArea = 2;
+        targetAreaFactorLight = 0.1;
+        targetAreaFactorDark = 0.2;
 
     }
 
