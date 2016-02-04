@@ -52,7 +52,6 @@ public class CPMLatticeCalculationParams {
         targetAreaFactorLight = 0.4;
         targetAreaFactorDark = 0.4;
         this.temperature = temperature;
-
     }
     
 	/**

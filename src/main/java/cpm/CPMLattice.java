@@ -204,13 +204,13 @@ public class CPMLattice implements CPM{
 							 * surface sites between different cells contribute to the adhesion energy*/
 							if(cell != sigma[i][j]){
 								
-								energyAdhesion += getEnergyAdheasionForCells(cell, sigma[i][j]);
+								energyAdhesion += getEnergyAdhesionForCells(cell, sigma[i][j]);
 									
 							}
 							/*Only calculate if we have different cell types --> Kronecker Delta (1-1 = 0 --> multiplication with 0)*/
 							if(cellNeighbour != sigma[i][j]){//cells are identical so don't calculate
 								
-								newEnergyAdhesion += getEnergyAdheasionForCells(cellNeighbour, sigma[i][j]);
+								newEnergyAdhesion += getEnergyAdhesionForCells(cellNeighbour, sigma[i][j]);
 							
 							}
 						}		
@@ -285,14 +285,14 @@ public class CPMLattice implements CPM{
 	}
 		
 	/**
-	 * Calculates the energyAdheasion for the given cells.
+	 * Calculates the energyAdhesion for the given cells.
 	 * 
 	 * @param cell1 - The cell
 	 * @param cell2 - The neighbor of cell
 	 * 
-	 * @return the energyAdheasion between given cells
+	 * @return the energyAdhesion between given cells
 	 */
-	public double getEnergyAdheasionForCells(int cell1, int cell2){
+	public double getEnergyAdhesionForCells(int cell1, int cell2){
 	
 		if(cell1 == 0 || cell2 == 0){//ECM
 			
