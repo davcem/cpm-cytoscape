@@ -43,14 +43,13 @@ public class CPMLatticeCalculationParams {
     public CPMLatticeCalculationParams(double temperature) {
     	
     	//TODO - if calculation param profiles are build remove this constructor
-    	
-        jEcm = 16;
-        jLightCells = 14;
-        jDarkCells = 2;
-        jDifferentCells = 11;
-        lambdaArea = 0.05;
-        targetAreaFactorLight = 0.4;
-        targetAreaFactorDark = 0.4;
+        this.jEcm = jEcm; // 16;
+        this.jLightCells = jLightCells; // 14;
+        this.jDarkCells = jDarkCells; // 2;
+        this.jDifferentCells = jDifferentCells; // 11;
+        this.lambdaArea = lambdaArea; // 0.05;
+        this.targetAreaFactorLight = targetAreaFactorLight; // 0.4;
+        this.targetAreaFactorDark = targetAreaFactorDark; // 0.4;
         this.temperature = temperature;
     }
     

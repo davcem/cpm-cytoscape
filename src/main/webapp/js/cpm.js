@@ -15,6 +15,14 @@ function cytoscapeRender(method){
 	var maxSigma = document.getElementsByName("maxSigma")[0].value;
 	var matrixDensity = document.getElementsByName("matrixDensity")[0].value;
 	var temperature = document.getElementsByName("temperature")[0].value;
+	var jEcm = document.getElementsByName("jEcm")[0].value;
+	var jLightCells = document.getElementsByName("jLightCells")[0].value;
+	var jDarkCells = document.getElementsByName("jDarkCells")[0].value;
+	var jDifferentCells = document.getElementsByName("jDifferentCells")[0].value;
+	var lambdaArea = document.getElementsByName("lambdaArea")[0].value;
+	var targetAreaFactorLight = document.getElementsByName("targetAreaFactorLight")[0].value;
+	var targetAreaFactorDark = document.getElementsByName("targetAreaFactorDark")[0].value;
+
 	var sigmaCounter = 0;
 	var colorArray = new Array();
 	colorArray[0] = "#e2e2e2"; //default color for ECM

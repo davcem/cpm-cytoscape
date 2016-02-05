@@ -33,96 +33,76 @@
 		</div>
 		<div>
 			<label for="maxX">Max X: </label>
-      <input name="maxX" type="number" value="34" min="1" max="100" maxlength="3" />
-      <label for="maxX">Max Y: </label>
-      <input name="maxY" type="number" value="34" min="1" max="100" maxlength="3" />
-      <label for="mcs">Monte-Carlo-Steps: </label>
-      <input name="mcs" value="250" type="number" min="1" max="10000" maxlength="5" />
+			<input name="maxX" type="number" value="34" min="1" max="100" maxlength="3" />
+			<label for="maxX">Max Y: </label>
+			<input name="maxY" type="number" value="34" min="1" max="100" maxlength="3" />
+			<label for="mcs">Monte-Carlo-Steps: </label>
+			<input name="mcs" value="250" type="number" min="1" max="10000" maxlength="5" />
 			<label for="mcSubsteps">Monte-Carlo-Substeps: </label>
-      <input name="mcSubsteps" value="32" type="number" min="1" max="10000" maxlength="5" />
+			<input name="mcSubsteps" value="32" type="number" min="1" max="10000" maxlength="5" />
 			<label for="maxSigma">Max Sigma: </label>
-      <input name="maxSigma" value="2" type="number" min="1" max="50" maxlength="2" />
+			<input name="maxSigma" value="2" type="number" min="1" max="50" maxlength="2" />
 			<label for="matrixDensity">Matrix Density: </label>
-      <input name="matrixDensity" value="0.8" type="number" min="0.1" step="0.1" max="1" maxlength="1" />
+			<input name="matrixDensity" value="0.8" type="number" min="0.1" step="0.1" max="1" maxlength="1" />
 			<label for="temperature">Temperature: </label>
-      <input name="temperature" value="10" type="number" min="0.0" step="0.25" max="15" maxlength="5" /><!-- temperature 10 suggested in http://www.indiana.edu/~bioc/jglazier/docs/papers/68_ouchi.pdf -->
+			<input name="temperature" value="10" type="number" min="0.0" step="0.25" max="15" maxlength="5" /><!-- temperature 10 suggested in http://www.indiana.edu/~bioc/jglazier/docs/papers/68_ouchi.pdf -->
 		</div>
-
-<!--div id="menuContainer">
-	<div id="menuHeader">
-		<h1>Menu</h1>
+		<div style="font-size:0.75em">
+			<label for="jEcm">ecm's energy interaction: </label>
+			<input name="jEcm" type="number" value="16" min="1" max="100" maxlength="3" />
+			<label for="jLightCells">light cells' energy interaction: </label>
+			<input name="jLightCells" type="number" value="15" min="1" max="100" maxlength="3" />
+			<label for="jDarkCells">dark cells' energy interaction: </label>
+			<input name="jDarkCells" type="number" value="2" min="1" max="100" maxlength="3" />
+			<label for="jDifferentCells">mixed cells' energy interaction: </label>
+			<input name="jDifferentCells" type="number" value="11" min="1" max="100" maxlength="3" />
+			<label for="lambdaArea">lambda for area calculation: </label>
+			<input name="lambdaArea" type="number" value="0.05" min="1" max="100" maxlength="4" step="0.1" />
+			<label for="targetAreaFactorLight">light cell's target area factor: </label>
+			<input name="targetAreaFactorLight" type="number" value="0.4" min="0" max="1" maxlength="4" step="0.1" />
+			<label for="targetAreaFactorDark">dark cell's target area factor: </label>
+			<input name="targetAreaFactorDark" type="number" value="0.4" min="0" max="1" maxlength="4" step="0.1"  />
+		</div>
+		<div id="subheader">
+			<span><span class="info-icon"> </span>Choose options above and then proceed with initialize/compute: </span>
+				<span><button class="btn btn-primary" type="button"
+							  onclick="cytoscapeRender('init')">initialize</button></span>
+				<span><button class="btn btn-primary" type="button"
+							  onclick="cytoscapeRender('compute')">compute next simulation run</button></span>
+			<span><button class="btn btn-secondary hide" id="toggleLineChart">show line chart</button></span>
+		</div>
 	</div>
-	<div>
-		<label for="maxX">Max X: </label>
-		<input name="maxX" type="number" value="22" min="1" max="100" maxlength="3" />
-		<label for="maxX">Max Y: </label>
-		<input name="maxY" type="number" value="22" min="1" max="100" maxlength="3" />
-		<label for="mcs">Monte-Carlo-Steps: </label>
-		<input name="mcs" value="484" type="number" min="1" max="10000" maxlength="5" />
-		<label for="mcSubsteps">Monte-Carlo-Substeps: </label>
-		<input name="mcSubsteps" value="88" type="number" min="1" max="10000" maxlength="5" />
-		<label for="maxSigma">Max Sigma: </label>
-		<input name="maxSigma" value="2" type="number" min="1" max="50" maxlength="2" />
-		<label for="matrixDensity">Matrix Density: </label>
-		<input name="matrixDensity" value="1" type="number" min="0.1" step="0.1" max="1" maxlength="1" />
-		<label for="temperature">Temperature: </label>
-		<input name="temperature" value="10" type="number" min="0.0" step="0.25" max="15" maxlength="5" />
+
+	<!-- cytoscape graph container -->
+	<div id="middleContainer"><div class="loading-spinner hide"></div>
+		<div id="cyInitialized"></div>
+		<div id="cyComputed"></div>
 	</div>
-	<div style="font-size:0.75em">
-		<label for="jEcm">ecm's energy interaction: </label>
-		<input name="jEcm" type="number" value="2" min="1" max="100" maxlength="3" readonly="readonly" disabled="disabled"/>
-		<label for="jLightCells">light cells' energy interaction: </label>
-		<input name="jLightCells" type="number" value="2" min="1" max="100" maxlength="3" readonly="readonly" disabled="disabled"/>
-		<label for="jDarkCells">dark cells' energy interaction: </label>
-		<input name="jDarkCells" type="number" value="14" min="1" max="100" maxlength="3" readonly="readonly" disabled="disabled"/>
-		<label for="jOtherCells">mixed cells' energy interaction: </label>
-		<input name="jOtherCells" type="number" value="11" min="1" max="100" maxlength="3" readonly="readonly" disabled="disabled"/>
-		<label for="lamdaArea">lambda for area calculation: </label>
-		<input name="lamdaArea" type="number" value="2" min="1" max="100" maxlength="3" readonly="readonly" disabled="disabled"/>
-		<label for="targetAreaFactorLight">light cell's target area factor: </label>
-		<input name="targetAreaFactorLight" type="number" value="0.1" min="0" max="1" maxlength="3" readonly="readonly" disabled="disabled"/>
-		<label for="targetAreaFactorDark">dark cell's target area factor: </label>
-		<input name="targetAreaFactorDark" type="number" value="0.2" min="0" max="1" maxlength="3" readonly="readonly" disabled="disabled"/>
-	</div--><!--temp=10 suggested in http://www.indiana.edu/~bioc/jglazier/docs/papers/68_ouchi.pdf -->
 
-	<div id="subheader">
-		<span><span class="info-icon"> </span>Choose options above and then proceed with initialize/compute: </span>
-			<span><button class="btn btn-primary" type="button"
-						  onclick="cytoscapeRender('init')">initialize</button></span>
-			<span><button class="btn btn-primary" type="button"
-						  onclick="cytoscapeRender('compute')">compute next simulation run</button></span>
-		<span><button class="btn btn-secondary hide" id="toggleLineChart">show line chart</button></span>
+	<!-- line chart container -->
+	<div id="growthAsLineChartContainer" class="hide">
+		<div id="lineChart"></div>
 	</div>
-</div>
 
-<!-- cytoscape graph container -->
-<div id="middleContainer"><div class="loading-spinner hide"></div>
-	<div id="cyInitialized"></div>
-	<div id="cyComputed"></div>
-</div>
+	<!-- bottom data table container container -->
+	<div id="bottomContainer">
+		<table id="areaInitializedTable">
+			<tbody>
+			<tr>
+				<th id="areaInitializedTableHeader">Cell area initial: </th>
+			</tr>
+			</tbody>
+		</table>
+		<table id="areaComputedTable">
+			<tbody>
+			<tr>
+				<th id="areaComputedTableHeader">Cell area after computation:</th>
+			</tr>
+			</tbody>
+		</table>
+	</div>
 
-<!-- line chart container -->
-<div id="growthAsLineChartContainer" class="hide">
-	<div id="lineChart"></div>
-</div>
+	<footer></footer>
 
-<!-- bottom data table container container -->
-<div id="bottomContainer">
-	<table id="areaInitializedTable">
-		<tbody>
-		<tr>
-			<th id="areaInitializedTableHeader">Cell area initial: </th>
-		</tr>
-		</tbody>
-	</table>
-	<table id="areaComputedTable">
-		<tbody>
-		<tr>
-			<th id="areaComputedTableHeader">Cell area after computation:</th>
-		</tr>
-		</tbody>
-	</table>
-</div>
-<footer></footer>
 </body>
 </html>
