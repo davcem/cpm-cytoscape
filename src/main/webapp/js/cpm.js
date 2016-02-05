@@ -22,6 +22,7 @@ function cytoscapeRender(method){
 	var lambdaArea = document.getElementsByName("lambdaArea")[0].value;
 	var targetAreaFactorLight = document.getElementsByName("targetAreaFactorLight")[0].value;
 	var targetAreaFactorDark = document.getElementsByName("targetAreaFactorDark")[0].value;
+	var ratioDarkToLightCells = document.getElementsByName("ratioDarkToLightCells")[0].value;
 
 	var sigmaCounter = 0;
 	var colorArray = new Array();
@@ -60,7 +61,15 @@ function cytoscapeRender(method){
 		'mcSubsteps': mcSubsteps,
 		'sigmaMax': maxSigma,
 		'matrixDensity': matrixDensity,
-		'temperature': temperature
+		'temperature': temperature,
+		'jEcm': jEcm,
+		'jLightCells': jLightCells,
+		'jDarkCells': jDarkCells,
+		'jDifferentCells': jDifferentCells,
+		'lambdaArea': lambdaArea,
+		'targetAreaFactorLight': targetAreaFactorLight,
+		'targetAreaFactorDark': targetAreaFactorDark,
+		'ratioDarkToLightCells' : ratioDarkToLightCells
 		}
 	});
 	graphP.done(function(msg) {
