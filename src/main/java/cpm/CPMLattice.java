@@ -24,7 +24,8 @@ import java.util.Random;
  */
 public class CPMLattice implements CPM{
 
-	CPMLatticeCalculationParams params = new CPMLatticeCalculationParams();
+	/** The params for the calculation of the CPMLattice*/
+	private CPMLatticeCalculationParams params;
 	
 	/** Number of rows of lattice */
 	private int xMax;
@@ -37,15 +38,12 @@ public class CPMLattice implements CPM{
 	
 	/** The amount of sub-steps per monte-carlo-step*/
 	private int mcSubsteps;
-	
+
 	/** Maximum value of sigma (cells) including sigma=0=ECM */
 	private int sigmaMax;
 	
-	/** The initial cellDensity for cellTypes != 0*/
+	/** The initial density for ECM (celltype == 0) to other cells (cellType != 0)*/
 	private double initialMatrixDensity;
-
-	/** The beta or temperature */
-	private double temperature;
 	
 	/** Sigma Array which holds lattice sites */
 	private int[][] sigma;
@@ -63,8 +61,9 @@ public class CPMLattice implements CPM{
 	 * @param newSigmaMax the number of different cells
 	 * @param newTemperature the temperature for the calculation
 	 */
-	public CPMLattice (int newXMax, int newYMax, int newMcs, int newMcSubsteps, int newSigmaMax, 
-			double newInitialMatrixDensity, double newTemperature ){
+	public CPMLattice (int newXMax, int newYMax, int newMcs, int newMcSubsteps, int newSigmaMax,
+			double newInitialMatrixDensity, CPMLatticeCalculationParams params){
+		
 		xMax = newXMax;
 		yMax = newYMax;
 		mcs = newMcs;
@@ -75,10 +74,10 @@ public class CPMLattice implements CPM{
 		
 		initialMatrixDensity = newInitialMatrixDensity;
 		
-		temperature = newTemperature;
-		
 		sigma = new int[xMax][yMax];
 		area = new int[sigmaMax];
+		
+		this.params = params;
 		
 	}
 	
@@ -89,17 +88,67 @@ public class CPMLattice implements CPM{
 	 * @param max the maximum range
 	 * @return the random number within range
 	 */
-	public int getRandom(int min, int max){
+	private int getRandom(int min, int max){
 		
-		Random rand = new Random();   
+		Random rand = new Random();
 		int randomNum = rand.nextInt((max - min) + 1) + min;
 
 	    return randomNum;
-		
+	}
+
+	/**
+	 * Return a random even number within the given range.
+	 * See also getRandom()
+	 *
+	 * @param min the minimum range
+	 * @param max the maximum range
+     * @return the random even number within range
+     */
+	private int getRandomEven(int min, int max){
+
+		Random rand = new Random();
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+
+		if(randomNum % 2 == 1) { // check if odd
+			if(randomNum >= max) {
+				randomNum = randomNum - 1;
+			}
+			else {
+				randomNum = randomNum +1;
+			}
+		}
+		return randomNum;
+	}
+
+	/**
+	 * Return a random odd number within the given range.
+	 * See also getRandom()
+	 *
+	 * @param min the minimum range
+	 * @param max the maximum range
+	 * @return the random odd number within range
+	 */
+	private int getRandomOdd(int min, int max){
+
+		Random rand = new Random();
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+
+		if(randomNum % 2 == 0) { // check if even
+			if(randomNum <= max) {
+				randomNum = randomNum - 1;
+			}
+			else {
+				randomNum = randomNum +1;
+			}
+		}
+		return randomNum;
 	}
 	
 	/**
-	 * Initializes the lattice by random. For every given sigma (defined by sigmaMax).
+	 * Procedure is used to initialize the lattice.
+	 * <p>
+	 * @see #initialMatrixDensity is the density of cells to ecm in the lattice.
+	 * @see #sigmaMax defines the number of cells to be randomly populated in lattice.
 	 */
 	public void initializeLattice() {
 		
@@ -109,6 +158,9 @@ public class CPMLattice implements CPM{
 		area[0] = xMax * yMax;
 		
 		int sumCellArea = 0;
+		int counter = 1;
+		int ratioDarkLight = 1;
+		ratioDarkLight = (int) params.getRatioDarkToLightCells();
 		
 		//as long as the sum of cell areas of "normal cells" (!= ECM) is lower than
 		//the area of the lattice * initialMatrixDensity create new random lattice sites != ECM
@@ -126,12 +178,20 @@ public class CPMLattice implements CPM{
 				sumCellArea--;
 			
 			}
-			
-			sigma[i][j] = getRandom(1, sigmaMax-1);
+
+			// adjust relative proportion between light and dark cells by a specified ratio
+			if (counter % ratioDarkLight == 0) {
+				sigma[i][j] = getRandomOdd(1, sigmaMax-1);
+			}
+			else {
+				sigma[i][j] = getRandomEven(1, sigmaMax - 1);
+			}
+
 			
 			//for the new cell we have to update the area also
 			area[sigma[i][j]]++;
 			sumCellArea++;
+			counter++;
 			
 		}
 		
@@ -221,14 +281,14 @@ public class CPMLattice implements CPM{
 				//if cell is of type ECM then the Area calculation is suppressed
 				if (cell > 0) {
 
-					energyArea = params.lambdaArea * Math.pow((area[cell] - getTargetAreaForCell(cell)), 2);
+					energyArea = params.getLambdaArea() * Math.pow((area[cell] - getTargetAreaForCell(cell)), 2);
 
 				}
 
 				//if cell neighbor is of type ECM then the Area calculation is suppressed
 				if (cellNeighbour > 0) {
 
-					newEnergyArea = params.lambdaArea * Math.pow((area[cellNeighbour] - getTargetAreaForCell(cellNeighbour)),2);
+					newEnergyArea = params.getLambdaArea() * Math.pow((area[cellNeighbour] - getTargetAreaForCell(cellNeighbour)),2);
 
 				}
 
@@ -238,11 +298,11 @@ public class CPMLattice implements CPM{
 				// spin-copy for a temperature > 0 is accepted
 				//  with prob = 1.0 if it would decrease the value of globally Hamiltonian
 				//  or with Boltzmann probability if it would increase the value of Hamiltonian
-				if (temperature > 0) {
+				if (params.getTemperature() > 0) {
 					
 					if (deltaH > 0) {
 
-						prob = Math.exp(-deltaH / temperature); // Boltzmann
+						prob = Math.exp(-deltaH / params.getTemperature()); // Boltzmann
 
 					} else if (deltaH <= 0) {
 
@@ -250,7 +310,7 @@ public class CPMLattice implements CPM{
 
 					}
 					
-				} else if (temperature == 0) {
+				} else if (params.getTemperature() == 0) {
 					
 					if (deltaH > 0) {
 
@@ -267,7 +327,8 @@ public class CPMLattice implements CPM{
 					}
 				}
 
-				//only copy if probability is high enough, and if cellNeighbour to copy is not an ECM lattice site
+				//only copy if probability is high enough, and if cellNeighbour to copy is not an 
+				//lattice site of type ECM (ECM should not grow)
 				if (prob >= Math.random()) {
 
 					if(cellNeighbour > 0){
@@ -293,15 +354,15 @@ public class CPMLattice implements CPM{
 	
 		if(cell1 == 0 || cell2 == 0){//ECM
 			
-			return params.jEcm;
+			return params.getEnergyECM();
 		
 		}else if(cell1 == cell2){//Same cells, which cells?
 			
-			return (cell1 % 2 == 0) ? params.jLightCells : params.jDarkCells;
+			return (cell1 % 2 == 0) ? params.getEnergyLightCells() : params.getEnergyDarkCells();
 		
 		}else{//different cells
 			
-			return params.jOtherCells;
+			return params.getEnergyDifferentCells();
 		}
 	}
 	
@@ -312,11 +373,12 @@ public class CPMLattice implements CPM{
 	 * 
 	 * @return targetArea - the targetArea for cell (depends if cell is light or dark cell)
 	 * */
-	private double getTargetAreaForCell(int cell){
+	public double getTargetAreaForCell(int cell){
 		
 		double targetAreaFactor = 0.0;
 		
-		targetAreaFactor =  (cell % 2 == 0) ? params.targetAreaFactorLight : params.targetAreaFactorDark;
+		targetAreaFactor =  (cell % 2 == 0) ? params.getTargetAreaFactorLight() 
+				: params.getTargetAreaFactorDark();
 		
 		return xMax * yMax * targetAreaFactor;
 		
@@ -360,15 +422,6 @@ public class CPMLattice implements CPM{
 	public int getSigmaMax() {
 		return sigmaMax;
 	}
-	
-	/**
-	 * Gets the temperature.
-	 *
-	 * @return the temperature
-	 */
-	public double getTemperature() {
-		return temperature;
-	}
 
 	/**
 	 * Gets the initialMatrixDensity.
@@ -395,6 +448,13 @@ public class CPMLattice implements CPM{
 	 */
 	public int[] getArea() {
 		return area;
+	}
+
+	/**
+	 * @return the params
+	 */
+	public CPMLatticeCalculationParams getParams() {
+		return params;
 	}
 	
 }
