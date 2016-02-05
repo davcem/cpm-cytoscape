@@ -45,7 +45,7 @@ Open a webbrowser and type in the url to the deployed webapp such as `http://loc
 
 ### Option 2 : Deploy the source ###
 
-Download the latest sources from `https://github.com/davcem/cpm-cytoscape/tree/master/bin/src/main`.
+Download the latest sources from `https://github.com/davcem/cpm-cytoscape/tree/master/src/main`.
 Create a webapp folder on your Java capable Webserver such as Tomcat and start start the server. 
 Open a webbrowser and type in the url to the deployed webapp such as `http://localhost:8080/cpm-cytoscape/` and start playing around with the app.
 

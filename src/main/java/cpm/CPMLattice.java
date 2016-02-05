@@ -38,7 +38,7 @@ public class CPMLattice implements CPM{
 	
 	/** The amount of sub-steps per monte-carlo-step*/
 	private int mcSubsteps;
-	
+
 	/** Maximum value of sigma (cells) including sigma=0=ECM */
 	private int sigmaMax;
 	
@@ -61,7 +61,7 @@ public class CPMLattice implements CPM{
 	 * @param newSigmaMax the number of different cells
 	 * @param newTemperature the temperature for the calculation
 	 */
-	public CPMLattice (int newXMax, int newYMax, int newMcs, int newMcSubsteps, int newSigmaMax, 
+	public CPMLattice (int newXMax, int newYMax, int newMcs, int newMcSubsteps, int newSigmaMax,
 			double newInitialMatrixDensity, CPMLatticeCalculationParams params){
 		
 		xMax = newXMax;
@@ -90,11 +90,58 @@ public class CPMLattice implements CPM{
 	 */
 	private int getRandom(int min, int max){
 		
-		Random rand = new Random();   
+		Random rand = new Random();
 		int randomNum = rand.nextInt((max - min) + 1) + min;
 
 	    return randomNum;
-		
+	}
+
+	/**
+	 * Return a random even number within the given range.
+	 * See also getRandom()
+	 *
+	 * @param min the minimum range
+	 * @param max the maximum range
+     * @return the random even number within range
+     */
+	private int getRandomEven(int min, int max){
+
+		Random rand = new Random();
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+
+		if(randomNum % 2 == 1) { // check if odd
+			if(randomNum >= max) {
+				randomNum = randomNum - 1;
+			}
+			else {
+				randomNum = randomNum +1;
+			}
+		}
+		return randomNum;
+	}
+
+	/**
+	 * Return a random odd number within the given range.
+	 * See also getRandom()
+	 *
+	 * @param min the minimum range
+	 * @param max the maximum range
+	 * @return the random odd number within range
+	 */
+	private int getRandomOdd(int min, int max){
+
+		Random rand = new Random();
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+
+		if(randomNum % 2 == 0) { // check if even
+			if(randomNum <= max) {
+				randomNum = randomNum - 1;
+			}
+			else {
+				randomNum = randomNum +1;
+			}
+		}
+		return randomNum;
 	}
 	
 	/**
@@ -111,6 +158,9 @@ public class CPMLattice implements CPM{
 		area[0] = xMax * yMax;
 		
 		int sumCellArea = 0;
+		int counter = 1;
+		int ratioDarkLight = 1;
+		ratioDarkLight = (int) params.getRatioDarkToLightCells();
 		
 		//as long as the sum of cell areas of "normal cells" (!= ECM) is lower than
 		//the area of the lattice * initialMatrixDensity create new random lattice sites != ECM
@@ -128,12 +178,20 @@ public class CPMLattice implements CPM{
 				sumCellArea--;
 			
 			}
-			
-			sigma[i][j] = getRandom(1, sigmaMax-1);
+
+			// adjust relative proportion between light and dark cells by a specified ratio
+			if (counter % ratioDarkLight == 0) {
+				sigma[i][j] = getRandomOdd(1, sigmaMax-1);
+			}
+			else {
+				sigma[i][j] = getRandomEven(1, sigmaMax - 1);
+			}
+
 			
 			//for the new cell we have to update the area also
 			area[sigma[i][j]]++;
 			sumCellArea++;
+			counter++;
 			
 		}
 		
