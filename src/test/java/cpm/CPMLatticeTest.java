@@ -1,7 +1,6 @@
 package cpm;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,6 +21,9 @@ public class CPMLatticeTest {
 	/** The default temperature*/
 	double temperature = 10;
 	
+	/** The default ratio*/
+	int cellRatio = 2;
+	
 	/**
 	 * Default setup method for the CPMLattice.
 	 * This method is only needed for default tests.
@@ -36,7 +38,7 @@ public class CPMLatticeTest {
 		int newMcSubsteps = newXMax * newYMax;
 		int newSigmaMax = 4;
 		double newInitialMatrixDensity = 0.5;
-		CPMLatticeCalculationParams params = new CPMLatticeCalculationParams(temperature);
+		CPMLatticeCalculationParams params = new CPMLatticeCalculationParams(temperature, cellRatio);
 		
 		lattice = new CPMLattice(newXMax, newYMax, newMcs, newMcSubsteps, newSigmaMax, 
 				newInitialMatrixDensity, params);
@@ -114,7 +116,7 @@ public class CPMLatticeTest {
 		lattice.initializeLattice();
 		
 		assertEquals(lattice.getParams().getEnergyLightCells(), 
-				lattice.getEnergyAdheasionForCells(lightCell, lightCell), 0.0);
+				lattice.getEnergyAdhesionForCells(lightCell, lightCell), 0.0);
 		
 	}
 	
@@ -124,7 +126,7 @@ public class CPMLatticeTest {
 		lattice.initializeLattice();
 		
 		assertEquals(lattice.getParams().getEnergyDarkCells(), 
-				lattice.getEnergyAdheasionForCells(darkCell, darkCell), 0.0);
+				lattice.getEnergyAdhesionForCells(darkCell, darkCell), 0.0);
 		
 	}
 	
@@ -134,7 +136,7 @@ public class CPMLatticeTest {
 		lattice.initializeLattice();
 		
 		assertEquals(lattice.getParams().getEnergyECM(), 
-				lattice.getEnergyAdheasionForCells(ecmCell, lightCell), 0.0);
+				lattice.getEnergyAdhesionForCells(ecmCell, lightCell), 0.0);
 		
 	}
 	
@@ -144,7 +146,7 @@ public class CPMLatticeTest {
 		lattice.initializeLattice();
 		
 		assertEquals(lattice.getParams().getEnergyECM(), 
-				lattice.getEnergyAdheasionForCells(ecmCell, darkCell), 0.0);
+				lattice.getEnergyAdhesionForCells(ecmCell, darkCell), 0.0);
 		
 	}
 	
@@ -154,7 +156,7 @@ public class CPMLatticeTest {
 		lattice.initializeLattice();
 		
 		assertEquals(lattice.getParams().getEnergyDifferentCells(), 
-				lattice.getEnergyAdheasionForCells(lightCell, darkCell), 0.0);
+				lattice.getEnergyAdhesionForCells(lightCell, darkCell), 0.0);
 		
 	}
 	
