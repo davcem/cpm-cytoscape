@@ -31,10 +31,12 @@ public class CPMLatticeCalculationTest {
 	        
 	        double newTemperature = 10;
 	        
+	        int cellRatio = 2;
+	        
 	        CPMLatticeCalculationParams params = 
 	        		new CPMLatticeCalculationParams(jEcm, jLightCells, jDarkCells, 
 	        				jDifferentCells, lambdaArea, targetAreaFactorLight, targetAreaFactorDark,
-	        				newTemperature);
+	        				newTemperature, cellRatio);
 	        
 	        return params;
 		
@@ -42,7 +44,7 @@ public class CPMLatticeCalculationTest {
 	
 	private CPMLattice createDefaultCPMLattice(){
 		
-		CPMLatticeCalculationParams params = new CPMLatticeCalculationParams(10);
+		CPMLatticeCalculationParams params = new CPMLatticeCalculationParams(10, 2);
 		
 		return createDefaultCPMLatticeWithParams(params);
 	}

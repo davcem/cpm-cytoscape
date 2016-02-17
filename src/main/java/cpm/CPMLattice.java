@@ -160,7 +160,7 @@ public class CPMLattice implements CPM{
 		int sumCellArea = 0;
 		int counter = 1;
 		int ratioDarkLight = 1;
-		ratioDarkLight = (int) params.getRatioDarkToLightCells();
+		ratioDarkLight = params.getRatioDarkToLightCells();
 		
 		//as long as the sum of cell areas of "normal cells" (!= ECM) is lower than
 		//the area of the lattice * initialMatrixDensity create new random lattice sites != ECM

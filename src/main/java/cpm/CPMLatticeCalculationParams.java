@@ -1,7 +1,5 @@
 package cpm;
 
-import java.util.function.DoubleToIntFunction;
-
 /**
  * The Class CPMLatticeCalculationParams.
  *
@@ -75,7 +73,8 @@ public class CPMLatticeCalculationParams {
 	 */
 	public CPMLatticeCalculationParams(double jEcm, double jLightCells,
 			double jDarkCells, double jOtherCells, double lambdaArea,
-			double targetAreaFactorLight, double targetAreaFactorDark, double temperature, int ratioDarkToLightCells) {
+			double targetAreaFactorLight, double targetAreaFactorDark, double temperature, 
+			int ratioDarkToLightCells) {
 		this.jEcm = jEcm;
 		this.jLightCells = jLightCells;
 		this.jDarkCells = jDarkCells;
