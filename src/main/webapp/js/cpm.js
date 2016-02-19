@@ -7,7 +7,6 @@ function cytoscapeRender(method){
 	 * - init: ajax call is post and cy container is cyInitialized
 	 * - compute: ajax call is get and cy container is cyComputed*/	 
 	
-	
 	x = document.getElementsByName("maxX")[0].value;
 	y = document.getElementsByName("maxY")[0].value;
 	var mcs = document.getElementsByName("mcs")[0].value;
@@ -34,7 +33,7 @@ function cytoscapeRender(method){
 		areaTable = 'areaInitializedTable';
 		tableHeader = 'areaInitializedTableHeader';
 		computationStep = 0;
-		if (maxSigma==2) { $('#toggleLineChart').show(); }
+		if (maxSigma>=1) { $('#toggleLineChart').show(); }
 		else {  $('#toggleLineChart').hide(); }
 		
 	} else if (method='compute') {
@@ -48,6 +47,8 @@ function cytoscapeRender(method){
 	}
 	
 	$('.loading-spinner').show(); // show loading feedback when render method called
+
+  //var ajaxTime = new Date().getTime();
 
 	// requesting CPM data
 	var graphP = $.ajax({
@@ -71,15 +72,17 @@ function cytoscapeRender(method){
 		'targetAreaFactorDark': targetAreaFactorDark,
 		'ratioDarkToLightCells' : ratioDarkToLightCells
 		}
-	});
-	graphP.done(function(msg) {
-		$('.loading-spinner').fadeOut(); // hide loading feedback after finish
-	});
+	}).done(function(data){
+      $('.loading-spinner').fadeOut(); // hide loading feedback after finish
+      //var responseTime = (new Date().getTime() - ajaxTime) / 1000;
+      //console.log("Ajax Time: " + responseTime + " seconds");
+  });
 	  
   //if asynchrone requests returns we initialize cytoscape
   Promise.all([ graphP ]).then(initCy);
   
   function initCy( then ){
+  var graphRenderInitTime = new Date().getTime();
 	 
 	//first params is our cytoscape cpm json
 	 var expJson = then[0];
@@ -169,11 +172,15 @@ function cytoscapeRender(method){
 				  'curve-style' : 'haystack'
 				})
     });
-     
-    sortNodes();
+
+    //sortNodes();   // redundant: sorted already by servlet - therefore outcommented to save performance
     
     addAreaOutput();
     
+    // Output time for performance measuring
+    //var renderTime = (new Date().getTime() - graphRenderInitTime) / 1000;
+    //console.log("Graph Rendering Time: " + renderTime + " seconds");
+
     /*Function sorts nodes of cytoscape graph (some layouts depend on sorted nodes)*/
     function sortNodes(){
     
@@ -187,7 +194,6 @@ function cytoscapeRender(method){
       cy.remove(nodesToremove);
       cy.add(nodesSorted);
       cy.add(edgesToAdd);
-    
     }
 	 
 	 /*Function adds the area output at the end of page*/
@@ -255,7 +261,9 @@ function cytoscapeRender(method){
 		});
 		
 		// update line chart
-		if (maxSigma==2) { updateLineChart(); }
+		//if (maxSigma<=2) { 
+    updateLineChart(); 
+    //}
         	
 	 }
   }//cytoscapeInit End

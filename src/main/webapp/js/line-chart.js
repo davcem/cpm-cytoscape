@@ -2,23 +2,30 @@ $(document).ready(function(){
   
   //define arrays for cell data to be plotted as line chart
   var celldata1, celldata2, lightcellcolor, darkcellcolor;
-  
+
   $("#toggleLineChart").click(function() {
   
     if($("#growthAsLineChartContainer").hasClass("hide")){
       $("#growthAsLineChartContainer").fadeIn().toggleClass('hide show');
       $("#toggleLineChart").text("hide line chart");
+      $("#growthAsLineChartContainer").css("top", $("#menuContainer").height()-50);  //-50 because of the container's default 5em margin
+      
+      if ($("#growthAsLineChartContainer > #lineChart > canvas").width() <= 100) { //resize initially
+        updateLineChart();
+        $('#toggleLineChart').load();
+      }
     } 
     else {
       $("#growthAsLineChartContainer").fadeOut().toggleClass('show hide');
       $("#toggleLineChart").text("show line chart");
     }
+    
   });
  
 });
 
 // plotting line charts for cell data
-function updateLineChart(){
+function updateLineChart(){ 
 
   if( $("#cyInitialized canvas").length){
     if( $("#cyInitialized canvas").length && !$("#cyComputed canvas").length ) { // init cell data arrays
