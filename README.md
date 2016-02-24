@@ -55,11 +55,17 @@ Open a webbrowser and type in the url to the deployed webapp such as `http://loc
 We __encourage__ you to have a look at our source code, give us [feedback](mailto:f.jeanquartier[at]hci-kdd.org) and contribute to the cpm-cytoscape project to foster in silico simulation in cancer research!
 
 
-## Demo - coming until 2016 ##
+## Demo ##
 
-The app is already running and can be easily deployed. 
-However, we know, that not every clinician and/or scientist is able to run his own web servlet or respectively java capable webserver. 
-Therefore, we further plan to provide an online version by end of 2015, always running the newest stable version to try it out.
+We know, that not every clinician and/or scientist is able to run his own web servlet or respectively java capable webserver. 
+Therefore, we further provide an online version, always running a stable version to try it out: 
+`http://styx.cgv.tugraz.at:8080/cpm-cytoscape/`. 
+
+## Acknowledgments ##
+
+We thank CGV Institute of the University of Technology Graz for providing the demo server.
+We thank the [HOLZINGER GROUP](http://hci-kdd.org) for giving us the opportunity to get feedback on this research.
+We also thank all participants for their contributions to the development of components for cpm-cytoscape software. 
 
 ## License
 
