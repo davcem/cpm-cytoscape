@@ -29,13 +29,15 @@ function gridLayout(){
 		rows : x,
 		columns : y,
 		position : function(ele) {
+			//console.log("Row : "+ele.data('x') + ", COL : "+ele.data('y') + " : " +ele.data('cell'));
 			return {
 				x : ele.data('x'),
 				y : ele.data('y')
 			};
+
 		},
 		sort : function(a, b) {
-			return a.data('id') > b.data('id');
+			return a.data('id') > b.data('id'); // if sorted by cell all bricks of same cell are placed next to each other
 		}
 	};
 }
