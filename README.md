@@ -3,7 +3,7 @@
 __In Silico Modeling for Tumor Growth Visualization__
 
 A science project by 
-F. Jeanquartier, C. Jean-Quartier, D. Cemernek, with the Holzinger Group, Research Unit HCI-KDD.
+F. Jeanquartier, C. Jean-Quartier, D. Cemernek and A. Holzinger with the Holzinger Group, Research Unit HCI-KDD.
 Get in contact with one of the developers via mail [f.jeanquartier[at]hci-kdd.org](mailto:f.jeanquartier[at]hci-kdd.org)
 
 <img src="img/cpm-cytoscape-with-line-chart-overlay.png" width="780" alt="The cpm-cytoscape webapp provides a ui for initialization and stepwise simulation computation. The left part shows the initialization, the right part the state after performing Monte Carlo step computations. A toggleable overlay is showing the traditional growth as line chart for comparing two different cell growth rates" />
@@ -63,7 +63,7 @@ Therefore, we further provide an online version, always running a stable version
 
 ## Acknowledgments ##
 
-We thank CGV Institute of the University of Technology Graz for providing the demo server.
+We thank the CGV Institute of the University of Technology Graz for providing the demo server.
 We thank the [HOLZINGER GROUP](http://hci-kdd.org) for giving us the opportunity to get feedback on this research.
 We also thank all participants for their contributions to the development of components for cpm-cytoscape software. 
 
