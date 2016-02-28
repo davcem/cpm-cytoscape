@@ -33,30 +33,30 @@
 		</div>
 		<div>
 			<label for="maxX">Max X: </label>
-			<input name="maxX" type="number" value="34" min="1" max="100" maxlength="3" />
+			<input name="maxX" type="number" value="32" min="1" max="100" maxlength="3" />
 			<label for="maxX">Max Y: </label>
-			<input name="maxY" type="number" value="34" min="1" max="100" maxlength="3" />
+			<input name="maxY" type="number" value="32" min="1" max="100" maxlength="3" />
 			<label for="mcs">Monte-Carlo-Steps: </label>
-			<input name="mcs" value="250" type="number" min="1" max="10000" maxlength="5" />
+			<input name="mcs" value="32" type="number" min="1" max="10000" maxlength="5" />
 			<label for="mcSubsteps">Monte-Carlo-Substeps: </label>
-			<input name="mcSubsteps" value="32" type="number" min="1" max="10000" maxlength="5" />
+			<input name="mcSubsteps" value="64" type="number" min="1" max="10000" maxlength="5" />
 			<label for="maxSigma">Max Sigma: </label>
 			<input name="maxSigma" value="2" type="number" min="1" max="50" maxlength="2" />
 			<label for="matrixDensity">Matrix Density: </label>
 			<input name="matrixDensity" value="0.8" type="number" min="0.1" step="0.1" max="1" maxlength="1" />
 			<label for="temperature">Temperature: </label>
-			<input name="temperature" value="10" type="number" min="0.0" step="0.25" max="15" maxlength="5" /><!-- temperature 10 suggested in http://www.indiana.edu/~bioc/jglazier/docs/papers/68_ouchi.pdf -->
+			<input name="temperature" value="10" type="number" min="0.0" step="0.25" max="15" maxlength="5" />
 		</div>
 		<div style="font-size:0.75em">
-			<label for="jEcm">ecm's energy interaction: </label>
+			<label for="jEcm">ecm's energy: </label>
 			<input name="jEcm" type="number" value="16" min="1" max="100" maxlength="3" />
-			<label for="jLightCells">light cells' energy interaction: </label>
+			<label for="jLightCells">light cells' energy: </label>
 			<input name="jLightCells" type="number" value="15" min="1" max="100" maxlength="3" />
-			<label for="jDarkCells">dark cells' energy interaction: </label>
+			<label for="jDarkCells">dark cells' energy: </label>
 			<input name="jDarkCells" type="number" value="2" min="1" max="100" maxlength="3" />
-			<label for="jDifferentCells">mixed cells' energy interaction: </label>
+			<label for="jDifferentCells">mixed cells' energy: </label>
 			<input name="jDifferentCells" type="number" value="11" min="1" max="100" maxlength="3" />
-			<label for="lambdaArea">lambda for area calculation: </label>
+			<label for="lambdaArea" title="lambda is used for area calculation">lambda for area calc.: </label>
 			<input name="lambdaArea" type="number" value="0.05" min="1" max="100" maxlength="4" step="0.1" />
 			<label for="targetAreaFactorLight">light cell's target area factor: </label>
 			<input name="targetAreaFactorLight" type="number" value="0.4" min="0" max="1" maxlength="4" step="0.1" />
@@ -64,6 +64,11 @@
 			<input name="targetAreaFactorDark" type="number" value="0.4" min="0" max="1" maxlength="4" step="0.1"  />
 			<label for="ratioDarkToLightCells" title="relative proportion of dark and light - only for initialization">light/dark ratio (1/x): </label>
 			<input name="ratioDarkToLightCells" title="relative proportion of dark and light - only for initialization" type="number" value="4" min="2" max="100" maxlength="4" step="1" />
+			<!--label for="darkCellDecrease" title="configure, whether dark cells can be replaced by light cells or not">dark cells can be eradicated: </label>
+			<select name="darkCellDecrease" title="configure, whether dark cells can be replaced by light cells or not" type="number" value="4" min="2" max="100" maxlength="4" step="1">
+			    <option value="0" selected="selected">Yes</option>
+			    <option value="1">No</option>
+			</select-->
 		</div>
 		<div id="subheader">
 			<span><span class="info-icon"> </span>Choose options above and then proceed with initialize/compute: </span>
