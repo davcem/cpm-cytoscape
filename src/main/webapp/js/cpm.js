@@ -52,7 +52,7 @@ function cytoscapeRender(method){
 
 	// requesting CPM data
 	var graphP = $.ajax({
-		url: 'http://localhost:8080/cpm-cytoscape/JSONCPMServlet',
+		url: './JSONCPMServlet',
 		type: httpType,
 		dataType: 'json',
 		data: {
