@@ -95,11 +95,11 @@ html, body {
   margin: 5em auto;
   opacity:0.85;
   width: 50%;
-  height: 10em;
+  height: 11em;
   border:1px solid #333;
   background:#fff;
   z-index:2; 
-  padding:1em;   
+  padding:1em 1em 2em 1em;   
 }
 #growthAsLineChartContainer #lineChart {
   float:left;
@@ -108,6 +108,13 @@ html, body {
 }
 .flot-text .tickLabel {
   font-size: 0.8em;
+}
+#growthAsLineChartContainer .button.right {
+  position: relative;
+  float: right;
+  top: -1em;
+  font-weight: bold;
+  font-size:0.9em;
 }
 
 #bottomContainer {

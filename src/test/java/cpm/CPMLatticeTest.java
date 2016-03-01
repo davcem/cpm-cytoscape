@@ -17,10 +17,13 @@ public class CPMLatticeTest {
 	
 	/** Example of a light cell within lattice */
 	int lightCell = 4;
-	
+
+	/** The default value is set to 0 so that dark cells can be decreased */
+	int darkCellDecrease = 0;
+
 	/** The default temperature*/
 	double temperature = 10;
-	
+
 	/** The default ratio*/
 	int cellRatio = 2;
 	

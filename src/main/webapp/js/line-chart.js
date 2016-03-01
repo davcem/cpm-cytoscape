@@ -13,13 +13,14 @@ $(document).ready(function(){
       if ($("#growthAsLineChartContainer > #lineChart > canvas").width() <= 100) { //resize initially
         updateLineChart();
         $('#toggleLineChart').load();
-      }
+      }      
+      
     } 
     else {
       $("#growthAsLineChartContainer").fadeOut().toggleClass('show hide');
       $("#toggleLineChart").text("show line chart");
     }
-    
+
   });
  
 });
@@ -29,6 +30,10 @@ function updateLineChart(){
 
   if( $("#cyInitialized canvas").length){
     if( $("#cyInitialized canvas").length && !$("#cyComputed canvas").length ) { // init cell data arrays
+      if (localStorage.getItem('cellData1') && localStorage.getItem('cellData2')) { // remove data from older runs 
+        localStorage.removeItem('cellData1');
+        localStorage.removeItem('cellData2'); 
+      }
       celldata1 = [[-1, 0], [0,$("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(3)").text()]];
       celldata2 = [[-1, 0], [0,$("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(4)").text()]];
     }
@@ -36,6 +41,9 @@ function updateLineChart(){
        celldata1.push([computationStep,$("#areaComputedTable tbody tr:nth-child(3) td:nth-child(3)").text()]);
        celldata2.push([computationStep,$("#areaComputedTable tbody tr:nth-child(3) td:nth-child(4)").text()]);
     }
+    // also store in local storage
+    localStorage.setItem('cellData1',celldata1);
+    localStorage.setItem('cellData2',celldata2);
     
     lightcellcolor = $("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(3)").css("background-color");
     darkcellcolor = $("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(4)").css("background-color");
