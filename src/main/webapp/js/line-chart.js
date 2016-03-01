@@ -1,7 +1,7 @@
 $(document).ready(function(){
   
   //define arrays for cell data to be plotted as line chart
-  var celldata1, celldata2, lightcellcolor, darkcellcolor;
+  var celldata1, celldata2, lightcellcolor, darkcellcolor, exportableEcmData, exportableCellData1, exportableCellData2;
 
   $("#toggleLineChart").click(function() {
   
@@ -29,21 +29,32 @@ $(document).ready(function(){
 function updateLineChart(){ 
 
   if( $("#cyInitialized canvas").length){
+  
     if( $("#cyInitialized canvas").length && !$("#cyComputed canvas").length ) { // init cell data arrays
-      if (localStorage.getItem('cellData1') && localStorage.getItem('cellData2')) { // remove data from older runs 
-        localStorage.removeItem('cellData1');
-        localStorage.removeItem('cellData2'); 
-      }
+    
+      /*if (localStorage.getItem('exportableCellData1') && localStorage.getItem('exportableCellData2')) { // remove data from older runs 
+        localStorage.removeItem('exportableCellData1');
+        localStorage.removeItem('exportableCellData2'); 
+      } */ // redundant
       celldata1 = [[-1, 0], [0,$("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(3)").text()]];
       celldata2 = [[-1, 0], [0,$("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(4)").text()]];
+      exportableEcmData = "0;"+$("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(2)").text();
+      exportableCellData1 = "0;"+$("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(3)").text();
+      exportableCellData2 = "0;"+$("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(4)").text();
     }
+    
     if( $("#cyComputed canvas").length ) {  // add data after computation
        celldata1.push([computationStep,$("#areaComputedTable tbody tr:nth-child(3) td:nth-child(3)").text()]);
        celldata2.push([computationStep,$("#areaComputedTable tbody tr:nth-child(3) td:nth-child(4)").text()]);
+       exportableEcmData += ";"+$("#areaComputedTable tbody tr:nth-child(3) td:nth-child(2)").text();
+       exportableCellData1 += ";"+$("#areaComputedTable tbody tr:nth-child(3) td:nth-child(3)").text();
+       exportableCellData2 += ";"+$("#areaComputedTable tbody tr:nth-child(3) td:nth-child(4)").text();
     }
-    // also store in local storage
-    localStorage.setItem('cellData1',celldata1);
-    localStorage.setItem('cellData2',celldata2);
+    
+    // also store in local storage 
+    localStorage.setItem('exportableEcmData', exportableEcmData);
+    localStorage.setItem('exportableCellData1', exportableCellData1);
+    localStorage.setItem('exportableCellData2', exportableCellData2);
     
     lightcellcolor = $("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(3)").css("background-color");
     darkcellcolor = $("#areaInitializedTable tbody tr:nth-child(3) td:nth-child(4)").css("background-color");

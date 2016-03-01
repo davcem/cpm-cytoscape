@@ -9,14 +9,23 @@ $(document).ready(function () {
         var rowDelim = '\r\n';
         var colDelim = '","';
         
-        csvData = localStorage.getItem('cellData1'); 
-        csvData  += rowDelim;
-        csvData  += localStorage.getItem('cellData2');
+        csvData = getCurrentParameterSettingsFromUI();
+        csvData += rowDelim;
+        csvData += rowDelim;
+        csvData += "Cells Data: ;";
+        csvData += rowDelim;
+        csvData += localStorage.getItem('exportableEcmData');
+        csvData += rowDelim;
+        csvData += localStorage.getItem('exportableCellData1'); 
+        csvData += rowDelim;
+        csvData += localStorage.getItem('exportableCellData2');
 
         downloadFile(filename,'data:text/csv;charset=UTF-8,' + encodeURIComponent(csvData));
     }
     
-    // download can only be handled by a link
+    /**
+     * handle file download via temporary link
+     */ 
     function downloadFile(fileName, urlData){
         var aLink = document.createElement('a');
         var evt = document.createEvent("HTMLEvents");
@@ -24,6 +33,23 @@ $(document).ready(function () {
         aLink.download = fileName;
         aLink.href = urlData ;
         aLink.dispatchEvent(evt);
+    }
+    
+    /**
+     * get current settings from menu and 
+     * return value set as string
+     */ 
+    function getCurrentParameterSettingsFromUI() {
+        var settingsString = "Parameter Settings: ;\r\n";
+        
+        $("#menuContainer input[type='number']").each(function() {
+            if(!isNaN(this.value)) {
+                settingsString += this.name + ":" + this.value + ";";
+            }
+        });
+        settingsString += $
+        
+        return settingsString;
     }
 
     // click on export csv handler
