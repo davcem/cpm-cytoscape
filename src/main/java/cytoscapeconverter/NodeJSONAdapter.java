@@ -1,6 +1,5 @@
 package cytoscapeconverter;
 
-import graphconverter.Edge;
 import graphconverter.Node;
 
 import java.lang.reflect.Type;

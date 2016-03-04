@@ -1,5 +1,9 @@
 package cytoscapeconverter;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import graphconverter.CPMLatticeToGraphConverter;
 import graphconverter.Edge;
 import graphconverter.Node;
@@ -47,9 +51,14 @@ public class GraphToCytoscapeJSONConverter {
 	public String convertGraphToCytoscapeJSON(CPMLatticeToGraphConverter converter){
 		
 		JsonObject subRoot = new JsonObject();
+
+		//For nodes: some layouts in frontend seem to have problems with unsorted node json arrays
+		//so we sort the nodes list
+		List<Node> nodesList = new ArrayList<Node>(converter.getNodes().values());
+		Collections.sort(nodesList);
 		
 		/*We have to get the values without keys, because gson writes the keys in front of json object*/
-		JsonElement nodeElements = gson.toJsonTree(converter.getNodes().values());
+		JsonElement nodeElements = gson.toJsonTree(nodesList);
 		JsonElement edgeElements = gson.toJsonTree(converter.getEdges().values());
 		
 		subRoot.add("nodes", nodeElements);	
@@ -63,4 +72,5 @@ public class GraphToCytoscapeJSONConverter {
         return gson.toJson(root);
 		
 	}
+
 }

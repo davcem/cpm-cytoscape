@@ -48,7 +48,9 @@ function cytoscapeRender(method){
 	}
 	
 	$('.loading-spinner').show(); // show loading feedback when render method called
-
+	
+	ajax1 = performance.now();
+	
 	// requesting CPM data
 	var graphP = $.ajax({
 		url: 'http://localhost:8080/cpm-cytoscape/JSONCPMServlet',
@@ -75,22 +77,26 @@ function cytoscapeRender(method){
 	graphP.done(function(msg) {
 		$('.loading-spinner').fadeOut(); // hide loading feedback after finish
 	});
-	  
+	
   //if asynchrone requests returns we initialize cytoscape
   Promise.all([ graphP ]).then(initCy);
   
   function initCy( then ){
+      
+     console.log("ajax request response took: ", performance.now()-ajax1 )
 	 
 	//first params is our cytoscape cpm json
 	 var expJson = then[0];
 	 
-	 var elements = expJson.elements;
-
+	 var elements = expJson.elements.nodes;
+	 
+	 var t1 = performance.now();
+	 
 	 var cy = cytoscape({
 		container: document.getElementById(cyContainer),
 		elements: elements,
 		//choose proper layout --> at the moment available see cytoscape-layouts.js
-		layout: gridLayout(),  	     	  
+		layout: gridLayout(),
 		zoom: 1,
 		pan: { x: 0, y: 0 },
 		minZoom: 0.125,
@@ -111,46 +117,48 @@ function cytoscapeRender(method){
 		hideEdgesOnViewport: true,
 		hideLabelsOnViewport: false,
 		textureOnViewport: true,
-		motionBlur: false,
-		motionBlurOpacity: 0.2,
+		motionBlur: true,
+		//motionBlurOpacity: 0.2,
 		wheelSensitivity: 0.25,
-		pixelRatio: 1, //'auto',
-		initrender: function(evt){ /* ... */ },
+		pixelRatio: 'auto', //'auto',
+		initrender: 'ready', //function(evt){ /* ... */ },
 		renderer: { /* ... */ },
+		ready:    function(){ console.log('cytoscapeRender cy.ready: ', performance.now()-t1)},
 		style: cytoscape.stylesheet()
 			.selector('node')
 			  .style({
-				  'content': 'data(cell)',
-				  'width' : '50',
-				  'height' : '50',
-				  'font-weight' : 'bold',
-				  'font-size' : '12',
+				  'content': 'data(id)',
+				  //'width' : '10',
+				  //'height' : '10',
+				  //'font-weight' : 'bold',
+				  'font-size' : '8',
 				  'font-style' : 'inherit',
-				  'min-zoomed-font-size' : '6',
+				  'min-zoomed-font-size' : '8',
 				  'text-halign' : 'center',
 				  'text-valign' : 'center',
-				  'border-width' : '1',
-          'border-color': '#333', 
-					'background-color': function (ele){
-  					 if (maxSigma > 2) {
-                if (sigmaCounter <= maxSigma) {
-                  if ( $.inArray(ele.data('color'), colorArray) == -1 ){
-                    colorArray[ele.data('cell')] = ele.data('color');
-                    sigmaCounter++;
-                  }
-                }
-                return ele.data('color'); // use cytoscape default coloring scheme for more than 2 different cells
-              }
-              else {
-                if (sigmaCounter <= maxSigma+1) {
-                    colorArray[ele.data('cell')] = ele.data('parentcolor');
-                    sigmaCounter++;
-                }
-                return ele.data('parentcolor');  // if we only differentiate between two cells, use the color from the NodeJSONAdapter
-              }
-					}
+				  //'border-width' : '1',
+				  //'border-color': '#333', 
+				  'background-color': 
+				      function (ele){
+  					     if (maxSigma > 2) {
+  					         if (sigmaCounter <= maxSigma) {
+  					             if ( $.inArray(ele.data('color'), colorArray) == -1 ){
+  					                 colorArray[ele.data('cell')] = ele.data('color');
+  					                 sigmaCounter++;
+  					             }
+  					         }
+  					         return ele.data('color'); // use cytoscape default coloring scheme for more than 2 different cells
+  					     }
+  					     else {
+  					         if (sigmaCounter <= maxSigma+1) {
+  					             colorArray[ele.data('cell')] = ele.data('parentcolor');
+  					             sigmaCounter++;
+  					         }
+  					         return ele.data('parentcolor');  // if we only differentiate between two cells, use the color from the NodeJSONAdapter
+  					         }
+					    }
 			  })
-			  /*set special colour for ECM*/
+			  //set special colour for ECM
 			.selector('node[cell = "0"]')
 				.style({
 				  'background-color': '#e2e2e2'
@@ -167,26 +175,26 @@ function cytoscapeRender(method){
 				  'line-color' : 'gray', //'#E0E0E0', //gray,
 				  'line-style' : 'solid',
 				  'curve-style' : 'haystack'
-				})
+			})
     });
      
-    sortNodes();
+    //sortNodes();
     
     addAreaOutput();
     
     /*Function sorts nodes of cytoscape graph (some layouts depend on sorted nodes)*/
     function sortNodes(){
     
-    var nodesToremove = cy.nodes();
-      var edgesToAdd = cy.edges();
+        var nodesToremove = cy.nodes();
+        var edgesToAdd = cy.edges();
       
-      var nodesSorted = cy.nodes().sort(function( a, b ){
-    	  return a.data('id') < b.data('id'); //may also be sorted by cell-relation or area-size
+        var nodesSorted = cy.nodes().sort(function( a, b ){
+            return a.data('id') < b.data('id'); //may also be sorted by cell-relation or area-size
     	});
       
-      cy.remove(nodesToremove);
-      cy.add(nodesSorted);
-      cy.add(edgesToAdd);
+        cy.remove(nodesToremove);
+        cy.add(nodesSorted);
+        cy.add(edgesToAdd);
     
     }
 	 

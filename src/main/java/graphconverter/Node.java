@@ -12,7 +12,7 @@ import java.util.Objects;
  * A node is given by a {@link #id}, a {@link #x} coordinate, a  {@link #y} coordinate, the {@link #cell} to which
  * the {@link Node} belongs, a {@link #parent} and the {@link #area}
  * */
-public class Node {
+public class Node implements Comparable{
 	
 	/** The id. */
 	private String id;
@@ -194,9 +194,11 @@ public class Node {
 		
 			Node node = (Node) object;
 			
-			if(this.getId().equals(node.getId()) && this.getX() == node.getX() 
+			if(this.getId().equals(node.getId())
+					&& this.getIndex().equals(node.getIndex())
 					&& this.getX() == node.getX() 
-					&& this.getCell() == node.getCell()){
+					&& this.getY() == node.getY() 
+					&& this.getCell().equals(node.getCell())){
 	        
 	                return true;
 	        }	
@@ -214,4 +216,22 @@ public class Node {
         
 		return Objects.hash(x, y);
     }
+
+
+	@Override
+	public int compareTo(Object o) {
+		
+		if(o instanceof Node){
+			
+			int thisId = Integer.valueOf(getId());
+			int id = Integer.valueOf(((Node) o).getId());
+			
+			if(thisId > id) return 1;
+			else if(thisId == id) return 0;
+			else return -1;
+			
+		}
+		
+		return 0;
+	}
 }

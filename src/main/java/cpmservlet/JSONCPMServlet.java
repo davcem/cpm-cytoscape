@@ -99,7 +99,8 @@ public class JSONCPMServlet extends HttpServlet {
 		String targetAreaFactorDark = request.getParameter("targetAreaFactorDark");
 
 		//TODO add functionality to decide which profile of calculation params to use
-    	CPMLatticeCalculationParams params = new CPMLatticeCalculationParams(Double.valueOf(temperature), Integer.valueOf(ratioDarkToLightCells));
+    	CPMLatticeCalculationParams params = new CPMLatticeCalculationParams(Double.valueOf(temperature), 
+    			Integer.valueOf(ratioDarkToLightCells));
 
     	lattice = new CPMLattice(Integer.valueOf(xMax), Integer.valueOf(yMax), 
     			Integer.valueOf(mcs), Integer.valueOf(mcSubsteps), 
