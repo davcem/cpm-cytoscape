@@ -41,8 +41,9 @@ public class CPMLatticeTest {
 		int newMcSubsteps = newXMax * newYMax;
 		int newSigmaMax = 4;
 		double newInitialMatrixDensity = 0.5;
-		CPMLatticeCalculationParams params = new CPMLatticeCalculationParams(temperature, cellRatio);
-		
+		int darkCellDecrease = 0;
+		CPMLatticeCalculationParams params = getCalculationParams();
+
 		lattice = new CPMLattice(newXMax, newYMax, newMcs, newMcSubsteps, newSigmaMax, 
 				newInitialMatrixDensity, params);
 		
@@ -219,4 +220,30 @@ public class CPMLatticeTest {
 		
 	}
 
+	private CPMLatticeCalculationParams getCalculationParams(){
+
+		int jEcm = 16;
+		int jLightCells = 14;
+		int jDarkCells = 2;
+		int jDifferentCells = 11;
+
+		double lambdaArea = 1;
+
+		double targetAreaFactorLight = 0.3;
+		double targetAreaFactorDark = 0.2;
+
+		double newTemperature = 10;
+
+		int cellRatio = 2;
+
+		int darkCellDecrease = 0;
+
+		CPMLatticeCalculationParams params =
+				new CPMLatticeCalculationParams(jEcm, jLightCells, jDarkCells,
+						jDifferentCells, lambdaArea, targetAreaFactorLight, targetAreaFactorDark,
+						darkCellDecrease, newTemperature, cellRatio);
+
+		return params;
+
+	}
 }

@@ -31,7 +31,10 @@ public class CPMLatticeCalculationParams {
 
     /**  The factor for the targetArea of dark cells. */
     private double targetAreaFactorDark;
-    
+
+	/** relative proportion of dark and light cells */
+	private int darkCellDecrease;
+
 	/** The beta or temperature within the lattice */
 	private double temperature;
 
@@ -44,7 +47,7 @@ public class CPMLatticeCalculationParams {
      * @param temperature the temperature within the lattice
 	 * @param ratioDarkToLightCells the ratio between dark and light cells (1/ratio = dark cell appearance)
      */
-    public CPMLatticeCalculationParams(double temperature, int ratioDarkToLightCells) {
+    /*public CPMLatticeCalculationParams(double temperature, int ratioDarkToLightCells) {
     	
     	//TODO - if calculation param profiles are build remove this constructor
         this.jEcm = jEcm; // 16;
@@ -54,9 +57,10 @@ public class CPMLatticeCalculationParams {
         this.lambdaArea = lambdaArea; // 0.05;
         this.targetAreaFactorLight = targetAreaFactorLight; // 0.4;
         this.targetAreaFactorDark = targetAreaFactorDark; // 0.4;
+		this.darkCellDecrease = darkCellDecrease; // 0
         this.temperature = temperature; // 10
 		this.ratioDarkToLightCells = ratioDarkToLightCells; // 4
-    }
+    }*/
     
 	/**
 	 * Instantiates a new CPM lattice calculation params with given params
@@ -68,12 +72,13 @@ public class CPMLatticeCalculationParams {
 	 * @param lambdaArea the lambda area
 	 * @param targetAreaFactorLight the target area factor light
 	 * @param targetAreaFactorDark the target area factor dark
+	 * @param darkCellDecrease configures dark cells eradication possibility
 	 * @param temperature the temperature within the lattice
 	 * @param ratioDarkToLightCells the ratio between dark and light cells (1/ratio = dark cell appearance)
 	 */
 	public CPMLatticeCalculationParams(double jEcm, double jLightCells,
 			double jDarkCells, double jOtherCells, double lambdaArea,
-			double targetAreaFactorLight, double targetAreaFactorDark, double temperature, 
+			double targetAreaFactorLight, double targetAreaFactorDark, int darkCellDecrease, double temperature,
 			int ratioDarkToLightCells) {
 		this.jEcm = jEcm;
 		this.jLightCells = jLightCells;
@@ -82,9 +87,17 @@ public class CPMLatticeCalculationParams {
 		this.lambdaArea = lambdaArea;
 		this.targetAreaFactorLight = targetAreaFactorLight;
 		this.targetAreaFactorDark = targetAreaFactorDark;
+		this.darkCellDecrease = darkCellDecrease;
 		this.temperature = temperature;
 		this.ratioDarkToLightCells = ratioDarkToLightCells;
 	}
+
+	/**
+	 * Gets the dark cell decrease param
+	 *
+	 * @return the darkCellDecrease
+	 */
+	public int getDarkCellDecrease() { return darkCellDecrease; }
 
 	/**
 	 * Gets the j ecm.

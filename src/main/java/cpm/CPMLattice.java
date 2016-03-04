@@ -1,5 +1,7 @@
 package cpm;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.BasicConfigurator;
 import java.util.Random;
 
 /**
@@ -50,7 +52,9 @@ public class CPMLattice implements CPM{
 	
 	/** Area array which holds the areas of different cells. */
 	private int[] area;
-	
+
+	private static Logger logger;
+
 	/**
 	 * Instantiates a new CPM lattice.
 	 *
@@ -59,16 +63,20 @@ public class CPMLattice implements CPM{
 	 * @param newMcs the amount of monte-carlo-steps
 	 * @param newMcSubsteps the number of CPM substeps
 	 * @param newSigmaMax the number of different cells
-	 * @param newTemperature the temperature for the calculation
+	 * @param newInitialMatrixDensity the density of the initial lattice's filling
+	 * @param params the other adjustable params
 	 */
 	public CPMLattice (int newXMax, int newYMax, int newMcs, int newMcSubsteps, int newSigmaMax,
 			double newInitialMatrixDensity, CPMLatticeCalculationParams params){
-		
+
 		xMax = newXMax;
 		yMax = newYMax;
 		mcs = newMcs;
 		mcSubsteps = newMcSubsteps;
-		
+
+		BasicConfigurator.configure();
+		logger = Logger.getLogger("CPMLattice");
+
 		/*+1 because ECM is not a cell*/
 		sigmaMax = newSigmaMax + 1;
 		
@@ -78,7 +86,7 @@ public class CPMLattice implements CPM{
 		area = new int[sigmaMax];
 		
 		this.params = params;
-		
+
 	}
 	
 	/**
@@ -151,7 +159,10 @@ public class CPMLattice implements CPM{
 	 * @see #sigmaMax defines the number of cells to be randomly populated in lattice.
 	 */
 	public void initializeLattice() {
-		
+
+		BasicConfigurator.configure();
+		logger = Logger.getLogger("CPMLattice");
+
 		int i, j = 0;
 		
 		//at the beginning the area for ECM is xMax * yMax (because all lattice sites are of cell 0 (=ECM)
@@ -281,20 +292,22 @@ public class CPMLattice implements CPM{
 				//if cell is of type ECM then the Area calculation is suppressed
 				if (cell > 0) {
 
-					energyArea = params.getLambdaArea() * Math.pow((area[cell] - getTargetAreaForCell(cell)), 2);
-
+					energyArea = params.getLambdaArea() *(Math.pow((area[cell] - getTargetAreaForCell(cell)), 2));
+					//logger.debug("energyArea=" + energyArea + "  (0.05 * (" + area[cell] + " - " + getTargetAreaForCell(cell) + ")^2 )");
 				}
 
 				//if cell neighbor is of type ECM then the Area calculation is suppressed
 				if (cellNeighbour > 0) {
 
-					newEnergyArea = params.getLambdaArea() * Math.pow((area[cellNeighbour] - getTargetAreaForCell(cellNeighbour)),2);
+					newEnergyArea = params.getLambdaArea() * (Math.pow((area[cellNeighbour] - getTargetAreaForCell(cellNeighbour)),2));
+					//logger.debug("newEnergyArea=" + newEnergyArea + "  (0.05 * (" + area[cellNeighbour] + " - " + getTargetAreaForCell(cellNeighbour) + ")^2 )");
 
 				}
 
 				/* The overall deltaH = AFTER-BEFORE */
 				deltaH = (newEnergyAdhesion + newEnergyArea) - (energyAdhesion + energyArea);
-				
+				//logger.debug("deltaH = " + deltaH + "  ((" + newEnergyAdhesion + "+" + newEnergyArea + ") - (" + energyAdhesion + "+" + energyArea + "))");
+
 				// spin-copy for a temperature > 0 is accepted
 				//  with prob = 1.0 if it would decrease the value of globally Hamiltonian
 				//  or with Boltzmann probability if it would increase the value of Hamiltonian
@@ -303,6 +316,7 @@ public class CPMLattice implements CPM{
 					if (deltaH > 0) {
 
 						prob = Math.exp(-deltaH / params.getTemperature()); // Boltzmann
+						//logger.debug("prob="+prob);
 
 					} else if (deltaH <= 0) {
 
@@ -332,10 +346,15 @@ public class CPMLattice implements CPM{
 				if (prob >= Math.random()) {
 
 					if(cellNeighbour > 0){
-						/* actual copy */
-						sigma[randomX][randomY] = cellNeighbour;
-						area[cell]--;
-						area[cellNeighbour]++;
+						if ((cell % 2 == 1) && (params.getDarkCellDecrease() == 1)) {
+							/* do not copy if dark cells are configured to not decrease in mass */
+						}
+						else {
+							/* actual copy */
+							sigma[randomX][randomY] = cellNeighbour;
+							area[cell]--;
+							area[cellNeighbour]++;
+						}
 					}
 				}
 			}
