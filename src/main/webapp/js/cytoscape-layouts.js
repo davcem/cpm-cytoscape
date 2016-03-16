@@ -6,12 +6,12 @@ function presetLayout(){
 		name : 'preset',
 		fit : true,
 		zoom : '1',
-		animate : true,
+		animate : false,
 		animationDuration : '500',
 		positions : function(ele) {
 			return {
-				x : ele.data('x') * 10,
-				y : ele.data('y') * 10
+				x : ele.data('x') * 5,
+				y : ele.data('y') * 5
 			};
 		},
 		padding : '25'
@@ -20,25 +20,21 @@ function presetLayout(){
 }
 
 function gridLayout(){
-	
+    
 	return {
 		name : 'grid',
 		fit : true,
-		padding : 25,
+		padding : 10,
 		animate : false,
 		rows : x,
 		columns : y,
-		position : function(ele) {
-			//console.log("Row : "+ele.data('x') + ", COL : "+ele.data('y') + " : " +ele.data('cell'));
+		position : function(node) {
 			return {
-				x : ele.data('x'),
-				y : ele.data('y')
+				x : node.data('x'),
+				y : node.data('y')
 			};
 
 		},
-		sort : function(a, b) {
-			return a.data('id') > b.data('id'); // if sorted by cell all bricks of same cell are placed next to each other
-		}
 	};
 }
 
@@ -62,23 +58,37 @@ function concentricLayout(){
 		name: 'concentric',
 		fit: true, // whether to fit the viewport to the graph
 		padding: 10, // the padding on fit
-		startAngle: 3/2 * Math.PI, // the position of the first node
-		counterclockwise: false, // whether the layout should go counterclockwise/anticlockwise (true) or clockwise (false)
-		minNodeSpacing: 1, // min spacing between outside of nodes (used for radius adjustment)
-		boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-		avoidOverlap: false, // prevents node overlap, may overflow boundingBox if not enough space
-		concentric: function(node){ // returns numeric value for each node, placing higher nodes in levels towards the centre
-		  return node.data('x');
-		},
-		levelWidth: function(node){ // the variation of concentric values in each level
-			  return node.data('x');
-		},
-		animate: false, // whether to transition the node positions
-		animationDuration: 500, // duration of animation in ms if enabled
-		ready: undefined, // callback on layoutready
-		stop: undefined // callback on layoutstop
+	    concentric: function(){ return this.data('cell'); },
+	    levelWidth: function( nodes ){ return 10; },
+	    padding: 10
 
 	};
+}
+
+function concentricLayoutOld(){
+    
+    return {
+        
+        name: 'concentric',
+        fit: true, // whether to fit the viewport to the graph
+        padding: 10, // the padding on fit
+        startAngle: 3/2 * Math.PI, // the position of the first node
+        counterclockwise: false, // whether the layout should go counterclockwise/anticlockwise (true) or clockwise (false)
+        minNodeSpacing: 1, // min spacing between outside of nodes (used for radius adjustment)
+        boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+        avoidOverlap: false, // prevents node overlap, may overflow boundingBox if not enough space
+        concentric: function(node){ // returns numeric value for each node, placing higher nodes in levels towards the centre
+          return node.data('x');
+        },
+        levelWidth: function(node){ // the variation of concentric values in each level
+              return node.data('x');
+        },
+        animate: false, // whether to transition the node positions
+        animationDuration: 500, // duration of animation in ms if enabled
+        ready: undefined, // callback on layoutready
+        stop: undefined // callback on layoutstop
+
+    };
 }
 
 function breadthfirstLayout(){
@@ -163,11 +173,3 @@ function springyLayout(){
 		
 	};
 }
-
-function Layout(){
-	
-	return {
-
-	};
-}
-

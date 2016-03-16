@@ -48,8 +48,8 @@ function cytoscapeRender(method){
 	}
 
 	$('.loading-spinner').show(); // show loading feedback when render method called
-
-  //var ajaxTime = new Date().getTime();
+	
+	ajax1 = performance.now();
 
 	// requesting CPM data
 	var graphP = $.ajax({
@@ -74,6 +74,7 @@ function cytoscapeRender(method){
 		'ratioDarkToLightCells' : ratioDarkToLightCells,
 		'darkCellDecrease' : darkCellDecrease
 		}
+
 	}).done(function(data){
       $('.loading-spinner').fadeOut(); // hide loading feedback after finish
       //var responseTime = (new Date().getTime() - ajaxTime) / 1000;
@@ -84,18 +85,36 @@ function cytoscapeRender(method){
   Promise.all([ graphP ]).then(initCy);
 
   function initCy( then ){
-  	//var graphRenderInitTime = new Date().getTime();
-
+      
+     console.log("ajax request response took: ", performance.now()-ajax1 );
+     
 	//first params is our cytoscape cpm json
 	 var expJson = then[0];
+     
+     //the elements of the ajax response
+     var elements = expJson.elements;
+	 
+	 //choose from available layouts in cytoscape-layouts
+	 //be careful some layouts need additional options (e.g. sorting...)
+	 var usedLayout = gridLayout();
+	 
+	 //if we use the grid layout we don't need edges
+	 //only adding nodes will increase performance for grid layout by factor 2 at least
+	 if(usedLayout.name == 'grid'){
+	     
+	     //replace elements with only nodes of ajax response
+	     elements = expJson.elements.nodes;
+	     
+	 }
 
-	 var elements = expJson.elements;
-
+	 var t1 = performance.now();
+	 
+	 //initiliaze cytoscape
 	 var cy = cytoscape({
 		container: document.getElementById(cyContainer),
 		elements: elements,
 		//choose proper layout --> at the moment available see cytoscape-layouts.js
-		layout: gridLayout(),
+		layout: usedLayout,
 		zoom: 1,
 		pan: { x: 0, y: 0 },
 		minZoom: 0.125,
@@ -110,51 +129,53 @@ function cytoscapeRender(method){
 		autounselectify: false,
 		selectionType: 'single',
 		boxSelectionEnabled: true,
-		// rendering options:
+		// rendering options
 		headless: false,
 		styleEnabled: true,
 		hideEdgesOnViewport: true,
 		hideLabelsOnViewport: false,
 		textureOnViewport: true,
-		motionBlur: false,
+		motionBlur: true,
 		wheelSensitivity: 0.25,
-		pixelRatio: 1, //'auto',
-		initrender: function(evt){ /* ... */ },
-		renderer: { /* ... */ },
+		pixelRatio: 'auto', 
+		initrender: 'ready', 
+		renderer: {  },
+		ready:    function(){ console.log("cytoscapeRender took: ", performance.now()-t1)},
 		style: cytoscape.stylesheet()
 			.selector('node')
 			  .style({
-				  'content': 'data(cell)',
-				  'width' : '50',
-				  'height' : '50',
-				  'font-weight' : 'bold',
-				  'font-size' : '12',
+				  'content': 'data(id)',
+				  //'width' : '10',
+				  //'height' : '10',
+				  //'font-weight' : 'bold',
+				  'font-size' : '8',
 				  'font-style' : 'inherit',
-				  'min-zoomed-font-size' : '6',
+				  'min-zoomed-font-size' : '8',
 				  'text-halign' : 'center',
 				  'text-valign' : 'center',
-				  'border-width' : '1',
-				  'border-color': '#333',
-					'background-color': function (ele){
+                //'border-width' : '1',
+                //'border-color': '#333',
+					'background-color': 
+				function (ele){
   					 if (maxSigma > 2) {
-                if (sigmaCounter <= maxSigma) {
-                  if ( $.inArray(ele.data('color'), colorArray) == -1 ){
-                    colorArray[ele.data('cell')] = ele.data('color');
-                    sigmaCounter++;
-                  }
-                }
-                return ele.data('color'); // color specified in NodeJSONAdapter
-              }
-              else {
-                if (sigmaCounter <= maxSigma+1) {
-                    colorArray[ele.data('cell')] = ele.data('parentcolor');
-                    sigmaCounter++;
-                }
-                return ele.data('parentcolor');  // color specified in the NodeJSONAdapter
-              }
-					}
+  					     if (sigmaCounter <= maxSigma) {
+  					         if ( $.inArray(ele.data('color'), colorArray) == -1 ){
+  					             colorArray[ele.data('cell')] = ele.data('color');
+  					             sigmaCounter++;
+  					         }
+  					     }
+  					     return ele.data('color'); // color specified in NodeJSONAdapter
+  					 }
+  					 else {
+  					     if (sigmaCounter <= maxSigma+1) {
+  					         colorArray[ele.data('cell')] = ele.data('parentcolor');
+  					         sigmaCounter++;
+  					     }
+  					     return ele.data('parentcolor');  // color specified in the NodeJSONAdapter
+  					 }
+				}
 			  })
-			  /*set special colour for ECM*/
+			  //set special colour for ECM
 			.selector('node[cell = "0"]')
 				.style({
 				  'background-color': '#e2e2e2'
@@ -166,15 +187,13 @@ function cytoscapeRender(method){
 					})
 			.selector('edge')
 				.style({
-				  'display' : 'none',//add the moment edges are not rendered (+ performance)
+				  'display' : 'none',//at the moment edges are not rendered (+ performance)
 				  'width' : '1',
 				  'line-color' : 'gray', //'#E0E0E0', //gray,
-				  'line-style' : 'solid'
-				})
-    });
-
-    //sortNodes();   // redundant: sorted already by servlet - therefore outcommented to save performance
-
+				  'line-style' : 'solid',
+				  'curve-style' : 'haystack'
+				    })
+	 });
     addAreaOutput();
 
     // Output time for performance measuring
@@ -184,87 +203,102 @@ function cytoscapeRender(method){
     /*Function sorts nodes of cytoscape graph (some layouts depend on sorted nodes)*/
     function sortNodes(){
 
-    	var nodesToremove = cy.nodes();
-      var edgesToAdd = cy.edges();
 
-      var nodesSorted = cy.nodes().sort(function( a, b ){
-    	  return a.data('id') < b.data('id'); //may also be sorted by cell-relation or area-size
+        var nodesToremove = cy.nodes();
+        var edgesToAdd = cy.edges();
+
+        var nodesSorted = cy.nodes().sort(function( a, b ){
+            return a.data('id') < b.data('id'); //may also be sorted by cell-relation or area-size
     	});
 
-      cy.startBatch();
-      cy.remove(nodesToremove);
-      cy.add(nodesSorted);
-      cy.add(edgesToAdd);
-      cy.forceRender()
-      cy.endBatch();
+        cy.startBatch();
+        cy.remove(nodesToremove);
+        cy.add(nodesSorted);
+        cy.add(edgesToAdd);
+        cy.forceRender()
+        cy.endBatch();
     }
 
 	 /*Function adds the area output at the end of page*/
-	 function addAreaOutput(){
+    
+    function addAreaOutput() {
+        
+           var parentNodes = cy.elements("node[x < 0]");
 
-		var parentNodes = cy.elements("node[x < 0]");
+            parentNodes.sort(function(a, b) {
+                return a.data('cell') > b.data('cell'); // may also be sorted by
+                // cell-relation or area
+            });
 
-		parentNodes.sort(function( a, b ){
-		  return a.data('cell') > b.data('cell'); //may also be sorted by cell-relation or area
-		});
+            var currentTableHeader = areaTable + "Header";
 
-		var currentTableHeader = areaTable+"Header";
-		var currentAreaTable = document.getElementById(currentTableHeader);
+            var currentAreaTable = document.getElementById(currentTableHeader);
 
-		//we count computation steps and output them
-		if (computationStep > 0) {
-			document.getElementById(currentTableHeader).innerHTML = "Cell area after computation step " +computationStep +":";
-			$("#cyComputed canvas").fadeIn();
-			$("#areaComputedTable tr").fadeIn();
-		}
-		else if (computationStep === 0) { // reset by init
-			//put code here to remove older computed results by init
-			$("#cyComputed canvas").fadeOut().remove();
-			$("#areaComputedTable tr").fadeOut();
-		}
+            // we count computation steps and output them
+            if (computationStep > 0) {
+                document.getElementById(currentTableHeader).innerHTML = "Cell area after computation step "
+                                + computationStep + ":";
+                $("#cyComputed canvas").fadeIn();
+                $("#areaComputedTable tr").fadeIn();
+            } else if (computationStep === 0) { // reset by init
+                // put code here to remove older computed results by init
+                $("#cyComputed canvas").fadeOut().remove();
+                $("#areaComputedTable tr").fadeOut();
+            }
 
-		//we need to add 2 because one for headers in 1 colum and 1 for cell 0 (ECM)
-		currentAreaTable.colSpan = maxSigma + 2;
+            // we need to add 2 because one for headers in 1 colum and 1 for
+            // cell 0 (ECM)
+            currentAreaTable.colSpan = maxSigma + 2;
 
-		var table = document.getElementById(areaTable);
+            var table = document.getElementById(areaTable);
 
-		var rows = document.getElementById(areaTable).rows;
+            var rows = document.getElementById(areaTable).rows;
 
-		if (rows.length > 1){
+            if (rows.length > 1) {
 
-			table.deleteRow(1);
-			table.deleteRow(1);
-		}
+                table.deleteRow(1);
+                table.deleteRow(1);
+            }
 
-		// prepare data table below visualization
-		var rowOne = table.insertRow(1);
-		var cellOneInRowOne = rowOne.insertCell(0);
-		cellOneInRowOne.innerHTML = "Cell id";
-		var rowTwo = table.insertRow(2);
-		var cellTwoInRowTwo = rowTwo.insertCell(0);
-		cellTwoInRowTwo.innerHTML = "Area";
+            // prepare data table below visualization
+            var rowOne = table.insertRow(1);
+            var cellOneInRowOne = rowOne.insertCell(0);
+            cellOneInRowOne.innerHTML = "Cell id";
+            var rowTwo = table.insertRow(2);
+            var cellTwoInRowTwo = rowTwo.insertCell(0);
+            cellTwoInRowTwo.innerHTML = "Area";
 
-		for (i=0; i <= maxSigma; i++) {
-      	rowOne.insertCell(i+1);
-      	rowTwo.insertCell(i+1);
-		}
+            for (i = 0; i <= maxSigma; i++) {
+                rowOne.insertCell(i + 1);
+                rowTwo.insertCell(i + 1);
+            }
 
-		// update data table
-		parentNodes.forEach(function( ele,i ){
-			var tableCellIndex = ele.data('cell'); tableCellIndex++;
-      	var cellForIDLabel = rowOne.getElementsByTagName("td")[tableCellIndex];
-      	cellForIDLabel.innerHTML = ele.data('cell');
-			cellForIDLabel.style.background = colorArray[ele.data('cell')];
-			var cellForAreaCount = rowTwo.getElementsByTagName("td")[tableCellIndex];
-			cellForAreaCount.innerHTML = ele.data('area');
-      	cellForAreaCount.style.background = colorArray[ele.data('cell')];
-		});
+            // update data table
+            parentNodes
+                            .forEach(
 
-		// update line chart
-		//if (maxSigma<=2) {
-		updateLineChart();
-		//}
+                            function(ele, i) {
+                                var tableCellIndex = ele.data('cell');
+                                tableCellIndex++;
 
-	 }
+                                var cellForIDLabel = rowOne
+                                                .getElementsByTagName("td")[tableCellIndex];
+                                cellForIDLabel.innerHTML = ele.data('cell');
+                                cellForIDLabel.style.background = colorArray[ele
+                                                .data('cell')];
+
+                                var cellForAreaCount = rowTwo
+                                                .getElementsByTagName("td")[tableCellIndex];
+                                cellForAreaCount.innerHTML = ele.data('area');
+                                cellForAreaCount.style.background = colorArray[ele
+                                                .data('cell')];
+                            });
+
+            // update line chart
+            if (maxSigma == 2) {
+                updateLineChart();
+            }
+
+        }
   }//cytoscapeInit End
 }

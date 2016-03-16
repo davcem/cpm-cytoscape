@@ -47,20 +47,20 @@ public class CPMLatticeCalculationParams {
      * @param temperature the temperature within the lattice
 	 * @param ratioDarkToLightCells the ratio between dark and light cells (1/ratio = dark cell appearance)
      */
-    /*public CPMLatticeCalculationParams(double temperature, int ratioDarkToLightCells) {
+    public CPMLatticeCalculationParams(double temperature, int ratioDarkToLightCells) {
     	
     	//TODO - if calculation param profiles are build remove this constructor
-        this.jEcm = jEcm; // 16;
-        this.jLightCells = jLightCells; // 14;
-        this.jDarkCells = jDarkCells; // 2;
-        this.jDifferentCells = jDifferentCells; // 11;
-        this.lambdaArea = lambdaArea; // 0.05;
-        this.targetAreaFactorLight = targetAreaFactorLight; // 0.4;
-        this.targetAreaFactorDark = targetAreaFactorDark; // 0.4;
-		this.darkCellDecrease = darkCellDecrease; // 0
-        this.temperature = temperature; // 10
-		this.ratioDarkToLightCells = ratioDarkToLightCells; // 4
-    }*/
+        this.jEcm = 16;
+        this.jLightCells = 14;
+        this.jDarkCells =  2;
+        this.jDifferentCells = 11;
+        this.lambdaArea = 0.05;
+        this.targetAreaFactorLight = 0.4;
+        this.targetAreaFactorDark = 0.4;
+		this.darkCellDecrease =  0;
+        this.temperature = temperature;
+		this.ratioDarkToLightCells = ratioDarkToLightCells;
+    }
     
 	/**
 	 * Instantiates a new CPM lattice calculation params with given params
