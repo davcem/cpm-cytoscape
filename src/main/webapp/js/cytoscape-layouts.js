@@ -10,8 +10,8 @@ function presetLayout(){
 		animationDuration : '500',
 		positions : function(ele) {
 			return {
-				x : ele.data('x') * 10,
-				y : ele.data('y') * 10
+				x : ele.data('x') * 5,
+				y : ele.data('y') * 5
 			};
 		},
 		padding : '25'
@@ -19,10 +19,7 @@ function presetLayout(){
 	
 }
 
-
 function gridLayout(){
-	
-    var t1 = performance.now();
     
 	return {
 		name : 'grid',
@@ -37,11 +34,6 @@ function gridLayout(){
 				y : node.data('y')
 			};
 		},
-		//ready: function(){ console.log('gridLayout ready: ', performance.now()-t1)},
-		//stop: function(){ console.log('gridLayout stop: ', performance.now()-t1)},
-		/*sort : function(a, b) {
-			return a.data('id') > b.data('id');
-		}*/
 	};
 }
 
