@@ -1,0 +1,18 @@
+{
+	"x": 50,
+	"y": 50,
+	"mcs": 5000,
+	"mcSubsteps": 5000,
+	"maxSigma": 45,
+	"matrixDensity": 0.1,
+	"temperature": 12.5,
+	"jEcm": 55,
+	"jLightCells": 75,
+	"jDarkCells": 75,
+	"jDifferentCells": 75,
+	"lambdaArea": 5,
+	"targetAreaFactorLight": 3,
+	"targetAreaFactorDark": 3,
+	"ratioDarkToLightCells": 2,
+	"darkCellDecrease": 1
+}

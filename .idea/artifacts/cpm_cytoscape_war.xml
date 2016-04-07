@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cpm-cytoscape:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="cpm-cytoscape.war">
+      <element id="artifact" artifact-name="cpm-cytoscape:war exploded" />
+    </root>
+  </artifact>
+</component>
