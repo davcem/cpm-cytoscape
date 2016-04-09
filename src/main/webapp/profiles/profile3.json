@@ -11,8 +11,8 @@
 	"jDarkCells": 50,
 	"jDifferentCells": 25,
 	"lambdaArea": 40,
-	"targetAreaFactorLight": 4,
-	"targetAreaFactorDark": 4,
-	"ratioDarkToLightCells": 30,
+	"targetAreaFactorLight": 0.3,
+	"targetAreaFactorDark": 0.3,
+	"ratioDarkToLightCells": 4,
 	"darkCellDecrease": 0
 }
