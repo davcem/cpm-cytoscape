@@ -121,7 +121,7 @@ html, body {
 	clear: both;
 	min-height: 6em;
 	position: relative;
-	height: 30%
+	height: 30%;
 	width: 100%;
 }
 #bottomContainer #areaInitializedTable {
@@ -278,4 +278,8 @@ span.info-icon:before {
 }
 .hide {
 	display: none;
+}
+
+.btn-disabled {
+    color: grey;
 }

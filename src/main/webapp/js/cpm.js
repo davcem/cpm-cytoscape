@@ -28,6 +28,10 @@ function cytoscapeRender(method){
 	var colorArray = new Array();
 	colorArray[0] = "#e2e2e2"; //default color for ECM
 
+	var button = document.getElementById("manualInitBtn");
+	button.disabled = true;
+	button.classList.add("btn-disabled");
+
 	if (method=='init') {
 		httpType = 'POST';
 		cyContainer = 'cyInitialized';

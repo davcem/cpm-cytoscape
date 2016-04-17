@@ -7,6 +7,7 @@
 	<link href="css/style-columns.css" type="text/css" rel="stylesheet" />
 
 	<script type="text/javascript" src="js/cpm.js"></script>
+	<script type="text/javascript" src="js/cpm-manual-init.js"></script>
 	<script type="text/javascript" src="js/cytoscape-layouts.js"></script>
 
 	<!-- 3rd party libraries for cytoscape and jquery (for ajax) -->
@@ -29,6 +30,8 @@
 
 </head>
 <body>
+
+
 	<div id="menuContainer">
 		<div id="menuHeader">
 			<h1>Menu</h1>
@@ -74,8 +77,10 @@
 		</div>
 		<div id="subheader">
 			<span><span class="info-icon"> </span>Choose options above and then proceed with initialize/compute: </span>
-				<span><button class="btn btn-primary" type="button"
-							  onclick="cytoscapeRender('init')">initialize</button></span>
+				<span><button class="btn btn-primary" type="button" id="randomInitBtn"
+							  onclick="cytoscapeRender('init')">initialize randomly</button></span> or
+				<span><button class="btn btn-primary" type="button" id="manualInitBtn"
+							  onclick="cytoscapeRenderUserInitialisation('init')">initialize manually</button></span>
 				<span><button class="btn btn-primary" type="button"
 							  onclick="cytoscapeRender('compute')">compute next simulation run</button></span>
 			<span><button class="btn btn-secondary hide" id="toggleLineChart">show line chart</button></span>
