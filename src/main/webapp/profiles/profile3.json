@@ -2,7 +2,7 @@
 	"x": 20,
 	"y": 30,
 	"mcs": 100,
-	"mcSubsteps": 100,
+	"mcSubsteps": 60,
 	"maxSigma": 5,
 	"matrixDensity": 0.7,
 	"temperature": 5.0,
