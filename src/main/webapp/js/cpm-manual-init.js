@@ -3,6 +3,16 @@ var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep;
 
 function cytoscapeRenderUserInitialisation(method) {
 
+    String.format = function() {
+        var s = arguments[0];
+        for (var i = 0; i < arguments.length - 1; i += 1) {
+            var reg = new RegExp('\\{' + i + '\\}', 'gm');
+            s = s.replace(reg, arguments[i + 1]);
+        }
+        return s;
+    };
+
+
     x = document.getElementsByName("maxX")[0].value;
     y = document.getElementsByName("maxY")[0].value;
     var mcs = document.getElementsByName("mcs")[0].value;
@@ -52,20 +62,31 @@ function cytoscapeRenderUserInitialisation(method) {
 
         var t1 = performance.now();
 
+        // calculation for leading zeros
+        var numberOfNodes = x*y;
+        var leadingZeros = Math.log10(numberOfNodes) + 1 ;
+
+        
+
         var elements = '[';
         var id = 0;
+        var format = Array(Math.floor(leadingZeros + 1)).join('0');
+
+        // visible nodes
         for (i = 0; i < x; i++){
             for(j = 0; j < y; j++){
-                elements = elements + '{"data": {';
-                elements = elements + '"id": "' + id + '",';
-                elements = elements + '"x": ' + i +  ',';
-                elements = elements + '"y": ' + j +  ',';
-                elements = elements + '"index": "' + i + '-' + j + '",';
-                elements = elements + '"cell": "0",';  // ??
-                elements = elements + '"ancestor": "3",'; // ???
-                elements = elements + '"area": 0,'; // ?
-                elements = elements + '"color": "#e2e2e2",';
-                elements = elements + '"parentcolor": "#e2e2e2"}}';
+                elements = elements + '{"data":{';
+                var idFormatted  = (format+id).substr(-format.length, format.length);
+                elements = elements + '"id":"' + idFormatted + '",';
+                elements = elements + '"x":' + i +  ',';
+                elements = elements + '"y":' + j +  ',';
+                elements = elements + '"index":"' + i + '-' + j + '",';
+                elements = elements + '"cell":"0",';
+                var ancestor = 0 + numberOfNodes; // cell type plus numberOfNodes
+                elements = elements + '"ancestor":"' + ancestor + '",';
+                elements = elements + '"area":0,';
+                elements = elements + '"color":"#96E0EA",';
+                elements = elements + '"parentcolor":"#96e0e0"}}';
                 id++;
                 if(j + 1 != y){
                     elements = elements + ',';
@@ -75,9 +96,41 @@ function cytoscapeRenderUserInitialisation(method) {
                 elements = elements + ',';
             }
         }
+
+        if(maxSigma != 0){
+            elements = elements + ',';
+        }
+        // invisible nodes, according to sigma
+        for(sigma = 0; sigma != maxSigma; sigma++){
+            elements = elements + '{"data":{';
+            var idFormatted  = (format+id).substr(-format.length, format.length);
+            elements = elements + '"id":"' + idFormatted + '",';
+            elements = elements + '"x":' + "-1" +  ',';
+            elements = elements + '"y":' + "-1" +  ',';
+            elements = elements + '"index":"' + "-1" + '-' + "-1" + '",';
+            elements = elements + '"cell":"' + sigma + '",';
+            elements = elements + '"ancestor":"' + id + '",';
+            if(sigma == 0){
+                elements = elements + '"area":1024,'; //?
+            }
+            else {
+                elements = elements + '"area":0,'; // ?
+            }
+            elements = elements + '"color":"#96E0EA",'; // #96E0EA ??
+            elements = elements + '"parentcolor":"#96e0e0"}}'; //??
+            id++;
+            if(sigma + 1 != maxSigma){
+                elements = elements + ',';
+            }
+        }
+
+
         elements = elements + ']';
 
         console.log("elements are: " + elements);
+
+        // create JSON object from string
+        elements = JSON.parse(elements);
 
 
 
@@ -169,5 +222,6 @@ function cytoscapeRenderUserInitialisation(method) {
         });
 
     }
+
 
 }

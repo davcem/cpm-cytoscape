@@ -94,6 +94,7 @@ function cytoscapeRender(method){
      
 	//first params is our cytoscape cpm json
 	 var expJson = then[0];
+	  console.log("cytoscape cpm json is:" + JSON.stringify(expJson));
      
      //the elements of the ajax response
      var elements = expJson.elements;
@@ -112,6 +113,7 @@ function cytoscapeRender(method){
 	 }
 
 	 var t1 = performance.now();
+	  console.log("random elements are: " + JSON.stringify(elements));
 	 
 	 //initiliaze cytoscape
 	 var cy = cytoscape({
