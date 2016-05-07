@@ -3,16 +3,6 @@ var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep;
 
 function cytoscapeRenderUserInitialisation(method) {
 
-    String.format = function() {
-        var s = arguments[0];
-        for (var i = 0; i < arguments.length - 1; i += 1) {
-            var reg = new RegExp('\\{' + i + '\\}', 'gm');
-            s = s.replace(reg, arguments[i + 1]);
-        }
-        return s;
-    };
-
-
     x = document.getElementsByName("maxX")[0].value;
     y = document.getElementsByName("maxY")[0].value;
     var mcs = document.getElementsByName("mcs")[0].value;
@@ -100,6 +90,9 @@ function cytoscapeRenderUserInitialisation(method) {
         if(maxSigma != 0){
             elements = elements + ',';
         }
+
+        var colors = [];
+
         // invisible nodes, according to sigma
         for(sigma = 0; sigma != maxSigma; sigma++){
             elements = elements + '{"data":{';
@@ -116,8 +109,29 @@ function cytoscapeRenderUserInitialisation(method) {
             else {
                 elements = elements + '"area":0,'; // ?
             }
-            elements = elements + '"color":"#96E0EA",'; // #96E0EA ??
-            elements = elements + '"parentcolor":"#96e0e0"}}'; //??
+
+            // todo: 0 is ecm!! check again in original!!
+
+            var cellType = (sigma == 0) ? 1 : sigma;
+
+            var lightColor = "#96e0e0";
+            var darkColor = "#91243e";
+
+            if(cellType % 2 == 0){
+                var color = getColor(lightColor, cellType, false);
+                elements = elements + '"color":"' + color + '",';
+                colors.push(color);
+                var parentColor = lightColor;
+
+            }
+            else {
+                var color = getColor(darkColor, cellType, true);
+                elements = elements + '"color":"' + color + '",';
+                colors.push(color);
+                var parentColor = darkColor;
+            }
+
+
             id++;
             if(sigma + 1 != maxSigma){
                 elements = elements + ',';
@@ -131,7 +145,6 @@ function cytoscapeRenderUserInitialisation(method) {
 
         // create JSON object from string
         elements = JSON.parse(elements);
-
 
 
         //initiliaze cytoscape
@@ -221,6 +234,32 @@ function cytoscapeRenderUserInitialisation(method) {
                 })
         });
 
+    }
+
+    function getColor(initialColor, cellType, isDark) {
+        var color = initialColor.substring(1); // get rid of #
+        color = "0x" + color;
+        color = parseInt(color);
+        color = color + 10*cellType;
+        color = color.toString(16);
+
+        if(color.length > 6){
+            color = color.substring(color.length - 6);
+        }
+        else {
+            if(color.length != 6){
+                // add padding
+                var zeros = 6 - color.length;
+                var i;
+                for(i = 0; i < zeros; i++){
+                    color = "0" + color;
+                }
+
+            }
+        }
+        color = "#" + color;
+
+        return color;
     }
 
 
