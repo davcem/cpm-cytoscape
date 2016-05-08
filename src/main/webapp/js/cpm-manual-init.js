@@ -110,27 +110,28 @@ function cytoscapeRenderUserInitialisation(method) {
                 elements = elements + '"area":0,'; // ?
             }
 
-            // todo: 0 is ecm!! check again in original!!
-
-            var cellType = (sigma == 0) ? 1 : sigma;
-
-            var lightColor = "#96e0e0";
-            var darkColor = "#91243e";
-
-            if(cellType % 2 == 0){
-                var color = getColor(lightColor, cellType, false);
-                elements = elements + '"color":"' + color + '",';
-                colors.push(color);
-                var parentColor = lightColor;
-
+            var cellType = sigma;
+            if(cellType == 0){
+                elements = elements + '"color":"#96E0EA",';
+                elements = elements + '"parentcolor":"#96e0e0"}}';
             }
             else {
-                var color = getColor(darkColor, cellType, true);
-                elements = elements + '"color":"' + color + '",';
-                colors.push(color);
-                var parentColor = darkColor;
-            }
+                var lightColor = "#96e0e0";
+                var darkColor = "#91243e";
 
+                if(cellType % 2 == 0){
+                    var color = getColor(lightColor, cellType, false);
+                    elements = elements + '"color":"' + color + '",';
+                    elements = elements + '"parentcolor":"' + lightColor + '"}}';
+                    colors.push(color);
+                }
+                else {
+                    var color = getColor(darkColor, cellType, true);
+                    elements = elements + '"color":"' + color + '",';
+                    elements = elements + '"parentcolor":"' + darkColor + '"}}';
+                    colors.push(color);
+                }
+            }
 
             id++;
             if(sigma + 1 != maxSigma){
