@@ -94,7 +94,7 @@ function cytoscapeRenderUserInitialisation(method) {
         var colors = [];
 
         // invisible nodes, according to sigma
-        for(sigma = 0; sigma != maxSigma; sigma++){
+        for(sigma = 0; sigma <= maxSigma; sigma++){
             elements = elements + '{"data":{';
             var idFormatted  = (format+id).substr(-format.length, format.length);
             elements = elements + '"id":"' + idFormatted + '",';
@@ -134,7 +134,7 @@ function cytoscapeRenderUserInitialisation(method) {
             }
 
             id++;
-            if(sigma + 1 != maxSigma){
+            if(sigma != maxSigma){
                 elements = elements + ',';
             }
         }
@@ -238,6 +238,10 @@ function cytoscapeRenderUserInitialisation(method) {
     }
 
     function getColor(initialColor, cellType, isDark) {
+
+        if(isDark) {
+            cellType = cellType*(-1);
+        }
         var color = initialColor.substring(1); // get rid of #
         color = "0x" + color;
         color = parseInt(color);
