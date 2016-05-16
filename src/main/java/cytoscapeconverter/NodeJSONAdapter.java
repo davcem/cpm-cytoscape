@@ -13,19 +13,19 @@ import java.lang.reflect.Type;
  * @author davcem
  * @version 1.0
  * @since 2015-06-12
- * 
+ *
  * The class NodeJSONAdapter is the representation of an {@link JsonSerializer}
  * for the {@link Node} object.
  * <p>
  * By the implementation of the {@link JsonSerializer} the function {@link #serialize(Node, Type, JsonSerializationContext)}
  * is called between conversation of nodes into {@link JsonElement}.
- */ 
+ */
 public class NodeJSONAdapter implements JsonSerializer<Node> {
 
 	@Override
 	public JsonElement serialize(Node node, Type type,
 			JsonSerializationContext context) {
-		
+
 		JsonObject data = new JsonObject();
         data.addProperty("id", node.getId());
         data.addProperty("x", node.getX());
@@ -57,25 +57,25 @@ public class NodeJSONAdapter implements JsonSerializer<Node> {
 
             data.addProperty("color", "#"+getColorGradient(darkColor, color, true)); // color gradient dark cells
         }
-        
+
         String parentColor;
 
         // The parent color is only needed if we use compound node
         // while we differentiate only between the light and the dark cellular bricks visualized as nodes
         if(modulo == 0){
-        	
+
         	parentColor = lightColor;
-        	
+
         }else{
-        	
+
         	parentColor = darkColor;
         }
-        
+
         data.addProperty("parentcolor", parentColor);
-        
+
         JsonObject object = new JsonObject();
         object.add("data", data);
-        
+
         return object;
 	}
 
@@ -94,6 +94,7 @@ public class NodeJSONAdapter implements JsonSerializer<Node> {
                 Integer.valueOf( colorStr.substring( 1, 3 ), 16 ),
                 Integer.valueOf( colorStr.substring( 3, 5 ), 16 ),
                 Integer.valueOf( colorStr.substring( 5, 7 ), 16 ));
+
 
        return String.format("%06X", Integer.valueOf(colorCode.getRGB())+fraction*10).substring(2);
     }

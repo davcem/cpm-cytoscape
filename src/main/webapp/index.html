@@ -5,9 +5,12 @@
 	<title>CPM-Cytoscape</title>
 	<link href="css/normalize.css" type="text/css" rel="stylesheet" />
 	<link href="css/style-columns.css" type="text/css" rel="stylesheet" />
+	<link href="css/palette-color-picker.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link href="css/cpm-manual-init.css" type="text/css" rel="stylesheet" />
+
 
 	<script type="text/javascript" src="js/cpm.js"></script>
-	<script type="text/javascript" src="js/cpm-manual-init.js"></script>
 	<script type="text/javascript" src="js/cytoscape-layouts.js"></script>
 
 	<!-- 3rd party libraries for cytoscape and jquery (for ajax) -->
@@ -15,10 +18,12 @@
 	<script type="text/javascript" src="js/libraries/cytoscape.js"></script>
 	<script type="text/javascript" src="js/libraries/jquery.flot.min.js"></script>
 	<script type="text/javascript" src="js/libraries/jquery.flot.axislabel.min.js"></script>
-
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/line-chart.js"></script>
-	
 	<script type="text/javascript" src="js/export.js"></script>
+	<script type="text/javascript" src="js/palette-color-picker.js"></script>
+	<script type="text/javascript" src="js/cpm-manual-init.js"></script>
+
 
 
 	<!-- External scripts for demo only if different layouts are used please comment layout js import in
@@ -87,11 +92,13 @@
 		</div>
 	</div>
 
+
 	<!-- cytoscape graph container -->
 	<div id="middleContainer"><div class="loading-spinner hide"></div>
 		<div id="cyInitialized"></div>
 		<div id="cyComputed"></div>
 	</div>
+
 
 	<!-- line chart container -->
 	<div id="growthAsLineChartContainer" class="hide">
@@ -119,5 +126,24 @@
 
 	<footer></footer>
 
+
+
+	<div id="colorpicker" title="Choose cell type">
+
+		<p>Please choose the type of the cell:</p>
+
+		<form>
+			<fieldset>
+				<input type="text" id="color" name="color" value="">
+
+				<!-- Allow form submission with keyboard without duplicating the dialog button -->
+				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+			</fieldset>
+		</form>
+	</div>
+
+
+
 </body>
 </html>
+

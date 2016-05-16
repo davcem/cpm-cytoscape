@@ -1,7 +1,16 @@
 //global visible variables
 var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep;
 
+
+var  nodeID;
+var colorForNode;
+var dialog, form;
+
+var colors = [];
+
+
 function cytoscapeRenderUserInitialisation(method) {
+
 
     x = document.getElementsByName("maxX")[0].value;
     y = document.getElementsByName("maxY")[0].value;
@@ -20,9 +29,14 @@ function cytoscapeRenderUserInitialisation(method) {
     var ratioDarkToLightCells = document.getElementsByName("ratioDarkToLightCells")[0].value;
     var darkCellDecrease = document.getElementsByName("darkCellDecrease")[0].selectedIndex;
 
+
     var sigmaCounter = 0;
     var colorArray = new Array();
     colorArray[0] = "#e2e2e2"; //default color for ECM
+    colors.push("#e2e2e2")
+
+    //var area = new Array(maxSigma);
+    //var sigma = new Array(maxSigma);
 
     var button = document.getElementById("randomInitBtn");
     button.disabled = true;
@@ -91,7 +105,7 @@ function cytoscapeRenderUserInitialisation(method) {
             elements = elements + ',';
         }
 
-        var colors = [];
+
 
         // invisible nodes, according to sigma
         for(sigma = 0; sigma <= maxSigma; sigma++){
@@ -133,6 +147,16 @@ function cytoscapeRenderUserInitialisation(method) {
                 }
             }
 
+
+            function addColorToNode() {
+                //colorForNode = $( "#color" );
+                dialog.dialog( "close" );
+
+                return true;
+            }
+
+
+
             id++;
             if(sigma != maxSigma){
                 elements = elements + ',';
@@ -141,6 +165,44 @@ function cytoscapeRenderUserInitialisation(method) {
 
 
         elements = elements + ']';
+
+        var colorCounter = 0;
+        var colorsString = '[';
+        for(colorCounter = 0; colorCounter < colors.length; colorCounter++){
+            colorsString = colorsString + '"' + colors[colorCounter] + '"';
+            if(colorCounter + 1 != colors.length){
+                colorsString = colorsString + ','
+            }
+        }
+        colorsString = colorsString + ']';
+
+
+        $('[name="color"]').paletteColorPicker({
+            position: 'downside',
+            colors: JSON.parse(colorsString)
+        });
+
+        dialog = $( "#colorpicker" ).dialog({
+            autoOpen: false,
+            height: 500,
+            width: 800,
+            modal: true,
+            buttons: {
+                "Add cell type": addColorToNode,
+                Cancel: function() {
+                    dialog.dialog( "close" );
+                }
+            },
+            close: function() {
+                form[ 0 ].reset();
+            }
+        });
+
+
+        form = dialog.find( "form" ).on( "submit", function( event ) {
+            event.preventDefault();
+            addColorToNode();
+        });
 
         console.log("elements are: " + elements);
 
@@ -163,6 +225,7 @@ function cytoscapeRenderUserInitialisation(method) {
             panningEnabled: true,
             userPanningEnabled: true,
             boxSelectionEnabled: false,
+            //autolock = true;
             autolock: false,
             autoungrabify: false,
             autounselectify: false,
@@ -233,7 +296,20 @@ function cytoscapeRenderUserInitialisation(method) {
                     'line-style': 'solid',
                     'curve-style': 'haystack'
                 })
+
+
+
         });
+
+        cy.on('click', function(evt){
+
+            nodeID = evt.cyTarget.id();
+            dialog.dialog("open");
+
+
+            console.log( 'click ' + evt.cyTarget.id() );
+        });
+
 
     }
 
@@ -266,6 +342,45 @@ function cytoscapeRenderUserInitialisation(method) {
 
         return color;
     }
+
+/*    function initializeAreas() {
+        var i, j = 0;
+        area[0] = x * y;
+        var sumCellArea = 0;
+        var counter = 1;
+        var ratioDarkLight = 1;
+        ratioDarkLight = ratioDarkToLightCells;
+
+        while(sumCellArea < x * y * matrixDensity){
+
+            i=getRandom(0, x - 1);
+            j=getRandom(0, y - 1);
+
+            //if we override a cell, we have to update the area of this cell
+            area[sigma[i][j]]--;
+
+            //if we override an already filled cell, we have to reduce the sumCellArea
+            if(sigma[i][j] > 0){
+                sumCellArea--;
+            }
+
+            // adjust relative proportion between light and dark cells by a specified ratio
+            if (counter % ratioDarkLight == 0) {
+                sigma[i][j] = getRandomOdd(1, maxSigma - 1);
+            }
+            else {
+                sigma[i][j] = getRandomEven(1, maxSigma - 1);
+            }
+
+            //for the new cell we have to update the area also
+            area[sigma[i][j]]++;
+            sumCellArea++;
+            counter++;
+
+        }
+
+    }*/
+
 
 
 }
