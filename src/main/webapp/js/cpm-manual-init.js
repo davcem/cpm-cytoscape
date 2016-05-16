@@ -2,11 +2,13 @@
 var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep;
 
 
-var  nodeID;
+var  nodeID, nodeToChange;
 var colorForNode;
 var dialog, form;
 
 var colors = [];
+var lightColor = "#96e0e0";
+var darkColor = "#91243e";
 
 
 function cytoscapeRenderUserInitialisation(method) {
@@ -130,8 +132,7 @@ function cytoscapeRenderUserInitialisation(method) {
                 elements = elements + '"parentcolor":"#96e0e0"}}';
             }
             else {
-                var lightColor = "#96e0e0";
-                var darkColor = "#91243e";
+
 
                 if(cellType % 2 == 0){
                     var color = getColor(lightColor, cellType, false);
@@ -149,7 +150,26 @@ function cytoscapeRenderUserInitialisation(method) {
 
 
             function addColorToNode() {
-                //colorForNode = $( "#color" );
+                colorForNode = document.getElementById("color").value;
+
+                var newColor = colors[colorForNode];
+
+                var parentColor;
+                if(colorForNode % 2 == 0){
+                    parentColor = lightColor;
+                }
+                else{
+                    parentColor = darkColor;
+                }
+
+
+                // todo: check again if calculated correctly
+                nodeToChange.data('color', newColor);
+                nodeToChange.data('parentcolor', parentColor);
+                nodeToChange.data('cell', colorForNode);
+                nodeToChange.data('ancestor', colorForNode + x*y);
+
+
                 dialog.dialog( "close" );
 
                 return true;
@@ -204,7 +224,7 @@ function cytoscapeRenderUserInitialisation(method) {
             addColorToNode();
         });
 
-        console.log("elements are: " + elements);
+        //console.log("elements are: " + elements);
 
         // create JSON object from string
         elements = JSON.parse(elements);
@@ -225,7 +245,6 @@ function cytoscapeRenderUserInitialisation(method) {
             panningEnabled: true,
             userPanningEnabled: true,
             boxSelectionEnabled: false,
-            //autolock = true;
             autolock: false,
             autoungrabify: false,
             autounselectify: false,
@@ -304,10 +323,11 @@ function cytoscapeRenderUserInitialisation(method) {
         cy.on('click', function(evt){
 
             nodeID = evt.cyTarget.id();
+            nodeToChange = evt.cyTarget;
+            console.log("nodeToChange is on click: ")
+            console.log(nodeToChange);
             dialog.dialog("open");
 
-
-            console.log( 'click ' + evt.cyTarget.id() );
         });
 
 

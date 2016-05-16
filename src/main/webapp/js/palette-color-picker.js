@@ -66,7 +66,7 @@
             .attr({
               'title': 'cell type ' + idx,
               'data-color': col,
-              'data-name': key
+              'data-name': idx
             }).css('background-color', col);
 
 
