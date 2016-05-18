@@ -187,5 +187,9 @@ function getParamsFromForm(){
     return currentProfile;
 }
 
-// call for initialization
-initializeProfiles();
+
+$( document ).ready(function() {
+    // call for initialization
+    initializeProfiles();
+});
+

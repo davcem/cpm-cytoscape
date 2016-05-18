@@ -1,5 +1,9 @@
 /**
- * Created by clemens on 07.04.16.
+ * Created by clemens on 07.04.2016.
+ * Modified by radiance on 27.04.2016
+ * User Interface Extensions for choosing a profile.
+ * The changeProfile() method is used within the index.html within the #profile dropdown.
+ * Default selection of #profile is "custom profile".
  */
 
 var profiles = [
@@ -19,6 +23,8 @@ function initializeProfiles(){
     });
 }
 
+/* This method is called on the onchange event of a dropdown
+*/
 function changeProfile(){
     var profileSelect = document.getElementById("profile");
     var selectedProfileFileName = profileSelect.options[profileSelect.selectedIndex].value;
@@ -81,7 +87,7 @@ function  verifyProfile(profile) {
         return false;
     }
 
-    if(!profile.hasOwnProperty("temperature") || !(profile.temperature >= 0 && profile.temperature <= 15)){
+    if(!profile.hasOwnProperty("temperature") || !(profile.temperature >= 0 && profile.temperature <= 100)){
         console.log("temperature-Value is corrupt!");
         return false;
     }
@@ -180,3 +186,10 @@ function getParamsFromForm(){
 
     return currentProfile;
 }
+
+
+$( document ).ready(function() {
+    // call for initialization
+    initializeProfiles();
+});
+
