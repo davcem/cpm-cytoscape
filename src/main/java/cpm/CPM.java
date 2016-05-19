@@ -1,5 +1,7 @@
 package cpm;
 
+import org.json.JSONObject;
+
 /**
  * @author davcem
  * @version 1.0
@@ -21,6 +23,12 @@ public interface CPM {
 	 * Initializes the lattice which is used for the computation of the CPM Lattice
 	 */
 	public void initializeLattice();
+
+
+	/**
+	 * Initializes the lattice which is used for the computation of the CPM Lattice using nodes initialised by user
+	 */
+	public void initialiseCPMFromUserInput(JSONObject nodes);
 
 	/**
 	 * Computes the CPM according to the parameters of the lattice and the user created nodes

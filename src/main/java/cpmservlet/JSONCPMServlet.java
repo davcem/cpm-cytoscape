@@ -55,15 +55,17 @@ public class JSONCPMServlet extends HttpServlet {
 		if(method.equals("manual")){
 
 
-			createCPMLatticeFromUserInitialisedParams(request);
+			createCPMLatticeFromParams(request);
 			String elements = request.getParameter("elements");
-			System.out.println(elements);
+
 			elements = "{\"elements\":" + elements + "}";
 
 			JSONObject nodes  = new JSONObject(elements);
 
-			System.out.println(nodes);
-			//lattice.initialiseCPMFromUserInput(nodes);
+			//System.out.println(nodes);
+			lattice.initialiseCPMFromUserInput(nodes);
+
+			//addCPMToResponse(response);
 
 		}
 		else {
@@ -96,43 +98,6 @@ public class JSONCPMServlet extends HttpServlet {
     	
     }
 
-	/**
-	 * Creates the cpm lattice from request params. Nodes are user initialised.
-	 *
-	 * @param request the request
-	 */
-	private void createCPMLatticeFromUserInitialisedParams(HttpServletRequest request){
-
-		String xMax = request.getParameter("xMax");
-		String yMax = request.getParameter("yMax");
-		String mcs = request.getParameter("mcs");
-		String mcSubsteps = request.getParameter("mcSubsteps");
-		String sigmaMax = request.getParameter("sigmaMax");
-		String matrixDensity = request.getParameter("matrixDensity");
-		String temperature = request.getParameter("temperature");
-
-		String ratioDarkToLightCells = request.getParameter("ratioDarkToLightCells");
-		String jEcm = request.getParameter("jEcm");
-		String jLightCells = request.getParameter("jLightCells");
-		String jDarkCells = request.getParameter("jDarkCells");
-		String jDifferentCells = request.getParameter("jDifferentCells");
-		String lambdaArea = request.getParameter("lambdaArea");
-		String targetAreaFactorLight = request.getParameter("targetAreaFactorLight");
-		String targetAreaFactorDark = request.getParameter("targetAreaFactorDark");
-		String darkCellDecrease = request.getParameter("darkCellDecrease");
-
-
-
-		CPMLatticeCalculationParams params = new CPMLatticeCalculationParams(
-				Double.valueOf(jEcm), Double.valueOf(jLightCells), Double.valueOf(jDarkCells), Double.valueOf(jDifferentCells),
-				Double.valueOf(lambdaArea), Double.valueOf(targetAreaFactorLight), Double.valueOf(targetAreaFactorDark),
-				Integer.valueOf(darkCellDecrease), Double.valueOf(temperature), Integer.valueOf(ratioDarkToLightCells)
-		);
-
-		lattice = new CPMLattice(Integer.valueOf(xMax), Integer.valueOf(yMax),
-				Integer.valueOf(mcs), Integer.valueOf(mcSubsteps),
-				Integer.valueOf(sigmaMax), Double.valueOf(matrixDensity), params);
-	}
     
     /**
      * Creates the cpm lattice from request params.

@@ -61,6 +61,7 @@ function cytoscapeRender(method){
 		type: httpType,
 		dataType: 'json',
 		data: {
+		'method': 'random',
 		'xMax': x,
 		'yMax': y,
 		'mcs': mcs,

@@ -3,9 +3,11 @@ var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep;
 
 
 var  nodeID, nodeToChange;
-var colorForNode;
+var colorIndexForNode;
 var dialog, form;
 var elements;
+
+var areas = [];
 
 var colors = [];
 var lightColor = "#96e0e0";
@@ -46,11 +48,18 @@ function cytoscapeRenderUserInitialisation(method) {
 
     var sigmaCounter = 0;
     var colorArray = new Array();
+
+    // initialise areas
+    areas =  new Array (maxSigma);
+    areas[0] = x*y;
+    for(var areaCounter = 1; areaCounter <= maxSigma; areaCounter++){
+        areas[areaCounter] = 0;
+    }
+
+
     colorArray[0] = "#e2e2e2"; //default color for ECM
     colors.push("#e2e2e2")
 
-    //var area = new Array(maxSigma);
-    //var sigma = new Array(maxSigma);
 
     var button = document.getElementById("randomInitBtn");
     button.disabled = true;
@@ -139,10 +148,10 @@ function cytoscapeRenderUserInitialisation(method) {
             elements = elements + '"cell":"' + sigma + '",';
             elements = elements + '"ancestor":"' + id + '",';
             if(sigma == 0){
-                elements = elements + '"area":1024,'; //?
+                elements = elements + '"area":' + x*y + ',';
             }
             else {
-                elements = elements + '"area":0,'; // ?
+                elements = elements + '"area":0,';
             }
 
             var cellType = sigma;
@@ -169,12 +178,38 @@ function cytoscapeRenderUserInitialisation(method) {
 
 
             function addColorToNode() {
-                colorForNode = document.getElementById("color").value;
+                colorIndexForNode = document.getElementById("color").value;
+                colorIndexForNode = parseInt(colorIndexForNode);
 
-                var newColor = colors[colorForNode];
+                var newColor = colors[colorIndexForNode];
+                console.log("newColor is" + newColor);
+
+                // update area
+                if(areas[colorIndexForNode] < x*y){
+
+                    var previousColorIndexForNode = parseInt(nodeToChange.data('cell'));
+
+                    var colorIndexForNodeID = x * y + colorIndexForNode;
+                    var previousColorIndexForNodeID = x * y + previousColorIndexForNode;
+
+                    areas[colorIndexForNode] += 1;
+                    areas[previousColorIndexForNode] -= 1;
+
+                    var increasedValue = areas[colorIndexForNode];
+                    var decreasedValue = areas[previousColorIndexForNode];
+
+                    cy.getElementById(colorIndexForNodeID).data('area', increasedValue);
+                    cy.getElementById(previousColorIndexForNodeID).data('area', decreasedValue);
+                }
+                else {
+                    console.log("Error: too many cells of this cell type")
+                    return;
+                }
+
+
 
                 var parentColor;
-                if(colorForNode % 2 == 0){
+                if(colorIndexForNode % 2 == 0){
                     parentColor = lightColor;
                 }
                 else{
@@ -182,11 +217,14 @@ function cytoscapeRenderUserInitialisation(method) {
                 }
 
 
-                // todo: check again if calculated correctly
                 nodeToChange.data('color', newColor);
                 nodeToChange.data('parentcolor', parentColor);
-                nodeToChange.data('cell', colorForNode);
-                nodeToChange.data('ancestor', colorForNode + x*y);
+                nodeToChange.data('cell', colorIndexForNode);
+                nodeToChange.data('ancestor', colorIndexForNode + x*y);
+
+                console.log(colors);
+                console.log(newColor);
+                console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
 
 
                 dialog.dialog( "close" );
@@ -298,22 +336,7 @@ function cytoscapeRenderUserInitialisation(method) {
                     //'border-width' : '1',
                     //'border-color': '#333',
                     'background-color': function (ele) {
-                        if (maxSigma > 2) {
-                            if (sigmaCounter <= maxSigma) {
-                                if ($.inArray(ele.data('color'), colorArray) == -1) {
-                                    colorArray[ele.data('cell')] = ele.data('color');
-                                    sigmaCounter++;
-                                }
-                            }
-                            return ele.data('color'); // color specified in NodeJSONAdapter
-                        }
-                        else {
-                            if (sigmaCounter <= maxSigma + 1) {
-                                colorArray[ele.data('cell')] = ele.data('parentcolor');
-                                sigmaCounter++;
-                            }
-                            return ele.data('parentcolor');  // color specified in the NodeJSONAdapter
-                        }
+                        return ele.data('color');
                     }
                 })
                 //set special colour for ECM
@@ -341,7 +364,7 @@ function cytoscapeRenderUserInitialisation(method) {
 
         cy.on('click', function(evt){
 
-            nodeID = evt.cyTarget.id();
+            //nodeID = evt.cyTarget.id();
             nodeToChange = evt.cyTarget;
             dialog.dialog("open");
 

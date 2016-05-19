@@ -2,6 +2,8 @@ package cpm;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
+import org.json.JSONObject;
+
 import java.util.Random;
 
 /**
@@ -151,6 +153,16 @@ public class CPMLattice implements CPM{
 		}
 		return randomNum;
 	}
+
+	/**
+	 * Procedure is used to initialize the lattice, using user initialised nodes
+	 * <p>
+	 * Qnodes are the nodes initialised by the user
+	 */
+
+	public void initialiseCPMFromUserInput(JSONObject nodes){
+
+	}
 	
 	/**
 	 * Procedure is used to initialize the lattice.
@@ -206,6 +218,8 @@ public class CPMLattice implements CPM{
 			
 		}
 
+		System.out.println(area);
+		System.out.println(sigma);
 
 	}
 
@@ -213,6 +227,7 @@ public class CPMLattice implements CPM{
 	 * Computes the CPM according to the parameters of the lattice and the user created nodes
 	 */
 	public void computeUserInitialisedCPM() {
+		// TODO: compute new CPM based on given nodes
 
 	}
 	
@@ -396,7 +411,7 @@ public class CPMLattice implements CPM{
 	/**
 	 * Function returns the targetArea for given cell
 	 * 
-	 * @param int cell - the cell to obtain the targetArea for
+	 * @param  cell - the cell to obtain the targetArea for
 	 * 
 	 * @return targetArea - the targetArea for cell (depends if cell is light or dark cell)
 	 * */
