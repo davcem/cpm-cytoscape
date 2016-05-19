@@ -5,10 +5,22 @@ var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep;
 var  nodeID, nodeToChange;
 var colorForNode;
 var dialog, form;
+var elements;
 
 var colors = [];
 var lightColor = "#96e0e0";
 var darkColor = "#91243e";
+
+function addSimulationButton(method){
+    if(method == 'random'){
+        document.getElementById('btnHolder').innerHTML = "<button class='btn btn-primary' type='button' onclick='cytoscapeRender(&quot;compute&quot;)'>compute next simulation run</button>";
+
+    }
+    else if(method == 'manual'){
+        document.getElementById('btnHolder').innerHTML = "<button class='btn btn-primary' type='button' onclick='cytoscapeRenderUserInitialisation(&quot;compute&quot;)'>compute next simulation run</button>";
+
+    }
+}
 
 
 function cytoscapeRenderUserInitialisation(method) {
@@ -50,9 +62,16 @@ function cytoscapeRenderUserInitialisation(method) {
         areaTable = 'areaInitializedTable';
         tableHeader = 'areaInitializedTableHeader';
         computationStep = 0;
-        if (maxSigma>=1) { $('#toggleLineChart').show(); }
-        else {  $('#toggleLineChart').hide(); }
+        if (maxSigma >= 1) {
+            $('#toggleLineChart').show();
+        }
+        else {
+            $('#toggleLineChart').hide();
+        }
 
+    }
+        else if(method == 'compute'){
+        sendUserInputToServlet();
     }
     else {
         console.log("Method not defined!");
@@ -74,7 +93,7 @@ function cytoscapeRenderUserInitialisation(method) {
 
         
 
-        var elements = '[';
+        elements = '[';
         var id = 0;
         var format = Array(Math.floor(leadingZeros + 1)).join('0');
 
@@ -324,8 +343,6 @@ function cytoscapeRenderUserInitialisation(method) {
 
             nodeID = evt.cyTarget.id();
             nodeToChange = evt.cyTarget;
-            console.log("nodeToChange is on click: ")
-            console.log(nodeToChange);
             dialog.dialog("open");
 
         });
@@ -401,6 +418,62 @@ function cytoscapeRenderUserInitialisation(method) {
 
     }*/
 
+    function sendUserInputToServlet(){
+
+        console.log("compute next steps of user initialised graph");
+
+        // create CPM
+        httpType = 'POST';
+        cyContainer = 'cyInitialized';
+        areaTable = 'areaInitializedTable';
+        tableHeader = 'areaInitializedTableHeader';
+        computationStep = 0;
+        if (maxSigma>=1) { $('#toggleLineChart').show(); }
+        else {  $('#toggleLineChart').hide(); }
+
+
+         $('.loading-spinner').show(); // show loading feedback when render method called
+
+
+         ajax1 = performance.now();
+
+
+
+         // requesting CPM data
+         var graphP = $.ajax({
+         url: './JSONCPMServlet',
+         type: httpType,
+         dataType: 'json',
+         data: {
+         'method': 'manual',
+         'elements' : JSON.stringify(elements),
+         'xMax': x,
+         'yMax': y,
+         'mcs': mcs,
+         'mcSubsteps': mcSubsteps,
+         'sigmaMax': maxSigma,
+         'matrixDensity': matrixDensity,
+         'temperature': temperature,
+         'jEcm': jEcm,
+         'jLightCells': jLightCells,
+         'jDarkCells': jDarkCells,
+         'jDifferentCells': jDifferentCells,
+         'lambdaArea': lambdaArea,
+         'targetAreaFactorLight': targetAreaFactorLight,
+         'targetAreaFactorDark': targetAreaFactorDark,
+         'ratioDarkToLightCells' : ratioDarkToLightCells,
+         'darkCellDecrease' : darkCellDecrease
+         }
+
+         }).done(function(data){
+           $('.loading-spinner').fadeOut(); // hide loading feedback after finish
+         });
+
+    }
+
 
 
 }
+
+
+

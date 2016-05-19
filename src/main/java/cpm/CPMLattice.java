@@ -208,6 +208,13 @@ public class CPMLattice implements CPM{
 
 
 	}
+
+	/**
+	 * Computes the CPM according to the parameters of the lattice and the user created nodes
+	 */
+	public void computeUserInitialisedCPM() {
+
+	}
 	
 	/**
 	 * Computes the CPM according to the parameters of the lattice.
