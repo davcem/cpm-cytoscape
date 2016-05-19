@@ -46,9 +46,6 @@ function cytoscapeRenderUserInitialisation(method) {
     var darkCellDecrease = document.getElementsByName("darkCellDecrease")[0].selectedIndex;
 
 
-    var sigmaCounter = 0;
-    var colorArray = new Array();
-
     // initialise areas
     areas =  new Array (maxSigma);
     areas[0] = x*y;
@@ -56,9 +53,7 @@ function cytoscapeRenderUserInitialisation(method) {
         areas[areaCounter] = 0;
     }
 
-
-    colorArray[0] = "#e2e2e2"; //default color for ECM
-    colors.push("#e2e2e2")
+    colors.push("#e2e2e2")//default color for ECM
 
 
     var button = document.getElementById("randomInitBtn");
@@ -182,7 +177,6 @@ function cytoscapeRenderUserInitialisation(method) {
                 colorIndexForNode = parseInt(colorIndexForNode);
 
                 var newColor = colors[colorIndexForNode];
-                console.log("newColor is" + newColor);
 
                 // update area
                 if(areas[colorIndexForNode] < x*y){
@@ -222,9 +216,9 @@ function cytoscapeRenderUserInitialisation(method) {
                 nodeToChange.data('cell', colorIndexForNode);
                 nodeToChange.data('ancestor', colorIndexForNode + x*y);
 
-                console.log(colors);
-                console.log(newColor);
-                console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
+
+                //console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
+
 
 
                 dialog.dialog( "close" );
@@ -403,47 +397,13 @@ function cytoscapeRenderUserInitialisation(method) {
         return color;
     }
 
-/*    function initializeAreas() {
-        var i, j = 0;
-        area[0] = x * y;
-        var sumCellArea = 0;
-        var counter = 1;
-        var ratioDarkLight = 1;
-        ratioDarkLight = ratioDarkToLightCells;
 
-        while(sumCellArea < x * y * matrixDensity){
-
-            i=getRandom(0, x - 1);
-            j=getRandom(0, y - 1);
-
-            //if we override a cell, we have to update the area of this cell
-            area[sigma[i][j]]--;
-
-            //if we override an already filled cell, we have to reduce the sumCellArea
-            if(sigma[i][j] > 0){
-                sumCellArea--;
-            }
-
-            // adjust relative proportion between light and dark cells by a specified ratio
-            if (counter % ratioDarkLight == 0) {
-                sigma[i][j] = getRandomOdd(1, maxSigma - 1);
-            }
-            else {
-                sigma[i][j] = getRandomEven(1, maxSigma - 1);
-            }
-
-            //for the new cell we have to update the area also
-            area[sigma[i][j]]++;
-            sumCellArea++;
-            counter++;
-
-        }
-
-    }*/
 
     function sendUserInputToServlet(){
 
         console.log("compute next steps of user initialised graph");
+
+
 
         // create CPM
         httpType = 'POST';

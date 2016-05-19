@@ -28,13 +28,9 @@ public interface CPM {
 	/**
 	 * Initializes the lattice which is used for the computation of the CPM Lattice using nodes initialised by user
 	 */
-	public void initialiseCPMFromUserInput(JSONObject nodes);
+	public void initialiseCPMFromUserInput(String user_area);
 
-	/**
-	 * Computes the CPM according to the parameters of the lattice and the user created nodes
-	 */
-	public void computeUserInitialisedCPM();
-	
+
 	/**
 	 * Computes the CPM according to the parameters of the lattice
 	 */

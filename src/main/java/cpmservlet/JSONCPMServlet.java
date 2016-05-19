@@ -4,6 +4,9 @@ import graphconverter.CPMLatticeToGraphConverter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +17,7 @@ import cpm.CPMLattice;
 import cpm.CPMLatticeCalculationParams;
 import cytoscapeconverter.GraphToCytoscapeJSONConverter;
 import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -57,13 +61,53 @@ public class JSONCPMServlet extends HttpServlet {
 
 			createCPMLatticeFromParams(request);
 			String elements = request.getParameter("elements");
+			String data  = elements.substring(1, elements.length()-1);
 
-			elements = "{\"elements\":" + elements + "}";
+			JSONObject nodes  = new JSONObject(data);
+			System.out.println(nodes);
 
-			JSONObject nodes  = new JSONObject(elements);
+			int sigmaMax = Integer.parseInt(request.getParameter("sigmaMax"));
+			int xMax = Integer.parseInt(request.getParameter("xMax"));
+			int yMax = Integer.parseInt(request.getParameter("yMax"));
 
-			//System.out.println(nodes);
-			lattice.initialiseCPMFromUserInput(nodes);
+			int[] areas = new int[sigmaMax];
+
+			int areas_counter = 0;
+			int areas_node_index = xMax * yMax;
+
+
+
+			//JSONObject jsonChildObject = (JSONObject)nodes.get("data");
+
+			Iterator keys = nodes.keys();
+			while(keys.hasNext()) {
+				// loop to get the dynamic key
+				String currentDynamicKey = (String)keys.next();
+
+				// get the value of the dynamic key
+				JSONObject currentDynamicValue = nodes.getJSONObject(currentDynamicKey);
+
+				int i = 0;
+
+				// do something here with the value...
+			}
+
+
+
+
+			while(areas_node_index <= xMax * yMax + sigmaMax){
+
+
+
+
+				//areas[areas_counter] =
+				areas_counter++;
+			}
+
+
+			//String user_area = request.getParameter("area");
+
+			//lattice.initialiseCPMFromUserInput(user_area);
 
 			//addCPMToResponse(response);
 
@@ -77,6 +121,7 @@ public class JSONCPMServlet extends HttpServlet {
 		}
 
     }
+
     
     /**
      * *************************************************

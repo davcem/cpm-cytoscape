@@ -160,7 +160,17 @@ public class CPMLattice implements CPM{
 	 * Qnodes are the nodes initialised by the user
 	 */
 
-	public void initialiseCPMFromUserInput(JSONObject nodes){
+	public void initialiseCPMFromUserInput(String user_area){
+
+		// TODO: compute new CPM based on given nodes
+
+		System.out.println(user_area);
+
+
+		//area = user_area;
+		//fill area
+		//fill sigma
+
 
 	}
 	
@@ -218,18 +228,12 @@ public class CPMLattice implements CPM{
 			
 		}
 
-		System.out.println(area);
-		System.out.println(sigma);
+		//System.out.println(area);
+		//System.out.println(sigma);
 
 	}
 
-	/**
-	 * Computes the CPM according to the parameters of the lattice and the user created nodes
-	 */
-	public void computeUserInitialisedCPM() {
-		// TODO: compute new CPM based on given nodes
 
-	}
 	
 	/**
 	 * Computes the CPM according to the parameters of the lattice.
