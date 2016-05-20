@@ -28,7 +28,7 @@ public interface CPM {
 	/**
 	 * Initializes the lattice which is used for the computation of the CPM Lattice using nodes initialised by user
 	 */
-	public void initialiseCPMFromUserInput(String user_area);
+	public void initialiseCPMFromUserInput(int[] user_area, int[][] user_sigma);
 
 
 	/**

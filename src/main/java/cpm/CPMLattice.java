@@ -2,7 +2,6 @@ package cpm;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
-import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -160,16 +159,12 @@ public class CPMLattice implements CPM{
 	 * Qnodes are the nodes initialised by the user
 	 */
 
-	public void initialiseCPMFromUserInput(String user_area){
-
-		// TODO: compute new CPM based on given nodes
-
-		System.out.println(user_area);
+	public void initialiseCPMFromUserInput(int[] user_area, int[][] user_sigma){
 
 
-		//area = user_area;
-		//fill area
-		//fill sigma
+		area = user_area;
+		sigma = user_sigma;
+
 
 
 	}

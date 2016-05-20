@@ -17,6 +17,7 @@ import cpm.CPMLattice;
 import cpm.CPMLatticeCalculationParams;
 import cytoscapeconverter.GraphToCytoscapeJSONConverter;
 import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -61,55 +62,44 @@ public class JSONCPMServlet extends HttpServlet {
 
 			createCPMLatticeFromParams(request);
 			String elements = request.getParameter("elements");
-			String data  = elements.substring(1, elements.length()-1);
 
-			JSONObject nodes  = new JSONObject(data);
-			System.out.println(nodes);
+			JSONArray arr = new JSONArray(elements);
+
 
 			int sigmaMax = Integer.parseInt(request.getParameter("sigmaMax"));
 			int xMax = Integer.parseInt(request.getParameter("xMax"));
 			int yMax = Integer.parseInt(request.getParameter("yMax"));
 
-			int[] areas = new int[sigmaMax];
+			int[] areas = new int[sigmaMax+1];
+			int [][] sigma = new int[xMax][yMax];
 
 			int areas_counter = 0;
-			int areas_node_index = xMax * yMax;
 
+			for (int i = 0; i < arr.length(); i++) {
+				JSONObject node = arr.getJSONObject(i);
 
+				int x = node.getJSONObject("data").getInt("x");
+				int y = node.getJSONObject("data").getInt("y");
+				if(x == -1 && y == -1){
+					int area = node.getJSONObject("data").getInt("area");
+					areas[areas_counter] = area;
+					areas_counter++;
+				}
+				else {
+					sigma[x][y] = node.getJSONObject("data").getInt("cell");
+				}
 
-			//JSONObject jsonChildObject = (JSONObject)nodes.get("data");
-
-			Iterator keys = nodes.keys();
-			while(keys.hasNext()) {
-				// loop to get the dynamic key
-				String currentDynamicKey = (String)keys.next();
-
-				// get the value of the dynamic key
-				JSONObject currentDynamicValue = nodes.getJSONObject(currentDynamicKey);
-
-				int i = 0;
-
-				// do something here with the value...
 			}
 
 
 
-
-			while(areas_node_index <= xMax * yMax + sigmaMax){
-
-
+			//System.out.println(sigma);
+			//System.out.println(areas);
 
 
-				//areas[areas_counter] =
-				areas_counter++;
-			}
+			lattice.initialiseCPMFromUserInput(areas, sigma);
 
-
-			//String user_area = request.getParameter("area");
-
-			//lattice.initialiseCPMFromUserInput(user_area);
-
-			//addCPMToResponse(response);
+			addCPMToResponse(response);
 
 		}
 		else {
