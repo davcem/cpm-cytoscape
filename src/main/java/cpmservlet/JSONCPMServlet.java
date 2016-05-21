@@ -91,12 +91,6 @@ public class JSONCPMServlet extends HttpServlet {
 
 			}
 
-
-
-			//System.out.println(sigma);
-			//System.out.println(areas);
-
-
 			lattice.initialiseCPMFromUserInput(areas, sigma);
 
 			addCPMToResponse(response);

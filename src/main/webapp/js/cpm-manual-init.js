@@ -465,6 +465,7 @@ function cytoscapeRenderUserInitialisation(method) {
         Promise.all([ graphP ]).then(initCyCPM);
 
 
+
         function initCyCPM( then ){
 
             console.log("ajax request response took: ", performance.now()-ajax1 );
@@ -577,7 +578,7 @@ function cytoscapeRenderUserInitialisation(method) {
                         'curve-style' : 'haystack'
                     })
             });
-            addAreaOutput();
+            //addAreaOutput();
 
             // Output time for performance measuring
             //var renderTime = (new Date().getTime() - graphRenderInitTime) / 1000;
@@ -758,7 +759,7 @@ function cytoscapeRenderUserInitialisation(method) {
             }
 
             var t1 = performance.now();
-            console.log("random elements are: " + JSON.stringify(elements));
+            console.log("random elements of computation are: " + JSON.stringify(elements));
 
             //initiliaze cytoscape
             var cy = cytoscape({
@@ -847,7 +848,8 @@ function cytoscapeRenderUserInitialisation(method) {
                         'curve-style' : 'haystack'
                     })
             });
-            addAreaOutput();
+            //
+            // addAreaOutput();
 
             // Output time for performance measuring
             //var renderTime = (new Date().getTime() - graphRenderInitTime) / 1000;
