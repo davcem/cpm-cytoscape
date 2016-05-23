@@ -226,7 +226,7 @@ function cytoscapeRenderUserInitialisation(method) {
                 nodeToChange.data('ancestor', colorIndexForNode + x*y);
 
 
-                //console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
+                console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
 
 
 
@@ -284,7 +284,7 @@ function cytoscapeRenderUserInitialisation(method) {
             addColorToNode();
         });
 
-        //console.log("elements are: " + elements);
+        console.log("initial elements are: " + elements);
 
         // create JSON object from string
         elements = JSON.parse(elements);
@@ -367,10 +367,17 @@ function cytoscapeRenderUserInitialisation(method) {
         });
 
 
-        cy.on('click', function(evt){
+        cy.on('click', 'node', function(evt){
+            if(evt.cyTarget){
+                nodeToChange = evt.cyTarget;
+                console.log(nodeToChange);
 
-            nodeToChange = evt.cyTarget;
-            dialog.dialog("open");
+                dialog.dialog("open");
+            }
+            else {
+                return;
+            }
+
 
         });
 
@@ -491,7 +498,7 @@ function cytoscapeRenderUserInitialisation(method) {
             }
 
             var t1 = performance.now();
-            console.log("random elements are: " + JSON.stringify(elements));
+           // console.log("random elements are: " + JSON.stringify(elements));
 
             //initiliaze cytoscape
             var cy = cytoscape({
@@ -706,7 +713,6 @@ function cytoscapeRenderUserInitialisation(method) {
             type: httpType,
             dataType: 'json',
             data: {
-                'method': 'random',
                 'xMax': x,
                 'yMax': y,
                 'mcs': mcs,
@@ -759,7 +765,7 @@ function cytoscapeRenderUserInitialisation(method) {
             }
 
             var t1 = performance.now();
-            console.log("random elements of computation are: " + JSON.stringify(elements));
+            console.log("elements of computation are: " + JSON.stringify(elements));
 
             //initiliaze cytoscape
             var cy = cytoscape({
