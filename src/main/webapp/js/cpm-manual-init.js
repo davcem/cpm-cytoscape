@@ -592,7 +592,7 @@ function cytoscapeRenderUserInitialisation(method) {
                         'curve-style' : 'haystack'
                     })
             });
-            //addAreaOutput();
+            addAreaOutput();
 
             // Output time for performance measuring
             //var renderTime = (new Date().getTime() - graphRenderInitTime) / 1000;
@@ -864,7 +864,7 @@ function cytoscapeRenderUserInitialisation(method) {
                     })
             });
             //
-            // addAreaOutput();
+             addAreaOutput();
 
             // Output time for performance measuring
             //var renderTime = (new Date().getTime() - graphRenderInitTime) / 1000;
