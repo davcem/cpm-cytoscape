@@ -80,10 +80,14 @@ function cytoscapeRenderUserInitialisation(method) {
     }
         else if(method == 'compute'){
         if(computationStep == 0){
+            console.log("before sendUserInputToServlet foo areas is: " + areas);
             sendUserInputToServlet();
+
+        }
+        else{
+            computeNextStep();
         }
 
-        computeNextStep();
         return;
     }
     else {
@@ -102,7 +106,7 @@ function cytoscapeRenderUserInitialisation(method) {
 
         // calculation for leading zeros
         var numberOfNodes = x*y;
-        var leadingZeros = Math.log10(numberOfNodes) + 1 ;
+        var leadingZeros = Math.log10(numberOfNodes + maxSigma) + 1 ;
 
         
 
@@ -178,7 +182,9 @@ function cytoscapeRenderUserInitialisation(method) {
                     elements = elements + '"parentcolor":"' + darkColor + '"}}';
                     colors.push(color);
                 }
+
             }
+
 
 
             function addColorToNode() {
@@ -195,17 +201,23 @@ function cytoscapeRenderUserInitialisation(method) {
                     var colorIndexForNodeID = x * y + colorIndexForNode;
                     var previousColorIndexForNodeID = x * y + previousColorIndexForNode;
 
+                    colorIndexForNodeID  = (format+colorIndexForNodeID).substr(-format.length, format.length);
+                    previousColorIndexForNodeID  = (format+previousColorIndexForNodeID).substr(-format.length, format.length);
+
                     areas[colorIndexForNode] += 1;
                     areas[previousColorIndexForNode] -= 1;
 
                     var increasedValue = areas[colorIndexForNode];
                     var decreasedValue = areas[previousColorIndexForNode];
 
+                    console.log("elements to update are: " + JSON.stringify(cy.elements().jsons()));
+
+
                     cy.getElementById(colorIndexForNodeID).data('area', increasedValue);
                     cy.getElementById(previousColorIndexForNodeID).data('area', decreasedValue);
                 }
                 else {
-                    console.log("Error: too many cells of this cell type")
+                    console.log("Error: too many cells of this cell type");
                     return;
                 }
 
@@ -226,7 +238,7 @@ function cytoscapeRenderUserInitialisation(method) {
                 nodeToChange.data('ancestor', colorIndexForNode + x*y);
 
 
-                console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
+                //console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
 
 
 
@@ -328,16 +340,11 @@ function cytoscapeRenderUserInitialisation(method) {
                 .selector('node')
                 .style({
                     'content': 'data(id)',
-                    //'width' : '10',
-                    //'height' : '10',
-                    //'font-weight' : 'bold',
                     'font-size': '8',
                     'font-style': 'inherit',
                     'min-zoomed-font-size': '8',
                     'text-halign': 'center',
                     'text-valign': 'center',
-                    //'border-width' : '1',
-                    //'border-color': '#333',
                     'background-color': function (ele) {
                         return ele.data('color');
                     }
@@ -418,7 +425,7 @@ function cytoscapeRenderUserInitialisation(method) {
 
     function sendUserInputToServlet(){
 
-        console.log("compute next steps of user initialised graph");
+        //console.log("compute next steps of user initialised graph");
 
 
 
@@ -691,6 +698,8 @@ function cytoscapeRenderUserInitialisation(method) {
                 }
 
             }
+
+            computeNextStep();
         }
 
     }
