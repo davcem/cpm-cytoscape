@@ -613,7 +613,7 @@ function cytoscapeRenderUserInitialisation(method) {
                 cy.remove(nodesToremove);
                 cy.add(nodesSorted);
                 cy.add(edgesToAdd);
-                cy.forceRender()
+                cy.forceRender();
                 cy.endBatch();
             }
 
@@ -885,7 +885,7 @@ function cytoscapeRenderUserInitialisation(method) {
                 cy.remove(nodesToremove);
                 cy.add(nodesSorted);
                 cy.add(edgesToAdd);
-                cy.forceRender()
+                cy.forceRender();
                 cy.endBatch();
             }
 
