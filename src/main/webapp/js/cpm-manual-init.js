@@ -108,7 +108,7 @@ function cytoscapeRenderUserInitialisation(method) {
         var numberOfNodes = x*y;
         var leadingZeros = Math.log10(numberOfNodes + maxSigma) + 1 ;
 
-        
+
 
         elements = '[';
         var id = 0;
@@ -210,7 +210,7 @@ function cytoscapeRenderUserInitialisation(method) {
                     var increasedValue = areas[colorIndexForNode];
                     var decreasedValue = areas[previousColorIndexForNode];
 
-                    console.log("elements to update are: " + JSON.stringify(cy.elements().jsons()));
+                    //console.log("elements to update are: " + JSON.stringify(cy.elements().jsons()));
 
 
                     cy.getElementById(colorIndexForNodeID).data('area', increasedValue);
@@ -296,7 +296,7 @@ function cytoscapeRenderUserInitialisation(method) {
             addColorToNode();
         });
 
-        console.log("initial elements are: " + elements);
+        //console.log("initial elements are: " + elements);
 
         // create JSON object from string
         elements = JSON.parse(elements);
@@ -315,10 +315,9 @@ function cytoscapeRenderUserInitialisation(method) {
             zoomingEnabled: true,
             userZoomingEnabled: true,
             panningEnabled: true,
-            userPanningEnabled: true,
-            boxSelectionEnabled: false,
+            userPanningEnabled: false,
             autolock: false,
-            autoungrabify: false,
+            autoungrabify: true,
             autounselectify: false,
             selectionType: 'single',
             boxSelectionEnabled: true,
@@ -334,7 +333,7 @@ function cytoscapeRenderUserInitialisation(method) {
             initrender: 'ready',
             renderer: {},
             ready: function () {
-                console.log("cytoscapeRender took: ", performance.now() - t1)
+                //console.log("cytoscapeRender took: ", performance.now() - t1)
             },
             style: cytoscape.stylesheet()
                 .selector('node')
@@ -378,17 +377,68 @@ function cytoscapeRenderUserInitialisation(method) {
             if(evt.cyTarget){
                 nodeToChange = evt.cyTarget;
                 console.log(nodeToChange);
-
                 dialog.dialog("open");
             }
-            else {
-                return;
-            }
-
-
         });
 
 
+
+
+
+
+
+
+
+
+        cy.on('box', function(event){
+            // cyTarget holds a reference to the originator
+            // of the event (core or element)
+            var evtTarget = event.cyTarget;
+
+            if( evtTarget === cy ){
+                console.log('box on background');
+            } else {
+                console.log('box on some element');
+            }
+        });
+
+        //cy.$('node').eq(0).trigger('box');
+        //cy.$('node').eq(0).trigger('boxselect');
+
+        cy.one('box', 'node', function(){
+            console.log('box!');
+        });
+
+        cy.one('boxselect', 'node', function(){
+            console.log('boxselect!');
+        });
+        cy.on('boxselect', function(event){
+            // cyTarget holds a reference to the originator
+            // of the event (core or element)
+            var evtTarget = event.cyTarget;
+
+            if( evtTarget === cy ){
+                console.log('tap on background');
+            } else {
+                console.log('tap on some element');
+            }
+        });
+        cy.on('box', 'node', function(evt){
+
+            var node = evt.cyTarget;
+            console.log( 'boxed ' + node.id() );
+        });
+
+        cy.on('boxselect', 'node', function(evt){
+            console.log("boxselect is: ");
+            console.log(evt.cyTarget);
+        });
+
+
+        cy.on('boxselect', function(evt){
+            console.log("boxselect is: ");
+            console.log(evt.cyTarget);
+        });
     }
 
     function getColor(initialColor, cellType, isDark) {
@@ -520,10 +570,9 @@ function cytoscapeRenderUserInitialisation(method) {
                 zoomingEnabled: true,
                 userZoomingEnabled: true,
                 panningEnabled: true,
-                userPanningEnabled: true,
-                boxSelectionEnabled: false,
+                userPanningEnabled: false,
                 autolock: false,
-                autoungrabify: false,
+                autoungrabify: true,
                 autounselectify: false,
                 selectionType: 'single',
                 boxSelectionEnabled: true,
@@ -538,7 +587,9 @@ function cytoscapeRenderUserInitialisation(method) {
                 pixelRatio: 'auto',
                 initrender: 'ready',
                 renderer: {  },
-                ready:    function(){ console.log("cytoscapeRender took: ", performance.now()-t1)},
+                ready:    function(){
+                    //console.log("cytoscapeRender took: ", performance.now()-t1)
+                },
                 style: cytoscape.stylesheet()
                     .selector('node')
                     .style({
@@ -774,7 +825,7 @@ function cytoscapeRenderUserInitialisation(method) {
             }
 
             var t1 = performance.now();
-            console.log("elements of computation are: " + JSON.stringify(elements));
+            //console.log("elements of computation are: " + JSON.stringify(elements));
 
             //initiliaze cytoscape
             var cy = cytoscape({
@@ -789,10 +840,9 @@ function cytoscapeRenderUserInitialisation(method) {
                 zoomingEnabled: true,
                 userZoomingEnabled: true,
                 panningEnabled: true,
-                userPanningEnabled: true,
-                boxSelectionEnabled: false,
+                userPanningEnabled: false,
                 autolock: false,
-                autoungrabify: false,
+                autoungrabify: true,
                 autounselectify: false,
                 selectionType: 'single',
                 boxSelectionEnabled: true,
@@ -807,21 +857,18 @@ function cytoscapeRenderUserInitialisation(method) {
                 pixelRatio: 'auto',
                 initrender: 'ready',
                 renderer: {  },
-                ready:    function(){ console.log("cytoscapeRender took: ", performance.now()-t1)},
+                ready:    function(){
+                    //console.log("cytoscapeRender took: ", performance.now()-t1)
+                },
                 style: cytoscape.stylesheet()
                     .selector('node')
                     .style({
                         'content': 'data(id)',
-                        //'width' : '10',
-                        //'height' : '10',
-                        //'font-weight' : 'bold',
                         'font-size' : '8',
                         'font-style' : 'inherit',
                         'min-zoomed-font-size' : '8',
                         'text-halign' : 'center',
                         'text-valign' : 'center',
-                        //'border-width' : '1',
-                        //'border-color': '#333',
                         'background-color':
                             function (ele){
                                 return ele.data('color');
