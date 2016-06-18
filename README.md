@@ -61,7 +61,7 @@ We know, that not every clinician and/or scientist is able to run his own web se
 Therefore, we further provide an online version, always running a stable version: 
 [Try out our Online Demo](http://styx.cgv.tugraz.at:8080/cpm-cytoscape/) and give us give us [feedback](mailto:f.jeanquartier[at]hci-kdd.org).
 
-See an example run also below:
+See an example showing several simulation steps as animated GIF also below:
 <img src="img/cpm-cytoscape-example-run.gif" alt="Animated GIF showing init step and 10 computation steps. In the last image the line chart is shown." /> 
 
 ## Acknowledgments ##

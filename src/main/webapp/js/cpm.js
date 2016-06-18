@@ -1,5 +1,5 @@
 //global visible variables
-var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep;
+var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep, multipleComputeTimesRun;
 
 function cytoscapeRender(method){
 
@@ -52,16 +52,18 @@ function cytoscapeRender(method){
 		computationStep++;
 	} 
   else if (method=='multipleCompute') {
-		httpType = 'GET';
-		cyContainer = 'cyComputed';
+	  httpType = 'GET';
+	  cyContainer = 'cyComputed';
 		areaTable = 'areaComputedTable';
 		tableHeader = 'areaComputedTableHeader';
 		computationStep++;
-    setTimeout(function(){ $("#computeBtn").click(); }, 500); // call compute a 2nd time
+		multipleComputeTimesRun = 0;
+    _doMultipleComputeRuns();
   }
   else {
 		console.log("Method not defined!");
 	}
+	
 
 	$('.loading-spinner').show(); // show loading feedback when render method called
 	
@@ -317,4 +319,17 @@ function cytoscapeRender(method){
 
         }
   }//cytoscapeInit End
+}
+
+/**
+* compute multiple steps after another for fast forward simulation 
+*/
+function _doMultipleComputeRuns() {
+	if (multipleComputeTimesRun < 10) { 
+		setTimeout(function(){ 
+			$("#computeBtn").click();
+		  _doMultipleComputeRuns(); 
+		}, 500);
+	  multipleComputeTimesRun++; 
+	}
 }
