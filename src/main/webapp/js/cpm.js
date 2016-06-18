@@ -34,16 +34,32 @@ function cytoscapeRender(method){
 		areaTable = 'areaInitializedTable';
 		tableHeader = 'areaInitializedTableHeader';
 		computationStep = 0;
+		if ($('#computeBtn').is(":disabled")) { 
+      $('#computeBtn').removeAttr("disabled");
+    }
+		if ($('#multipleComputeBtn').is(":disabled")) { 
+      $('#multipleComputeBtn').removeAttr("disabled");
+    }
 		if (maxSigma>=1) { $('#toggleLineChart').show(); }
 		else {  $('#toggleLineChart').hide(); }
 
-	} else if (method='compute') {
+	} 
+  else if (method=='compute') {
 		httpType = 'GET';
 		cyContainer = 'cyComputed';
 		areaTable = 'areaComputedTable';
 		tableHeader = 'areaComputedTableHeader';
 		computationStep++;
-	} else {
+	} 
+  else if (method=='multipleCompute') {
+		httpType = 'GET';
+		cyContainer = 'cyComputed';
+		areaTable = 'areaComputedTable';
+		tableHeader = 'areaComputedTableHeader';
+		computationStep++;
+    setTimeout(function(){ $("#computeBtn").click(); }, 500); // call compute a 2nd time
+  }
+  else {
 		console.log("Method not defined!");
 	}
 
