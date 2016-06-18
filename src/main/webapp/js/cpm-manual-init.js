@@ -195,32 +195,26 @@ function cytoscapeRenderUserInitialisation(method) {
                 var newColor = colors[colorIndexForNode];
 
                 // update area
-                if(areas[colorIndexForNode] < x*y){
+                var previousColorIndexForNode = parseInt(node.data('cell'));
 
-                    var previousColorIndexForNode = parseInt(node.data('cell'));
+                var colorIndexForNodeID = x * y + colorIndexForNode;
+                var previousColorIndexForNodeID = x * y + previousColorIndexForNode;
 
-                    var colorIndexForNodeID = x * y + colorIndexForNode;
-                    var previousColorIndexForNodeID = x * y + previousColorIndexForNode;
+                colorIndexForNodeID  = (format+colorIndexForNodeID).substr(-format.length, format.length);
+                previousColorIndexForNodeID  = (format+previousColorIndexForNodeID).substr(-format.length, format.length);
 
-                    colorIndexForNodeID  = (format+colorIndexForNodeID).substr(-format.length, format.length);
-                    previousColorIndexForNodeID  = (format+previousColorIndexForNodeID).substr(-format.length, format.length);
+                areas[colorIndexForNode] += 1;
+                areas[previousColorIndexForNode] -= 1;
 
-                    areas[colorIndexForNode] += 1;
-                    areas[previousColorIndexForNode] -= 1;
+                var increasedValue = areas[colorIndexForNode];
+                var decreasedValue = areas[previousColorIndexForNode];
 
-                    var increasedValue = areas[colorIndexForNode];
-                    var decreasedValue = areas[previousColorIndexForNode];
-
-                    //console.log("elements to update are: " + JSON.stringify(cy.elements().jsons()));
+                //console.log("elements to update are: " + JSON.stringify(cy.elements().jsons()));
 
 
-                    cy.getElementById(colorIndexForNodeID).data('area', increasedValue);
-                    cy.getElementById(previousColorIndexForNodeID).data('area', decreasedValue);
-                }
-                else {
-                    console.log("Error: too many cells of this cell type");
-                    return;
-                }
+                cy.getElementById(colorIndexForNodeID).data('area', increasedValue);
+                cy.getElementById(previousColorIndexForNodeID).data('area', decreasedValue);
+
 
 
 

@@ -28,7 +28,7 @@
         colors: null,
         position: 'upside',  // upside | downside
         insert: 'before',    // default
-        clear_btn: 'first',  // default
+        //clear_btn: 'first',  // default
         timeout: 2000        // default
       };
 
@@ -70,7 +70,6 @@
             }).css('background-color', col);
 
 
-        // console.log(key + '===' +  current_value + ' - > '+(key === current_value)+' - t -'+(typeof key)+' '+(typeof current_value));
         if ( key === current_value ) {
           $sw.addClass('active');
           $button.css('background', col);
@@ -79,14 +78,7 @@
         $sw.appendTo( $bubble );
       });
 
-      // Create clear button
-      var
-        $clear_btn = $('<span>').addClass('swatch clear').attr('title', 'Clear selection');
-      if (plugin.settings.clear_btn === 'last') {
-        $clear_btn.addClass('last').appendTo( $bubble );
-      } else {
-        $clear_btn.prependTo( $bubble );
-      }
+
 
       // Public
       plugin.destroy = function() {
@@ -129,18 +121,12 @@
           $button = $('.'+ns+'-button[data-target="' + $( this ).closest( '.'+ns+'-button' ).attr('data-target') + '"]'),
           $bubble = $( this ).closest( '.'+ns+'-bubble' );
 
-        // console.log('.'+ns+'-button [data-target="' + $( this ).closest( '.'+ns+'-button' ).attr('data-target') + '"]');
         $bubble.find('.active').removeClass('active');
 
         // Set background on color
         // User clicked in the clear swatch
-        if ( $(e.target).is('.clear') ) {
-          $button.removeAttr('style');
-          col = '';
-        } else {
-          $(this).addClass('active');
-          $button.css('background', col);
-        }
+        $(this).addClass('active');
+        //$button.css('background', col);
         $( '[name="'+$button.attr('data-target')+'"]' ).val( name );
       })['insert'+plugin.settings.insert]( $el );
 
@@ -166,7 +152,3 @@
 
 })(jQuery);
 
-// Sample usage
-// $(function() {
-//   $('[data-palette-color-picker]').paletteColorPicker();
-// });
