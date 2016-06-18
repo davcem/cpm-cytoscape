@@ -83,7 +83,6 @@ function cytoscapeRenderUserInitialisation(method) {
     }
         else if(method == 'compute'){
         if(computationStep == 0){
-            console.log("before sendUserInputToServlet foo areas is: " + areas);
             sendUserInputToServlet();
 
         }
@@ -233,12 +232,13 @@ function cytoscapeRenderUserInitialisation(method) {
                 node.data('ancestor', colorIndexForNode + x*y);
 
 
-                console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
+                //console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
             }
 
 
 
             function addColorToNode() {
+
 
                 if(multipleSelection ){
                     for(var n = 0; n < multipleSelectionNodes.length; n++){
@@ -246,6 +246,7 @@ function cytoscapeRenderUserInitialisation(method) {
 
                     }
                     multipleSelectionNodes = [];
+                    multipleSelection = false;
                 }
                 else {
                     addColor(nodeToChange);
@@ -288,8 +289,8 @@ function cytoscapeRenderUserInitialisation(method) {
 
         dialog = $( "#colorpicker" ).dialog({
             autoOpen: false,
-            height: 500,
-            width: 800,
+            height: 400,
+            width: 400,
             modal: true,
             buttons: {
                 "Add cell type": addColorToNode,
@@ -833,9 +834,9 @@ function cytoscapeRenderUserInitialisation(method) {
                         'text-valign' : 'center',
                         'background-color':
                             function (ele){
-                                return ele.data('color');
+                                /*return ele.data('color');
                             }
-                               /* if (maxSigma > 2) {
+                                */if (maxSigma > 2) {
                                     if (sigmaCounter <= maxSigma) {
                                         if ( $.inArray(ele.data('color'), colorArray) == -1 ){
                                             colorArray[ele.data('cell')] = ele.data('color');
@@ -851,7 +852,7 @@ function cytoscapeRenderUserInitialisation(method) {
                                     }
                                     return ele.data('parentcolor');  // color specified in the NodeJSONAdapter
                                 }
-                            }*/
+                            }
                     })
                     //set special colour for ECM
                     .selector('node[cell = "0"]')
@@ -925,7 +926,7 @@ function cytoscapeRenderUserInitialisation(method) {
                     $("#areaComputedTable tr").fadeOut();
                 }
 
-                // we need to add 2 because one for headers in 1 colum and 1 for
+                // we need to add 2 because one for headers in 1 column and 1 for
                 // cell 0 (ECM)
                 currentAreaTable.colSpan = maxSigma + 2;
 
