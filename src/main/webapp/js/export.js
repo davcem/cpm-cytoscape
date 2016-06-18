@@ -31,11 +31,15 @@ $(document).ready(function () {
         var evt = new Event('click');                       
         aLink.download = fileName;
         aLink.href = urlData ;
-        aLink.dispatchEvent(evt);
-        if (navigator.userAgent.indexOf("Firefox") > 0) {
+        var isFirefox = typeof InstallTrigger !== 'undefined';
+        var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+        if (isFirefox || isSafari) {
           //needed because of firefox bug 395917 
-          //( https://bugzilla.mozilla.org/show_bug.cgi?id=395917)
-          document.location.href = aLink.href; 
+          //and because of navigating in safari
+          window.open(aLink.href, '_blank'); //open download in new window
+        }
+        else {
+          aLink.dispatchEvent(evt);
         }
     }
     
