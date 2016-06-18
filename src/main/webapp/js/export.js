@@ -28,11 +28,15 @@ $(document).ready(function () {
      */ 
     function downloadFile(fileName, urlData){
         var aLink = document.createElement('a');
-        var evt = document.createEvent("HTMLEvents");
-        evt.initEvent("click");
+        var evt = new Event('click');                       
         aLink.download = fileName;
         aLink.href = urlData ;
         aLink.dispatchEvent(evt);
+        if (navigator.userAgent.indexOf("Firefox") > 0) {
+          //needed because of firefox bug 395917 
+          //( https://bugzilla.mozilla.org/show_bug.cgi?id=395917)
+          document.location.href = aLink.href; 
+        }
     }
     
     /**
