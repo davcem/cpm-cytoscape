@@ -12,6 +12,8 @@ var areas = [];
 var colors = [];
 var lightColor = "#96e0e0";
 var darkColor = "#91243e";
+var multipleSelection = false;
+var multipleSelectionNodes = [];
 
 function addSimulationButton(method){
     if(method == 'random'){
@@ -30,6 +32,7 @@ function cytoscapeRenderUserInitialisation(method) {
     var sigmaCounter = 0;
     var colorArray = new Array();
     colorArray[0] = "#e2e2e2"; //default color for ECM
+
 
 
     x = document.getElementsByName("maxX")[0].value;
@@ -57,7 +60,7 @@ function cytoscapeRenderUserInitialisation(method) {
         areas[areaCounter] = 0;
     }
 
-    colors.push("#e2e2e2")//default color for ECM
+    colors.push("#e2e2e2");//default color for ECM
 
 
     var button = document.getElementById("randomInitBtn");
@@ -185,9 +188,7 @@ function cytoscapeRenderUserInitialisation(method) {
 
             }
 
-
-
-            function addColorToNode() {
+            function addColor(node){
                 colorIndexForNode = document.getElementById("color").value;
                 colorIndexForNode = parseInt(colorIndexForNode);
 
@@ -196,7 +197,7 @@ function cytoscapeRenderUserInitialisation(method) {
                 // update area
                 if(areas[colorIndexForNode] < x*y){
 
-                    var previousColorIndexForNode = parseInt(nodeToChange.data('cell'));
+                    var previousColorIndexForNode = parseInt(node.data('cell'));
 
                     var colorIndexForNodeID = x * y + colorIndexForNode;
                     var previousColorIndexForNodeID = x * y + previousColorIndexForNode;
@@ -232,13 +233,30 @@ function cytoscapeRenderUserInitialisation(method) {
                 }
 
 
-                nodeToChange.data('color', newColor);
-                nodeToChange.data('parentcolor', parentColor);
-                nodeToChange.data('cell', colorIndexForNode);
-                nodeToChange.data('ancestor', colorIndexForNode + x*y);
+                node.data('color', newColor);
+                node.data('parentcolor', parentColor);
+                node.data('cell', colorIndexForNode);
+                node.data('ancestor', colorIndexForNode + x*y);
 
 
-                //console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
+                console.log("updated elements are: " + JSON.stringify(cy.elements().jsons()));
+            }
+
+
+
+            function addColorToNode() {
+
+                if(multipleSelection ){
+                    for(var n = 0; n < multipleSelectionNodes.length; n++){
+                        addColor(multipleSelectionNodes[n]);
+
+                    }
+                    multipleSelectionNodes = [];
+                }
+                else {
+                    addColor(nodeToChange);
+                }
+
 
 
 
@@ -376,7 +394,6 @@ function cytoscapeRenderUserInitialisation(method) {
         cy.on('click', 'node', function(evt){
             if(evt.cyTarget){
                 nodeToChange = evt.cyTarget;
-                console.log(nodeToChange);
                 dialog.dialog("open");
             }
         });
@@ -384,60 +401,11 @@ function cytoscapeRenderUserInitialisation(method) {
 
 
 
-
-
-
-
-
-
-        cy.on('box', function(event){
-            // cyTarget holds a reference to the originator
-            // of the event (core or element)
-            var evtTarget = event.cyTarget;
-
-            if( evtTarget === cy ){
-                console.log('box on background');
-            } else {
-                console.log('box on some element');
-            }
-        });
-
-        //cy.$('node').eq(0).trigger('box');
-        //cy.$('node').eq(0).trigger('boxselect');
-
-        cy.one('box', 'node', function(){
-            console.log('box!');
-        });
-
-        cy.one('boxselect', 'node', function(){
-            console.log('boxselect!');
-        });
-        cy.on('boxselect', function(event){
-            // cyTarget holds a reference to the originator
-            // of the event (core or element)
-            var evtTarget = event.cyTarget;
-
-            if( evtTarget === cy ){
-                console.log('tap on background');
-            } else {
-                console.log('tap on some element');
-            }
-        });
-        cy.on('box', 'node', function(evt){
-
-            var node = evt.cyTarget;
-            console.log( 'boxed ' + node.id() );
-        });
-
-        cy.on('boxselect', 'node', function(evt){
-            console.log("boxselect is: ");
-            console.log(evt.cyTarget);
-        });
-
-
-        cy.on('boxselect', function(evt){
-            console.log("boxselect is: ");
-            console.log(evt.cyTarget);
+        cy.on('select', 'node', function(evt){
+            window["selectedNodes"] = cy.$('node:selected');
+            multipleSelection = true;
+            multipleSelectionNodes.push(evt.cyTarget);
+            dialog.dialog("open");
         });
     }
 
