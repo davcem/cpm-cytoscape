@@ -86,18 +86,18 @@ lambda for area calc.:1
   ```
   *  
     ```
-light cell's target area factor:1 (or 0.5 if you want the light cell's to rise)
+light cell's target area factor:1 *(or 0.5 if you want the light cell's to grow)*
   ```
   *  
     ```
-dark cell's target area factor:1 (or 0.5 if you want the dark cell's to rise)
+dark cell's target area factor:1 *(or 0.5 if you want the dark cell's to grow)*
   ```
   *  
     ```
 light/dark ratio:2
   ```
 
-_Parameters comprise:_
+__Parameters comprise:__
 <small>
    * lattice size x*y
    * count of monte carlo steps and substeps (representing units of time)
@@ -110,8 +110,8 @@ _Parameters comprise:_
    * and initialization ratio between dark (tumor) and light (normal) cells
 </small>
 
-3. After pressing the button _[initialize]_, the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
-4. Now you can use the button _[compute next simulation run]_ or calculate the next ten computation cycles at once by using the option [compute next two simulation runs]. The given experimental area will be then completely filled after 7 to 8 computation steps. So, malignant cells within the experimental area will have reached their critical mass by then. The simulated cancer cells grow according to Gompertz kinetics imitating 2D cultured glioma cells or spheroids implanted in animals (compare [Rubenstein et al. 2008](http://www.sciencedirect.com/science/article/pii/S0006349508819844)). One computation step now accounts for 50 hours. If you change input parameters of MCS and substeps the time factor will change appropriately, also depending on the size of matrix, given by parameters X and Y. Using the previous input parameters for X and Y equaling 50, the experimental area amounts for up to 2500 cells.
+3. After pressing the button __[initialize]__, the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
+4. Now you can use the button __[compute next simulation run]__ or calculate the next ten computation cycles at once by using the option [compute next two simulation runs]. The given experimental area will be then completely filled after 7 to 8 computation steps. So, malignant cells within the experimental area will have reached their critical mass by then. The simulated cancer cells grow according to Gompertz kinetics imitating 2D cultured glioma cells or spheroids implanted in animals (compare [Rubenstein et al. 2008](http://www.sciencedirect.com/science/article/pii/S0006349508819844)). One computation step now accounts for 50 hours. If you change input parameters of MCS and substeps the time factor will change appropriately, also depending on the size of matrix, given by parameters X and Y. Using the previous input parameters for X and Y equaling 50, the experimental area amounts for up to 2500 cells.
 5. Press the button [show line chart] will give you the summary of previously calculated steps which you can download as spreadsheet using the option [export as csv]. The line chart shows the amount of computation steps on the x-axis and the amount of cellular bricks on the y-axis. 
 6. Finally, we encourage readers to use GitHub for having a closer look at our implementation, explore it's features and suggest enhancements as well as participate in the development. :)
 
