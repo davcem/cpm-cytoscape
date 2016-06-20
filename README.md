@@ -35,7 +35,6 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
 
 1. Start the tool via the demo or offline according to the instructions presented below.
 2. Go to the tools top section for input parameters and type in the values, given in list beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
-  <div>
   * X:50  
   * Y:50  
   * MCS:25 
@@ -45,7 +44,8 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
   * temperature:4
   * light/dark ratio:2 
 
-  Parameters comprise:
+
+  *Parameters comprise:*
   * lattice size x*y
   * count of monte carlo steps and substeps (representing units of time)
   * number of cell types σ, namely dark (tumor) and light (normal) cells
@@ -55,7 +55,6 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
   * cellular elasticity index λ (representing a growth limiting factor)
   * cell-type target areas
   * and initialization ratio between dark (tumor) and light (normal) cells
-  </div>
 
 3. After pressing the button [initialize], the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
 4. Now you can use the button [compute next simulation run] or calculate the next ten computation cycles at once by using the option [compute next two simulation runs]. The given experimental area will be then completely filled after 7 to 8 computation steps. So, malignant cells within the experimental area will have reached their critical mass by then. The simulated cancer cells grow according to Gompertz kinetics imitating 2D cultured glioma cells or spheroids implanted in animals [Rubenstein2008theRole]{http://www.sciencedirect.com/science/article/pii/S0006349508819844}. One computation step now accounts for 50 hours. If you change input parameters of MCS and substeps the time factor will change appropriately, also depending on the size of matrix, given by parameters X and Y. Using the previous input parameters for X and Y equaling 50, the experimental area amounts for up to 2500 cells.
