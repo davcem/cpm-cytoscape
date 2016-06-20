@@ -26,9 +26,33 @@ The CPM model is a popular lattice-based, multi-particle cell-based formalism, a
 
 We make use of the graph theory and visualization library [Cytoscape.js](http://js.cytoscape.org) to create simulation output in html.
 
-### User Interface ###
+
+### User Interface & Tutorial ###
 
 [See the overview of the tool's user interface](img/cpm-cytosacpe-ui-description.pdf)
+
+####Tutorial On Modeling Brain Tumor Growth####
+
+1. Start the tool via the demo or offline according to the instructions presented below.
+2. Go to the tools top section for input parameters and type in the values, given in the table beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
+  X | Y | MCS | substeps | max simga | matrix density | temperature | light/dark ratio
+  -- | -- | --- | ------- | --------- | -------- | --------- | ------- 
+  50 | 50 | 25 | 10 | 2 | 1 | 4 | 2
+  Parameters comprise:
+  * lattice size x*y
+  •	count of monte carlo steps and substeps (representing units of time)
+  •	number of cell types σ, namely dark (tumor) and light (normal) cells
+  •	matrix density (given the cell density between dark and light cells in proportion to extracellular matrix)
+  •	temperature T (resembling cellular motility)
+  •	cell-type interaction parameters J (so-called boundary energy coefficient determining cell growth as multiplicative degree of freedom)
+  •	cellular elasticity index λ (representing a growth limiting factor)
+  •	cell-type target areas
+  •	and initialization ratio between dark (tumor) and light (normal) cells
+
+3. After pressing the button [initialize], the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
+4. Now you can use the button [compute next simulation run] or calculate the next ten computation cycles at once by using the option [compute next two simulation runs]. The given experimental area will be then completely filled after 7 to 8 computation steps. So, malignant cells within the experimental area will have reached their critical mass by then. The simulated cancer cells grow according to Gompertz kinetics imitating 2D cultured glioma cells or spheroids implanted in animals [Rubenstein2008theRole]{http://www.sciencedirect.com/science/article/pii/S0006349508819844}. One computation step now accounts for 50 hours. If you change input parameters of MCS and substeps the time factor will change appropriately, also depending on the size of matrix, given by parameters X and Y. Using the previous input parameters for X and Y equaling 50, the experimental area amounts for up to 2500 cells.
+5. Press the button [show line chart] will give you the summary of previously calculated steps which you can download as spreadsheet using the option [export as csv]. The line chart shows the amount of computation steps on the x-axis and the amount of cellular bricks on the y-axis. 
+6. Finally, we encourage readers to use GitHub for having a closer look at our implementation, explore it's features and suggest enhancements as well as participate in the development. :)
 
 
 ## How to Run and Deploy cpm-cytoscape in silico simulation app ##
@@ -65,7 +89,8 @@ We know, that not every clinician and/or scientist is able to run his own web se
 Therefore, we further provide an online version, always running a stable version: 
 [Try out our Online Demo](http://styx.cgv.tugraz.at:8080/cpm-cytoscape/) and  give us [feedback](mailto:f.jeanquartier[at]hci-kdd.org).
 
-See an example showing several simulation steps as animated GIF also below:
+See an example showing several simulation steps as animated GIF also below: 
+
 <img src="img/cpm-cytoscape-example-run.gif" alt="Animated GIF showing init step and 10 computation steps. In the last image the line chart is shown." /> 
 
 ## Acknowledgments ##
