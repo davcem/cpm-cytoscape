@@ -35,19 +35,23 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
 
 1. Start the tool via the demo or offline according to the instructions presented below.
 2. Go to the tools top section for input parameters and type in the values, given in the table beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
-  X | Y | MCS | substeps | max simga | matrix density | temperature | light/dark ratio
-  -- | -- | --- | ------- | --------- | -------- | --------- | ------- 
-  50 | 50 | 25 | 10 | 2 | 1 | 4 | 2
+
+------------- | ----------------
+ X:50         | max sigma:2 
+ Y:50         | matrix density:1
+ MCS:25       | temperature:4
+ substeps:10  | light/dark ratio:2 
+  
   Parameters comprise:
-  * lattice size x*y
-  •	count of monte carlo steps and substeps (representing units of time)
-  •	number of cell types σ, namely dark (tumor) and light (normal) cells
-  •	matrix density (given the cell density between dark and light cells in proportion to extracellular matrix)
-  •	temperature T (resembling cellular motility)
-  •	cell-type interaction parameters J (so-called boundary energy coefficient determining cell growth as multiplicative degree of freedom)
-  •	cellular elasticity index λ (representing a growth limiting factor)
-  •	cell-type target areas
-  •	and initialization ratio between dark (tumor) and light (normal) cells
+    * lattice size x*y
+    * count of monte carlo steps and substeps (representing units of time)
+    * number of cell types σ, namely dark (tumor) and light (normal) cells
+    * matrix density (given the cell density between dark and light cells in proportion to extracellular matrix)
+  * temperature T (resembling cellular motility)
+  * cell-type interaction parameters J (so-called boundary energy coefficient determining cell growth as multiplicative degree of freedom)
+  * cellular elasticity index λ (representing a growth limiting factor)
+  * cell-type target areas
+  * and initialization ratio between dark (tumor) and light (normal) cells
 
 3. After pressing the button [initialize], the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
 4. Now you can use the button [compute next simulation run] or calculate the next ten computation cycles at once by using the option [compute next two simulation runs]. The given experimental area will be then completely filled after 7 to 8 computation steps. So, malignant cells within the experimental area will have reached their critical mass by then. The simulated cancer cells grow according to Gompertz kinetics imitating 2D cultured glioma cells or spheroids implanted in animals [Rubenstein2008theRole]{http://www.sciencedirect.com/science/article/pii/S0006349508819844}. One computation step now accounts for 50 hours. If you change input parameters of MCS and substeps the time factor will change appropriately, also depending on the size of matrix, given by parameters X and Y. Using the previous input parameters for X and Y equaling 50, the experimental area amounts for up to 2500 cells.
