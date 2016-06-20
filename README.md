@@ -96,6 +96,8 @@ dark cell's target area factor:1 (or 0.5 if you want the dark cell's to grow)
     ```
 light/dark ratio:2
     ```
+    
+    
 
     >__Parameters comprise:__
     >  *<small style="font-size:0.75em;">
