@@ -50,7 +50,7 @@ Monte-Carlo-Steps:25
   ```
   *  
     ```
-Monte-Carlo-Substeps:100
+Monte-Carlo-Substeps:100 _(or smaller down to 25, if you want to have a slower grow)_
   ```
   *  
     ```
@@ -86,11 +86,11 @@ lambda for area calc.:0.05
   ```
   *  
     ```
-light cell's target area factor:1 (or 0.5 if you want the light cell's to grow)
+light cell's target area factor:1 _(or 0.5 if you want the light cell's to grow)_
   ```
   *  
     ```
-dark cell's target area factor:1 (or 0.5 if you want the dark cell's to grow)
+dark cell's target area factor:1 _(or 0.5 if you want the dark cell's to grow)_
   ```
   *  
     ```
