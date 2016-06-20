@@ -36,10 +36,14 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
 1. Start the tool via the demo or offline according to the instructions presented below.
 2. Go to the tools top section for input parameters and type in the values, given in list beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
 
-  * ````html
-X:50  
-  * ````html
-Y:50  
+  * 
+    ````html
+X:50
+  ```  
+  * 
+    ````html 
+Y:50
+  ```  
   * MCS:25 
   * substeps:10 
   * max sigma:2
