@@ -86,17 +86,17 @@ lambda for area calc.:1
   ```
   *  
     ```
-light cell's target area factor:1
+light cell's target area factor:1 (or 0.5 if you want the light cell's to rise)
   ```
   *  
     ```
-dark cell's target area factor:1
+dark cell's target area factor:1 (or 0.5 if you want the dark cell's to rise)
   ```
   *  
     ```
 light/dark ratio:2
   ```
-
+<sub style="font-size:0.9em;">
 > _Parameters comprise:_
 >   * lattice size x*y
 >   * count of monte carlo steps and substeps (representing units of time)
@@ -107,6 +107,7 @@ light/dark ratio:2
 >   * cellular elasticity index λ (representing a growth limiting factor)
 >   * cell-type target areas
 >   * and initialization ratio between dark (tumor) and light (normal) cells
+</sub>
 
 3. After pressing the button *[initialize]*, the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
 4. Now you can use the button *[compute next simulation run]* or calculate the next ten computation cycles at once by using the option [compute next two simulation runs]. The given experimental area will be then completely filled after 7 to 8 computation steps. So, malignant cells within the experimental area will have reached their critical mass by then. The simulated cancer cells grow according to Gompertz kinetics imitating 2D cultured glioma cells or spheroids implanted in animals (compare [Rubenstein et al. 2008](http://www.sciencedirect.com/science/article/pii/S0006349508819844)). One computation step now accounts for 50 hours. If you change input parameters of MCS and substeps the time factor will change appropriately, also depending on the size of matrix, given by parameters X and Y. Using the previous input parameters for X and Y equaling 50, the experimental area amounts for up to 2500 cells.
