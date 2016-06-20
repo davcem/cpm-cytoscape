@@ -96,12 +96,11 @@ dark cell's target area factor:1 (or 0.5 if you want the dark cell's to grow)
     ```
 light/dark ratio:2
     ```
-    
-    
+
 
     >__Parameters comprise:__
     >  *<small style="font-size:0.75em;">
-        lattice size x\*y, 
+        lattice size ``x * y``, 
         count of monte carlo steps and substeps (representing units of time), 
         number of cell types σ, namely dark (tumor) and light (normal) cells, 
         matrix density (given the cell density between dark and light cells in proportion to extracellular matrix), 
