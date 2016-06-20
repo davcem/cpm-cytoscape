@@ -34,7 +34,7 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
 ####Tutorial On Modeling Brain Tumor Growth####
 
 1. Start the tool via the demo or offline according to the instructions presented below.
-2. Go to the tools top section for input parameters and type in the values, given in the table beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
+2. Go to the tools top section for input parameters and type in the values, given in list beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
   <div>
   * X:50  
   * Y:50  
@@ -44,9 +44,7 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
   * matrix density:1
   * temperature:4
   * light/dark ratio:2 
-  </div>
-  
-  <div>
+
   Parameters comprise:
   * lattice size x*y
   * count of monte carlo steps and substeps (representing units of time)
@@ -56,7 +54,7 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
   * cell-type interaction parameters J (so-called boundary energy coefficient determining cell growth as multiplicative degree of freedom)
   * cellular elasticity index λ (representing a growth limiting factor)
   * cell-type target areas
-and initialization ratio between dark (tumor) and light (normal) cells
+  * and initialization ratio between dark (tumor) and light (normal) cells
   </div>
 
 3. After pressing the button [initialize], the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
