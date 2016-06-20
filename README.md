@@ -37,26 +37,65 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
 2. Go to the tools top section for input parameters and type in the values, given in list beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
 
   * 
-    ````html
-X:50
+    ```
+Max X:50
   ```  
   * 
-    ````html 
-Y:50
+    ``` 
+Max Y:50
   ```  
-  * MCS:25 
-  * substeps:10 
-  * max sigma:2
-  * matrix density:1
-  * temperature:4 
-  * J_ecm:8
-  * J_light:30
-  * J_dark:3
-  * J_mix:2
-  * lambda:1
-  * target area light:1
-  * target area dark:1
-  * light/dark ratio:2
+  * 
+    ```
+Monte-Carlo-Steps:25
+  ```
+  *  
+    ```
+Monte-Carlo-Substeps:10
+  ```
+  *  
+    ```
+Max Sigma:2
+  ```
+  *  
+    ```
+Matrix Density:1
+  ```
+  *  
+    ```
+Temperature:4
+  ```
+  *  
+    ```
+ecm's energy:8
+  ```
+  *  
+    ```
+light cells' energy:30
+  ```
+  *  
+    ```
+dark cells' energy:3
+  ```
+  *  
+    ```
+mixex cells' energy:2
+  ```
+  *  
+    ```
+lambda for area calc.:1
+  ```
+  *  
+    ```
+light cell's target area factor:1
+  ```
+  *  
+    ```
+dark cell's target area factor:1
+  ```
+  *  
+    ```
+light/dark ratio:2
+  ```
 
 
   *Parameters comprise:*
@@ -70,8 +109,8 @@ Y:50
   * cell-type target areas
   * and initialization ratio between dark (tumor) and light (normal) cells
 
-3. After pressing the button [initialize], the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
-4. Now you can use the button [compute next simulation run] or calculate the next ten computation cycles at once by using the option [compute next two simulation runs]. The given experimental area will be then completely filled after 7 to 8 computation steps. So, malignant cells within the experimental area will have reached their critical mass by then. The simulated cancer cells grow according to Gompertz kinetics imitating 2D cultured glioma cells or spheroids implanted in animals (compare [Rubenstein et al. 2008](http://www.sciencedirect.com/science/article/pii/S0006349508819844)). One computation step now accounts for 50 hours. If you change input parameters of MCS and substeps the time factor will change appropriately, also depending on the size of matrix, given by parameters X and Y. Using the previous input parameters for X and Y equaling 50, the experimental area amounts for up to 2500 cells.
+3. After pressing the button *[initialize]*, the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
+4. Now you can use the button *[compute next simulation run]* or calculate the next ten computation cycles at once by using the option [compute next two simulation runs]. The given experimental area will be then completely filled after 7 to 8 computation steps. So, malignant cells within the experimental area will have reached their critical mass by then. The simulated cancer cells grow according to Gompertz kinetics imitating 2D cultured glioma cells or spheroids implanted in animals (compare [Rubenstein et al. 2008](http://www.sciencedirect.com/science/article/pii/S0006349508819844)). One computation step now accounts for 50 hours. If you change input parameters of MCS and substeps the time factor will change appropriately, also depending on the size of matrix, given by parameters X and Y. Using the previous input parameters for X and Y equaling 50, the experimental area amounts for up to 2500 cells.
 5. Press the button [show line chart] will give you the summary of previously calculated steps which you can download as spreadsheet using the option [export as csv]. The line chart shows the amount of computation steps on the x-axis and the amount of cellular bricks on the y-axis. 
 6. Finally, we encourage readers to use GitHub for having a closer look at our implementation, explore it's features and suggest enhancements as well as participate in the development. :)
 
