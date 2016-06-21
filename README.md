@@ -31,9 +31,10 @@ We make use of the graph theory and visualization library [Cytoscape.js](http://
 
 [See the overview of the tool's user interface](img/cpm-cytosacpe-ui-description.pdf)
 
-####Tutorial On Modeling Brain Tumor Growth####
+####Tutorial On Modeling Brain Tumor Growth with cpm-cytoscape####
 
-1. Start the tool via the demo or offline according to the instructions presented below.
+1. Start the tool via the [demo](styx.cgv.tugraz.at:8080/cpm-cytoscape/) or offline according to the [instructions](#how-to-run-and-deploy-cpm-cytoscape-in-silico-simulation-app) presented below.
+
 2. Go to the tools top section for input parameters and type in the values, given in list beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
 
   * 
