@@ -26,6 +26,10 @@ The CPM model is a popular lattice-based, multi-particle cell-based formalism, a
 
 We make use of the graph theory and visualization library [Cytoscape.js](http://js.cytoscape.org) to create simulation output in html.
 
+More details can be found in our journal publication: 
+In silico modeling for tumor growth visualization – F. Jeanquartier, C. Jean-Quartier, D. Cemernek and A. Holzinger, BMC Systems Biology.2016, 10:59, 
+[DOI: 10.1186/s12918-016-0318-8](http://www.biomedcentral.com/1752-0509/10/59)
+
 
 ### User Interface & Tutorial ###
 
