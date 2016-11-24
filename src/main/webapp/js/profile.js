@@ -7,9 +7,9 @@
  */
 
 var profiles = [
-    {"name":"profile 1", "file":"profile1.json"},
-    {"name":"profile 2", "file":"profile2.json"},
-    {"name":"profile 3", "file":"profile3.json"}
+    {"name":"Brain cancer", "file":"profile1.json"},
+    {"name":"Colocteral cancer", "file":"profile2.json"},
+    {"name":"Ovarian cancer", "file":"profile3.json"}
 ];
 
 function initializeProfiles(){
@@ -57,83 +57,83 @@ function  verifyProfile(profile) {
         return false;
     }
 
-    if(!profile.hasOwnProperty("x") || !(profile.x >= 0 && profile.x <= 100)){
-        console.log("x-Value is corrupt!");
+    if(!profile.hasOwnProperty("x") || !(profile.x >= 1 && profile.x <= 200)){
+        console.log("x-Value allows only an Integer between 1 and 200!");
         return false;
     }
 
-    if(!profile.hasOwnProperty("y") || !(profile.y >= 0 && profile.y <= 100)){
-        console.log("y-Value is corrupt!");
+    if(!profile.hasOwnProperty("y") || !(profile.y >= 1 && profile.y <= 200)){
+        console.log("y-Value allows only an Integer between 1 and 200!");
         return false;
     }
 
     if(!profile.hasOwnProperty("mcs") || !(profile.mcs >= 1 && profile.mcs <= 10000)){
-        console.log("mcs-Value is corrupt!");
+        console.log("mcs-Value only allows an Integer between 1 and 10000!");
         return false;
     }
 
     if(!profile.hasOwnProperty("mcSubsteps") || !(profile.mcSubsteps >= 1 && profile.mcSubsteps <= 10000)){
-        console.log("mcSubsteps-Value is corrupt!");
+        console.log("mcSubsteps-Value allows only an Integer between 1 and 10000!");
         return false;
     }
 
     if(!profile.hasOwnProperty("maxSigma") || !(profile.maxSigma >= 1 && profile.maxSigma <= 50)){
-        console.log("maxSigma-Value is corrupt!");
+        console.log("maxSigma-Value allows only an Integer between 1 and 50!");
         return false;
     }
 
     if(!profile.hasOwnProperty("matrixDensity") || !(profile.matrixDensity >= 0.1 && profile.matrixDensity <= 1)){
-        console.log("matrixDensity-Value is corrupt!");
+        console.log("matrixDensity-Value allows only a double in the range between 0.1 and 1!");
         return false;
     }
 
     if(!profile.hasOwnProperty("temperature") || !(profile.temperature >= 0 && profile.temperature <= 100)){
-        console.log("temperature-Value is corrupt!");
+        console.log("temperature-Value allows only a double between 0 and 100!");
         return false;
     }
 
-    if(!profile.hasOwnProperty("jEcm") || !(profile.jEcm >= 1 && profile.jEcm <= 100)){
-        console.log("jEcm-Value is corrupt!");
+    if(!profile.hasOwnProperty("jEcm") || !(profile.jEcm >= 0.1 && profile.jEcm <= 100)){
+        console.log("jEcm-Value allows only a double between 0.1 and 100!");
         return false;
     }
 
-    if(!profile.hasOwnProperty("jLightCells") || !(profile.jLightCells >= 1 && profile.jLightCells <= 100)){
-        console.log("jLightCells-Value is corrupt!");
+    if(!profile.hasOwnProperty("jLightCells") || !(profile.jLightCells >= -99.99 && profile.jLightCells <= 100)){
+        console.log("jLightCells-Value allows only numerical values between -99.99 and 100!");
         return false;
     }
 
-    if(!profile.hasOwnProperty("jDarkCells") || !(profile.jDarkCells >= 1 && profile.jDarkCells <= 100)){
-        console.log("jDarkCells-Value is corrupt!");
+    if(!profile.hasOwnProperty("jDarkCells") || !(profile.jDarkCells >= -99.99 && profile.jDarkCells <= 100)){
+        console.log("jDarkCells-Value allows only numerical values between -99.99 and 100!");
         return false;
     }
 
-    if(!profile.hasOwnProperty("jDifferentCells") || !(profile.jDifferentCells >= 1 && profile.jDifferentCells <= 100)){
-        console.log("jDifferentCells-Value is corrupt!");
+    if(!profile.hasOwnProperty("jDifferentCells") || !(profile.jDifferentCells >= -99.99 && profile.jDifferentCells <= 100)){
+        console.log("jDifferentCells-Value allows only numerical values between -99.99 and 100!");
         return false;
     }
 
-    if(!profile.hasOwnProperty("lambdaArea") || !(profile.lambdaArea >= 1 && profile.lambdaArea <= 100)){
-        console.log("lambdaArea-Value is corrupt!");
+    if(!profile.hasOwnProperty("lambdaArea") || !(profile.lambdaArea >= 0.01 && profile.lambdaArea <= 100)){
+        console.log("lambdaArea-Value allows only numerical values between 0.01 and 100!");
         return false;
     }
 
     if(!profile.hasOwnProperty("targetAreaFactorLight") || !(profile.targetAreaFactorLight >= 0.0 && profile.targetAreaFactorLight <= 1.0)){
-        console.log("targetAreaFactorLight-Value is corrupt!");
+        console.log("targetAreaFactorLight-Value allows only double values between 0.0 and 1.0!");
         return false;
     }
 
     if(!profile.hasOwnProperty("targetAreaFactorDark") || !(profile.targetAreaFactorDark >= 0.0 && profile.targetAreaFactorDark <= 1.0)){
-        console.log("targetAreaFactorDark-Value is corrupt!");
+        console.log("targetAreaFactorDark-Value allows only double values between 0.0 and 1.0!");
         return false;
     }
 
     if(!profile.hasOwnProperty("ratioDarkToLightCells") || !(profile.ratioDarkToLightCells >= 2 && profile.ratioDarkToLightCells <= 100)){
-        console.log("ratioDarkToLightCells-Value is corrupt!");
+        console.log("ratioDarkToLightCells-Value allows only integers between 2 and 100!");
         return false;
     }
 
     if(!profile.hasOwnProperty("darkCellDecrease")&& (profile.darkCellDecrease == 0 || profile.darkCellDecrease == 1)){
-        console.log("darkCellDecrease-Value is corrupt!");
+        console.log("darkCellDecrease-Value allows only 0=no and 1=yes!");
         return false;
     }
 
