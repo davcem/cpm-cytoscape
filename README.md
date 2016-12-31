@@ -20,11 +20,109 @@ The html5 frontend makes use of the cytoscape.js library for visualization outpu
 
 - CPM Model
 
-The CPM model is a popular lattice-based, multi-particle cell-based formalism, also used for modeling tumor growth, first described by Graner & Glazier 1992.
+The CPM model is a popular lattice-based, multi-particle cell-based formalism, also used for modeling tumor growth, first described by [Graner & Glazier 1992](http://www.if.ufrgs.br/~leon/cursopg/mod_min/Articles/PRL_69-13-2013.pdf).
 
 - Cytoscape Visualization
 
 We make use of the graph theory and visualization library [Cytoscape.js](http://js.cytoscape.org) to create simulation output in html.
+
+More details can be found in our journal publication: 
+In silico modeling for tumor growth visualization – F. Jeanquartier, C. Jean-Quartier, D. Cemernek and A. Holzinger, BMC Systems Biology.2016, 10:59, 
+[DOI: 10.1186/s12918-016-0318-8](http://www.biomedcentral.com/1752-0509/10/59)
+
+
+### User Interface & Tutorial ###
+
+[See the overview of the tool's user interface](img/cpm-cytosacpe-ui-description.pdf)
+
+####Tutorial On Modeling Brain Tumor Growth with cpm-cytoscape####
+
+1. Start the tool via the [demo](http://styx.cgv.tugraz.at:8080/cpm-cytoscape/) or offline according to the [instructions](#how-to-run-and-deploy-cpm-cytoscape-in-silico-simulation-app) presented below.
+
+2. Go to the tools top section for input parameters and type in the values, given in list beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
+
+  * 
+    ```
+Max X:50
+  ```  
+  * 
+    ``` 
+Max Y:50
+  ```  
+  * 
+    ```
+Monte-Carlo-Steps:25
+  ```
+  *  
+    ```
+Monte-Carlo-Substeps:100 (or smaller down to 25, if you want to have a slower growth rate)
+  ```
+  *  
+    ```
+Max Sigma:2
+  ```
+  *  
+    ```
+Matrix Density:1
+  ```
+  *  
+    ```
+Temperature:4
+  ```
+  *  
+    ```
+ecm's energy:8
+  ```
+  *  
+    ```
+light cells' energy:30
+  ```
+  *  
+    ```
+dark cells' energy:3
+  ```
+  *  
+    ```
+mixex cells' energy:2
+  ```
+  *  
+    ```
+lambda for area calc.:0.05
+  ```
+  *  
+    ```
+light cell's target area factor:1 
+  ```
+  *  
+    ```
+dark cell's target area factor:1 
+  ```
+  *  
+    ```
+light/dark ratio:2
+    ```
+
+
+    >__Parameters comprise:__
+    >  *<small style="font-size:0.75em;">
+        lattice size ``x * y``, 
+        count of ``monte carlo steps`` and ``substeps`` (representing units of time), 
+        number of ``cell types σ``, namely dark (tumor) and light (normal) cells, 
+        ``matrix density`` (given the cell density between dark and light cells in proportion to extracellular matrix), 
+        ``temperature T`` (resembling cellular motility),      
+        cell-type ``interaction parameters J`` (so-called boundary energy coefficient determining cell growth as multiplicative degree of freedom)
+        cellular ``elasticity index λ`` (representing a growth limiting factor), 
+        cell-type ``target areas``,         
+        and initialization ``ratio`` between dark (tumor/mutated) and light (normal/healthy) cells
+        </small>*
+
+3. After pressing the button __`` initialize ``__ , the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
+
+4. Now you can use the button __`` compute next simulation run ``__ or calculate the next ten computation cycles at once by using the option [compute next two simulation runs]. The given experimental area will be then completely filled after 7 to 8 computation steps. So, malignant cells within the experimental area will have reached their critical mass by then. The simulated cancer cells grow according to Gompertz kinetics imitating 2D cultured glioma cells or spheroids implanted in animals (compare [Rubenstein et al. 2008](http://www.sciencedirect.com/science/article/pii/S0006349508819844)). One computation step now accounts for 50 hours. If you change input parameters of MCS and substeps the time factor will change appropriately, also depending on the size of matrix, given by parameters X and Y. Using the previous input parameters for X and Y equaling 50, the experimental area amounts for up to 2500 cells.
+
+5. Press the button __`` show line chart ``__ will give you the summary of previously calculated steps which you can download as spreadsheet using the option [export as csv]. The line chart shows the amount of computation steps on the x-axis and the amount of cellular bricks on the y-axis.
+ 
+6. Finally, we encourage readers to use GitHub for having a closer look at our implementation, explore it's features and suggest enhancements as well as participate in the development. :)
 
 
 ## How to Run and Deploy cpm-cytoscape in silico simulation app ##
@@ -59,7 +157,11 @@ We __encourage__ you to have a look at our source code, give us [feedback](mailt
 
 We know, that not every clinician and/or scientist is able to run his own web servlet or respectively java capable webserver. 
 Therefore, we further provide an online version, always running a stable version: 
-[Try out our Online Demo](http://styx.cgv.tugraz.at:8080/cpm-cytoscape/) and give us give us [feedback](mailto:f.jeanquartier[at]hci-kdd.org). 
+[Try out our Online Demo](http://styx.cgv.tugraz.at:8080/cpm-cytoscape/) and  give us [feedback](mailto:f.jeanquartier[at]hci-kdd.org).
+
+See an example showing several simulation steps as animated GIF also below: 
+
+<img src="img/cpm-cytoscape-example-run.gif" alt="Animated GIF showing init step and 10 computation steps. In the last image the line chart is shown." /> 
 
 ## Acknowledgments ##
 

@@ -105,7 +105,6 @@ public class JSONCPMServlet extends HttpServlet {
 		}
 
     }
-
     
     /**
      * *************************************************
@@ -120,13 +119,12 @@ public class JSONCPMServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException{
-
-		lattice.computeCPM();
-		addCPMToResponse(response);
-
+    	
+    	lattice.computeCPM();
+    	
+    	addCPMToResponse(response);
     	
     }
-
     
     /**
      * Creates the cpm lattice from request params.
@@ -171,7 +169,6 @@ public class JSONCPMServlet extends HttpServlet {
      *
      * @param response the response
      */
-
 	private void addCPMToResponse(HttpServletResponse response) throws ServletException, IOException{
 	        
 		response.setContentType("application/json");

@@ -1,5 +1,6 @@
 //global visible variables
-var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep;
+var cyContainer, areaTable, tableHeader, x, y, maxSigma, computationStep, multipleComputeTimesRun;
+
 
 function cytoscapeRender(method){
 
@@ -28,9 +29,8 @@ function cytoscapeRender(method){
 	var colorArray = new Array();
 	colorArray[0] = "#e2e2e2"; //default color for ECM
 
-	var button = document.getElementById("manualInitBtn");
-	button.disabled = true;
-	button.classList.add("btn-disabled");
+    //document.getElementById("randomInitBtn").disabled = true;
+	//document.getElementById("manualInitBtn").disabled = true;
 
 	if (method=='init') {
 		httpType = 'POST';
@@ -38,16 +38,33 @@ function cytoscapeRender(method){
 		areaTable = 'areaInitializedTable';
 		tableHeader = 'areaInitializedTableHeader';
 		computationStep = 0;
+		if ($('#computeBtn').is(":disabled")) { 
+            $('#computeBtn').removeAttr("disabled");
+        }
+		if ($('#multipleComputeBtn').is(":disabled")) { 
+            $('#multipleComputeBtn').removeAttr("disabled");
+        }
 		if (maxSigma>=1) { $('#toggleLineChart').show(); }
 		else {  $('#toggleLineChart').hide(); }
-
-	} else if (method='compute') {
+	    $('#resetSimBtn').show();
+	}
+  else if (method=='compute') {
 		httpType = 'GET';
 		cyContainer = 'cyComputed';
 		areaTable = 'areaComputedTable';
 		tableHeader = 'areaComputedTableHeader';
 		computationStep++;
-	} else {
+	} 
+  else if (method=='multipleCompute') {
+	  httpType = 'GET';
+	  cyContainer = 'cyComputed';
+		areaTable = 'areaComputedTable';
+		tableHeader = 'areaComputedTableHeader';
+		computationStep++;
+		multipleComputeTimesRun = 0;
+    _doMultipleComputeRuns();
+  }
+  else {
 		console.log("Method not defined!");
 	}
 
@@ -95,7 +112,6 @@ function cytoscapeRender(method){
      
 	//first params is our cytoscape cpm json
 	 var expJson = then[0];
-	 // console.log("cytoscape cpm json is:" + JSON.stringify(expJson));
      
      //the elements of the ajax response
      var elements = expJson.elements;
@@ -114,7 +130,7 @@ function cytoscapeRender(method){
 	 }
 
 	 var t1 = performance.now();
-	  console.log("random elements are: " + JSON.stringify(elements));
+	 //console.log("random elements are: " + JSON.stringify(elements));
 	 
 	 //initiliaze cytoscape
 	 var cy = cytoscape({
@@ -308,4 +324,17 @@ function cytoscapeRender(method){
 
         }
   }//cytoscapeInit End
+}
+
+/**
+* compute multiple steps after another for fast forward simulation 
+*/
+function _doMultipleComputeRuns() {
+	if (multipleComputeTimesRun < 10) { 
+		setTimeout(function(){ 
+			$("#computeBtn").click();
+		  _doMultipleComputeRuns(); 
+		}, 500);
+	  multipleComputeTimesRun++; 
+	}
 }

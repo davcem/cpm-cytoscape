@@ -16,14 +16,22 @@ var multipleSelection = false;
 var multipleSelectionNodes = [];
 
 function addSimulationButton(method){
-    if(method == 'random'){
-        document.getElementById('btnHolder').innerHTML = "<button class='btn btn-primary' type='button' onclick='cytoscapeRender(&quot;compute&quot;)'>compute next simulation run</button>";
 
+    if(method == 'random'){
+        // random init uses initial values
     }
     else if(method == 'manual'){
-        document.getElementById('btnHolder').innerHTML = "<button class='btn btn-primary' type='button' onclick='cytoscapeRenderUserInitialisation(&quot;compute&quot;)'>compute next simulation run</button>";
+        // change some params if set manual
+        $("input[name='ratioDarkToLightCells'], #profile, input[name='maxSigma'], input[name='maxX'], input[name='maxY'], input[name='matrixDensity']").prop( "disabled", true );
+        $('#computeBtn').attr('onclick','cytoscapeRenderUserInitialisation("compute")');
+        $('#computeBtn').removeAttr("disabled");
+        $('#multipleComputeBtn').attr('onclick','cytoscapeRenderUserInitialisation("multipleCompute")');
+        //$('#multipleComputeBtn').removeAttr("disabled"); // not working for the first manual click. set active after 1st click
+        $('#resetSimBtn').show();
 
     }
+    $("#randomInitBtn").prop( "disabled", true );
+    $("#manualInitBtn").prop( "disabled", true );
 }
 
 
@@ -32,8 +40,6 @@ function cytoscapeRenderUserInitialisation(method) {
     var sigmaCounter = 0;
     var colorArray = new Array();
     colorArray[0] = "#e2e2e2"; //default color for ECM
-
-
 
     x = document.getElementsByName("maxX")[0].value;
     y = document.getElementsByName("maxY")[0].value;
@@ -52,7 +58,6 @@ function cytoscapeRenderUserInitialisation(method) {
     var ratioDarkToLightCells = document.getElementsByName("ratioDarkToLightCells")[0].value;
     var darkCellDecrease = document.getElementsByName("darkCellDecrease")[0].selectedIndex;
 
-
     // initialise areas
     areas =  new Array (maxSigma);
     areas[0] = x*y;
@@ -62,10 +67,8 @@ function cytoscapeRenderUserInitialisation(method) {
 
     colors.push("#e2e2e2");//default color for ECM
 
-
     var button = document.getElementById("randomInitBtn");
     button.disabled = true;
-    button.classList.add("btn-disabled");
 
     if (method=='init') {
         httpType = 'POST';
@@ -79,17 +82,18 @@ function cytoscapeRenderUserInitialisation(method) {
         else {
             $('#toggleLineChart').hide();
         }
-
     }
-        else if(method == 'compute'){
+    else if(method == 'compute'){
+
         if(computationStep == 0){
             sendUserInputToServlet();
-
+            //console.log("compute with senduserinputtoservlet");
+            $('#multipleComputeBtn').removeAttr("disabled"); // not working for the first manual click. set active after 1st click
         }
         else{
             computeNextStep();
+            //console.log("compute with after "+computationStep);
         }
-
         return;
     }
     else {
@@ -109,8 +113,6 @@ function cytoscapeRenderUserInitialisation(method) {
         // calculation for leading zeros
         var numberOfNodes = x*y;
         var leadingZeros = Math.log10(numberOfNodes + maxSigma) + 1 ;
-
-
 
         elements = '[';
         var id = 0;
@@ -309,7 +311,7 @@ function cytoscapeRenderUserInitialisation(method) {
             addColorToNode();
         });
 
-        //console.log("initial elements are: " + elements);
+        //console.log("user's initial elements are: " + elements);
 
         // create JSON object from string
         elements = JSON.parse(elements);
@@ -331,8 +333,8 @@ function cytoscapeRenderUserInitialisation(method) {
             userPanningEnabled: false,
             autolock: false,
             autoungrabify: true,
-            autounselectify: false,
-            selectionType: 'single',
+            autounselectify: true,
+            selectionType: 'single'; //'additive',
             boxSelectionEnabled: true,
             // rendering options
             headless: false,
@@ -435,12 +437,8 @@ function cytoscapeRenderUserInitialisation(method) {
     }
 
 
-
+    /* compute next steps of user initialised graph */
     function sendUserInputToServlet(){
-
-        //console.log("compute next steps of user initialised graph");
-
-
 
         // create CPM
         httpType = 'POST';
@@ -451,13 +449,9 @@ function cytoscapeRenderUserInitialisation(method) {
         if (maxSigma>=1) { $('#toggleLineChart').show(); }
         else {  $('#toggleLineChart').hide(); }
 
-
          $('.loading-spinner').show(); // show loading feedback when render method called
 
-
          ajax1 = performance.now();
-
-
 
          // requesting CPM data
          var graphP = $.ajax({
@@ -490,7 +484,6 @@ function cytoscapeRenderUserInitialisation(method) {
          });
 
         Promise.all([ graphP ]).then(initCyCPM);
-
 
 
         function initCyCPM( then ){
@@ -724,7 +717,6 @@ function cytoscapeRenderUserInitialisation(method) {
         areaTable = 'areaComputedTable';
         tableHeader = 'areaComputedTableHeader';
         computationStep++;
-
 
         $('.loading-spinner').show(); // show loading feedback when render method called
 
@@ -982,15 +974,5 @@ function cytoscapeRenderUserInitialisation(method) {
             }
         }
 
-    }
-
-
-
-
-
-
-
+  }//cytoscapeInit End
 }
-
-
-

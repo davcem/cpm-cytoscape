@@ -2,7 +2,6 @@ package cpm;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
-
 import java.util.Random;
 
 /**
@@ -222,13 +221,8 @@ public class CPMLattice implements CPM{
 			counter++;
 			
 		}
-
-		//System.out.println(area);
-		//System.out.println(sigma);
-
+		
 	}
-
-
 	
 	/**
 	 * Computes the CPM according to the parameters of the lattice.
@@ -410,7 +404,7 @@ public class CPMLattice implements CPM{
 	/**
 	 * Function returns the targetArea for given cell
 	 * 
-	 * @param  cell - the cell to obtain the targetArea for
+	 * @param int cell - the cell to obtain the targetArea for
 	 * 
 	 * @return targetArea - the targetArea for cell (depends if cell is light or dark cell)
 	 * */
