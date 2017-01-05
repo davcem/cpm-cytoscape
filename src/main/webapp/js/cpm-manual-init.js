@@ -334,7 +334,7 @@ function cytoscapeRenderUserInitialisation(method) {
             autolock: false,
             autoungrabify: true,
             autounselectify: true,
-            selectionType: 'single'; //'additive',
+            selectionType: 'single', //'additive',
             boxSelectionEnabled: true,
             // rendering options
             headless: false,
