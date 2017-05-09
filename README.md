@@ -32,7 +32,7 @@ In silico modeling for tumor growth visualization – F. Jeanquartier, C. Jean
 
 And on the tumor growth profiles extension in particular:
 Tumor growth simulation profiling. - C. Jean-Quartier, F. Jeanquartier, D. Cemernek  and A. Holzinger,  In International Conference on Information Technology in Bio-and Medical Informatics (pp. 208-213). Springer International Publishing,
-[DOI: 10.1007/978-3-319-43949-5_16] (https://link.springer.com/chapter/10.1007/978-3-319-43949-5_16)
+[DOI: 10.1007/978-3-319-43949-5_16](https://link.springer.com/chapter/10.1007/978-3-319-43949-5_16)
 
 
 
@@ -62,17 +62,17 @@ Tumor growth simulation profiling. - C. Jean-Quartier, F. Jeanquartier, D. Ceme
  * dark cell's target area factor:1 
  * light/dark ratio:2
 
-
     >__Parameters comprise:__
-    >  lattice size ``x * y``, 
-        count of ``monte carlo steps`` and ``substeps`` (representing units of time), 
-        number of ``cell types σ``, namely dark (tumor) and light (normal) cells, 
-        ``matrix density`` (given the cell density between dark and light cells in proportion to extracellular matrix), 
-        ``temperature T`` (resembling cellular motility),      
-        cell-type ``interaction parameters J`` (so-called boundary energy coefficient determining cell growth as multiplicative degree of freedom)
-        cellular ``elasticity index λ`` (representing a growth limiting factor), 
-        cell-type ``target areas``,         
-        and initialization ``ratio`` between dark (tumor/mutated) and light (normal/healthy) cells
+    >  lattice size ``x * y``,     
+        count of ``monte carlo steps`` and ``substeps`` (representing units of time),     
+        number of ``cell types σ``, namely dark (tumor) and light (normal) cells,     
+        ``matrix density`` (given the cell density between dark and light cells in proportion to extracellular matrix),     
+        ``temperature T`` (resembling cellular motility),     
+        cell-type ``interaction parameters J`` (so-called boundary energy coefficient determining cell growth as multiplicative degree of freedom),     
+        cellular ``elasticity index λ`` (representing a growth limiting factor),     
+        cell-type ``target areas``,     
+        and initialization ``ratio`` between dark (tumor/mutated) and light (normal/healthy) cells     
+    >    
         
 
 3. After pressing the button __`` initialize ``__ , the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
