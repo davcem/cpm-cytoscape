@@ -30,6 +30,11 @@ More details can be found in our journal publication:
 In silico modeling for tumor growth visualization – F. Jeanquartier, C. Jean-Quartier, D. Cemernek and A. Holzinger, BMC Systems Biology.2016, 10:59, 
 [DOI: 10.1186/s12918-016-0318-8](http://www.biomedcentral.com/1752-0509/10/59)
 
+And on the tumor growth profiles extension in particular:
+Tumor growth simulation profiling. - C. Jean-Quartier, F. Jeanquartier, D. Cemernek  and A. Holzinger,  In International Conference on Information Technology in Bio-and Medical Informatics (pp. 208-213). Springer International Publishing,
+[DOI: 10.1007/978-3-319-43949-5_16] (https://link.springer.com/chapter/10.1007/978-3-319-43949-5_16)
+
+
 
 ### User Interface & Tutorial ###
 
@@ -41,71 +46,25 @@ In silico modeling for tumor growth visualization – F. Jeanquartier, C. Jean
 
 2. Go to the tools top section for input parameters and type in the values, given in list beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
 
-  * 
-    ```
-Max X:50
-  ```  
-  * 
-    ``` 
-Max Y:50
-  ```  
-  * 
-    ```
-Monte-Carlo-Steps:25
-  ```
-  *  
-    ```
-Monte-Carlo-Substeps:100 (or smaller down to 25, if you want to have a slower growth rate)
-  ```
-  *  
-    ```
-Max Sigma:2
-  ```
-  *  
-    ```
-Matrix Density:1
-  ```
-  *  
-    ```
-Temperature:4
-  ```
-  *  
-    ```
-ecm's energy:8
-  ```
-  *  
-    ```
-light cells' energy:30
-  ```
-  *  
-    ```
-dark cells' energy:3
-  ```
-  *  
-    ```
-mixex cells' energy:2
-  ```
-  *  
-    ```
-lambda for area calc.:0.05
-  ```
-  *  
-    ```
-light cell's target area factor:1 
-  ```
-  *  
-    ```
-dark cell's target area factor:1 
-  ```
-  *  
-    ```
-light/dark ratio:2
-    ```
+ * Max X:50
+ * Max Y:50
+ * Monte-Carlo-Steps:25
+ * Monte-Carlo-Substeps:100 (or smaller down to 25, if you want to have a slower growth rate)
+ * Max Sigma:2
+ * Matrix Density:1
+ * Temperature:4
+ * ecm's energy:8
+ * light cells' energy:30
+ * dark cells' energy:3
+ * mixex cells' energy:2
+ * lambda for area calc.:0.05
+ * light cell's target area factor:1 
+ * dark cell's target area factor:1 
+ * light/dark ratio:2
 
 
     >__Parameters comprise:__
-    >  *<small style="font-size:0.75em;">
-        lattice size ``x * y``, 
+    >  lattice size ``x * y``, 
         count of ``monte carlo steps`` and ``substeps`` (representing units of time), 
         number of ``cell types σ``, namely dark (tumor) and light (normal) cells, 
         ``matrix density`` (given the cell density between dark and light cells in proportion to extracellular matrix), 
@@ -114,7 +73,7 @@ light/dark ratio:2
         cellular ``elasticity index λ`` (representing a growth limiting factor), 
         cell-type ``target areas``,         
         and initialization ``ratio`` between dark (tumor/mutated) and light (normal/healthy) cells
-        </small>*
+        
 
 3. After pressing the button __`` initialize ``__ , the graph is created on a grid, randomly presenting individual cells as group of nodes, also called cellular bricks. Colored nodes represent cellular bricks and uncolored nodes are part of the extracellular matrix and resemble the cellular environment without peculiar growth variables. Dark nodes, shown in red, are attributed to cancerous cells and light nodes, shown in blue, stand for normal cells.
 
