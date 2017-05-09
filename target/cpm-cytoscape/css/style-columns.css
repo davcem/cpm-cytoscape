@@ -53,6 +53,10 @@ html, body {
 	font-weight: bold;
 	font-size: small;
 }
+#subheader button[disabled]{
+  opacity: 0.8;
+  color: #777; 
+}
 #middleContainer {
 	position: relative;
 	clear:both;

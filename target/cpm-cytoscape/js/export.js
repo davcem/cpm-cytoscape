@@ -28,11 +28,19 @@ $(document).ready(function () {
      */ 
     function downloadFile(fileName, urlData){
         var aLink = document.createElement('a');
-        var evt = document.createEvent("HTMLEvents");
-        evt.initEvent("click");
+        var evt = new Event('click');                       
         aLink.download = fileName;
         aLink.href = urlData ;
-        aLink.dispatchEvent(evt);
+        var isFirefox = typeof InstallTrigger !== 'undefined';
+        var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+        if (isFirefox || isSafari) {
+          //needed because of firefox bug 395917 
+          //and because of navigating in safari
+          window.open(aLink.href, '_blank'); //open download in new window
+        }
+        else {
+          aLink.dispatchEvent(evt);
+        }
     }
     
     /**
