@@ -42,7 +42,7 @@ Tumor growth simulation profiling. - C. Jean-Quartier, F. Jeanquartier, D. Ceme
 
 ####Tutorial On Modeling Brain Tumor Growth with cpm-cytoscape####
 
-1. Start the tool via the [demo](http://styx.cgv.tugraz.at:8080/cpm-cytoscape/) or offline according to the [instructions](#how-to-run-and-deploy-cpm-cytoscape-in-silico-simulation-app) presented below.
+1. Start the tool via a local build according to the [instructions](#how-to-run-and-deploy-cpm-cytoscape-in-silico-simulation-app) presented below (please note, the [demo-server](http://styx.cgv.tugraz.at:8080/cpm-cytoscape/) is temporary offline).
 
 2. Go to the tools top section for input parameters and type in the values, given in list beneath. Alternatively, you can try out variations in order to simulate your own sample properties and start a new experiment. By varying several parameters the user is allowed to simulate a wide range of conditions.
 
@@ -115,8 +115,8 @@ We __encourage__ you to have a look at our source code, give us [feedback](mailt
 ## Demo ##
 
 We know, that not every clinician and/or scientist is able to run his own web servlet or respectively java capable webserver. 
-Therefore, we further provide an online version, always running a stable version: 
-[Try out our Online Demo](http://styx.cgv.tugraz.at:8080/cpm-cytoscape/) and  give us [feedback](mailto:f.jeanquartier[at]hci-kdd.org).
+Unfortunately our demo server went offline. We are working on another updated online version for demo use: 
+Meanwhile, please try out the the app by deploying the WAR as local tomcat app and give us [feedback](mailto:f.jeanquartier[at]hci-kdd.org).
 
 See an example showing several simulation steps as animated GIF also below: 
 
